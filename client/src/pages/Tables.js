@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../ui/Table';
-import Image from '../ui/Image';
 import styled from 'styled-components';
 import { leagueColumns } from '../tableUtils';
 import { fetchLeagueStandings } from '../api/requests';
-import screwfixDiv2Image from '../images/screwfix-div-2.png';
-import badgersDiv1Image from '../images/badgers-div-1.png';
+import { device } from '../breakpoints';
 
 const screwfixId = 589414;
 const badgersId = 728798;
@@ -13,15 +11,23 @@ const badgersId = 728798;
 const BothLeaguesContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
+  @media ${device.md} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const LeagueContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
+  @media ${device.md} {
+    width: 100%;
+  }
 `;
 
-export const Tables = ({ combinedLeague }) => {
+export const Tables = () => {
   const [leagueOneData, setLeagueOneData] = useState(null);
   const [leagueTwoData, setLeagueTwoData] = useState(null);
 
@@ -30,7 +36,7 @@ export const Tables = ({ combinedLeague }) => {
       try {
         const screwfixData = await fetchLeagueStandings(screwfixId);
         setLeagueTwoData(screwfixData);
-        console.log('SF league data: ', screwfixData);
+        // console.log('SF league data: ', screwfixData);
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }
@@ -42,7 +48,7 @@ export const Tables = ({ combinedLeague }) => {
         if (badgersData) {
           setLeagueOneData(badgersData);
         }
-        console.log('B league data: ', badgersData);
+        // console.log('B league data: ', badgersData);
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }

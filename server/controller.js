@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 
 const fplApiBaseString = 'https://fantasy.premierleague.com/api';
 
-export const getCurrentGameweekNumber = async (req, res) => {
+export const getAllGameweekInfo = async (req, res) => {
   const url = `${fplApiBaseString}/bootstrap-static/`;
 
   try {
@@ -30,7 +30,6 @@ export const getLiveGameweek = async (req, res) => {
 };
 
 export const getLeagueStandings = async (req, res) => {
-  console.log(req.params);
   const league_id = req.params.leagueId;
   const url = `${fplApiBaseString}/leagues-h2h/${league_id}/standings`;
 
@@ -45,7 +44,8 @@ export const getLeagueStandings = async (req, res) => {
 
 export const getLeagueFixtures = async (req, res) => {
   const league_id = req.params.leagueId;
-  const url = `${fplApiBaseString}/leagues-h2h-matches/league/${league_id}?page=1&event=3`;
+  const gameweek = req.params.gameweek;
+  const url = `${fplApiBaseString}/leagues-h2h-matches/league/${league_id}?page=1&event=${gameweek}`;
 
   try {
     const response = await fetch(url);

@@ -1,9 +1,13 @@
 import styled from 'styled-components';
+import { device } from './breakpoints';
 
 const TeamName = styled.p`
   margin: 0;
   padding: 0;
   font-size: 0.9rem;
+  @media ${device.sm} {
+    font-size: 0.6rem;
+  }
 `
 
 const ManagerName = styled.p`
@@ -11,23 +15,28 @@ const ManagerName = styled.p`
   margin: 0;
   padding: 0;
   font-size: 0.6rem;
+  max-width: 40%;
+  text-align: right;
+
+  @media ${device.sm} {
+    font-size: 0.4rem;
+  }
 `
 
 const ManagerTeamCombined = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${({ fixturesTable }) => (fixturesTable ? 'column' : 'row')};
   align-items: center;
   justify-content: space-between;
-`
+`;
 
-const LeagueTeamAndManagerName = (row, table = true, player2 = false) => {
-
+const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) => {
   return (
-  <ManagerTeamCombined style={{ textAlign: !table && !player2 ? 'right' : 'left'}}>
-    <TeamName>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
-    <ManagerName>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
-  </ManagerTeamCombined>
-  )
+    <ManagerTeamCombined style={{ textAlign: fixturesTable && !player2 ? 'right' : 'left'}} fixturesTable={fixturesTable}>
+      <TeamName>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
+      <ManagerName>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
+    </ManagerTeamCombined>
+    )
 }
 
 export const leagueColumns = [
@@ -161,12 +170,11 @@ export const badgeFixColumns = [
 export const fixtureColumns = [
   {
     Header: 'Home',
-    accessor: (row) => LeagueTeamAndManagerName(row, false),
+    accessor: (row) => LeagueTeamAndManagerName(row, true),
     width: 200,
     minWidth: 200,
     maxWidth: 200,
     style: { textAlign: 'right' },
-
   },
   {
     Header: '',
@@ -184,11 +192,9 @@ export const fixtureColumns = [
   },
   {
     Header: 'Away',
-    accessor: (row) => LeagueTeamAndManagerName(row, false, true),
+    accessor: (row) => LeagueTeamAndManagerName(row, true, true),
     width: 200,
     minWidth: 200,
     maxWidth: 200,
-    style: { textAlign: 'left' },
-
   }
 ];

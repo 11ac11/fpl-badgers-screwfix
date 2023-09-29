@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { device } from '../breakpoints';
 
 const SidebarContainer = styled.div`
   font-size: 32px;
@@ -18,6 +19,7 @@ const SidebarContainer = styled.div`
   }
 
   li {
+    display: flex;
     margin: 0.5rem 0;
   }
 
@@ -28,6 +30,17 @@ const SidebarContainer = styled.div`
 
   a:hover {
     color: var(--black);
+  }
+
+  @media ${device.md} {
+    justify-content: center;
+    li {
+      margin: 0.25rem 0;
+    }
+
+    a {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -59,6 +72,10 @@ const StatSection = styled.div`
     font-family: Jetbrains mono;
     display: block;
     font-size: 16px;
+  }
+
+  @media ${device.sm} {
+    display: none;
   }
 `;
 

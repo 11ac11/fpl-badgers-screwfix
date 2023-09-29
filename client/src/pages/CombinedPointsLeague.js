@@ -15,8 +15,7 @@ export const CombinedPointsLeague = ({
   badgersTableData,
 }) => {
   const [combinedLeagueData, setCombinedLeagueData] = useState(null);
-
-  console.log('11111111', screwfixTableData, badgersTableData);
+  const [combinedAndSortedData, setCombinedAndSortedData] = useState(null);
 
   useEffect(() => {
     if (screwfixTableData && badgersTableData) {
@@ -34,6 +33,7 @@ export const CombinedPointsLeague = ({
       const bothLeagues = [...badgersNewRank, ...screwfixNewRank];
       setCombinedLeagueData(bothLeagues);
     }
+    setCombinedAndSortedData(bothLeaguesSorted);
   }, [screwfixTableData, badgersTableData]);
 
   // Use useMemo to sort the data
@@ -43,13 +43,12 @@ export const CombinedPointsLeague = ({
         (a, b) => b.points_for - a.points_for
       );
     }
-  }, [badgersTableData]);
+  }, [screwfixTableData, badgersTableData]);
 
-  console.log(bothLeaguesSorted);
+  console.log(screwfixTableData, badgersTableData, bothLeaguesSorted);
 
   return (
     <LeagueContainer>
-      {/* <Image src={badgersDiv1Image} alt="Badgers divison one" width="20%" /> */}
       {bothLeaguesSorted && (
         <Table
           columns={leagueColumns}
