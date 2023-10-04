@@ -7,7 +7,7 @@ import { fixtureColumns } from '../tableUtils';
 
 const BothFixturescontainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1rem;
   @media ${device.md} {
     flex-direction: column;

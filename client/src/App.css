@@ -19,8 +19,6 @@ body {
   color: var(--black);
   font-size: 14px;
   background-color: var(--white);
-  height: 100vh;
-  width: 100vw;
   overflow: hidden;
 }
 
@@ -39,6 +37,7 @@ th {
 
 th, td {
   padding: 0.3rem 0.5rem;
+  max-height: 10px;
 }
 
 tr {

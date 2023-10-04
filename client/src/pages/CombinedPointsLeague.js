@@ -7,7 +7,6 @@ const LeagueContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 50vw;
 `;
 
 export const CombinedPointsLeague = ({
@@ -15,7 +14,14 @@ export const CombinedPointsLeague = ({
   badgersTableData,
 }) => {
   const [combinedLeagueData, setCombinedLeagueData] = useState(null);
-  const [combinedAndSortedData, setCombinedAndSortedData] = useState(null);
+  // Use useMemo to sort the data
+  const bothLeaguesSorted = useMemo(() => {
+    if (combinedLeagueData) {
+      return [...combinedLeagueData].sort(
+        (a, b) => b.points_for - a.points_for
+      );
+    }
+  }, [combinedLeagueData]);
 
   useEffect(() => {
     if (screwfixTableData && badgersTableData) {
@@ -33,17 +39,7 @@ export const CombinedPointsLeague = ({
       const bothLeagues = [...badgersNewRank, ...screwfixNewRank];
       setCombinedLeagueData(bothLeagues);
     }
-    setCombinedAndSortedData(bothLeaguesSorted);
-  }, [screwfixTableData, badgersTableData]);
-
-  // Use useMemo to sort the data
-  const bothLeaguesSorted = useMemo(() => {
-    if (combinedLeagueData) {
-      return [...combinedLeagueData].sort(
-        (a, b) => b.points_for - a.points_for
-      );
-    }
-  }, [screwfixTableData, badgersTableData]);
+  }, [screwfixTableData, badgersTableData, bothLeaguesSorted]);
 
   console.log(screwfixTableData, badgersTableData, bothLeaguesSorted);
 

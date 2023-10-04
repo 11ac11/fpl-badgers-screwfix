@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../breakpoints';
@@ -7,10 +7,10 @@ const SidebarContainer = styled.div`
   font-size: 32px;
   padding-left: 2rem;
   height: 90vh;
-  width: 25vw;
+  flex: 0 0 20%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   ul {
     list-style-type: none;
@@ -44,9 +44,7 @@ const SidebarContainer = styled.div`
   }
 `;
 
-const NavSection = styled.nav`
-  height: 60%;
-`;
+const NavSection = styled.nav``;
 
 const StatSection = styled.div`
   height: 20%;
@@ -79,8 +77,18 @@ const StatSection = styled.div`
   }
 `;
 
-export const Sidebar = ({ gameweekNumber }) => {
-  return (
+const OpenCloseArrow = styled.button`
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+`;
+
+export const Sidebar = ({ isOpen, setIsOpen }) => {
+  return isOpen ? (
     <SidebarContainer>
       <NavSection>
         <ul>
@@ -96,9 +104,9 @@ export const Sidebar = ({ gameweekNumber }) => {
           <li>
             <Link to="/fixtures">Fixtures</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/live">Live Gameweek</Link>
-          </li>
+          </li> */}
         </ul>
       </NavSection>
       <StatSection>
@@ -107,5 +115,5 @@ export const Sidebar = ({ gameweekNumber }) => {
         <span>Screwfix: Player Y</span>
       </StatSection>
     </SidebarContainer>
-  );
+  ) : null;
 };

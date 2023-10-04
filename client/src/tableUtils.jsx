@@ -5,9 +5,10 @@ const TeamName = styled.p`
   margin: 0;
   padding: 0;
   font-size: 0.9rem;
-  @media ${device.sm} {
-    font-size: 0.6rem;
-  }
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '75%')};;
 `
 
 const ManagerName = styled.p`
@@ -15,12 +16,10 @@ const ManagerName = styled.p`
   margin: 0;
   padding: 0;
   font-size: 0.6rem;
-  max-width: 40%;
-  text-align: right;
-
-  @media ${device.sm} {
-    font-size: 0.4rem;
-  }
+  ${({ fixturesTable }) => fixturesTable && `width: 100%`};
+  max-width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '40%')};
+  text-align: ${({ fixturesTable }) => (fixturesTable ? 'center' : 'right')};
+  text-align: ${({ player2 }) => player2 ? 'left' : 'right'};
 `
 
 const ManagerTeamCombined = styled.div`
@@ -33,8 +32,8 @@ const ManagerTeamCombined = styled.div`
 const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) => {
   return (
     <ManagerTeamCombined style={{ textAlign: fixturesTable && !player2 ? 'right' : 'left'}} fixturesTable={fixturesTable}>
-      <TeamName>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
-      <ManagerName>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
+      <TeamName fixturesTable={fixturesTable}>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
+      <ManagerName fixturesTable={fixturesTable} player2={player2}>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
     </ManagerTeamCombined>
     )
 }
@@ -43,9 +42,9 @@ export const leagueColumns = [
   {
     Header: '#',
     accessor: 'rank',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
+    width: 50,
+    minWidth: 50,
+    maxWidth: 50,
     sortable: false,
     canSort: false
   },
@@ -103,98 +102,26 @@ export const leagueColumns = [
   },
 ];
 
-export const badgeFixColumns = [
-  {
-    Header: '#',
-    accessor: 'index',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
-    sortable: false
-  },
-  {
-    Header: 'Team',
-    accessor: (row) => LeagueTeamAndManagerName(row),
-    width: 300,
-    style: { textAlign: 'left' },
-    sortable: false,
-  },
-  {
-    Header: 'W',
-    accessor: 'matches_won',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
-    style: { textAlign: 'center' },
-    sortable: false,
-  },
-  {
-    Header: 'D',
-    accessor: 'matches_drawn',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
-    style: { textAlign: 'center' },
-    sortable: false,
-  },
-  {
-    Header: 'L',
-    accessor: 'matches_lost',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
-    style: { textAlign: 'center' },
-    sortable: false,
-  },
-  {
-    Header: 'League Rank',
-    accessor: 'rank',
-    width: 40,
-    minWidth: 40,
-    maxWidth: 40,
-    fontSize: 8,
-    sortable: false, // Enable sorting for this column
-  },
-  {
-    Header: 'Total Points',
-    accessor: 'points_for',
-    width: 40,
-    minWidth: 40,
-    maxWidth: 40,
-    fontSize: '8px',
-    sortable: false, // Enable sorting for this column
-    sortType: 'basic',
-  },
-];
-
 export const fixtureColumns = [
   {
     Header: 'Home',
     accessor: (row) => LeagueTeamAndManagerName(row, true),
-    width: 200,
-    minWidth: 200,
-    maxWidth: 200,
+    width: '35%',
     style: { textAlign: 'right' },
   },
   {
     Header: '',
     accessor: 'entry_1_points',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
+    width: '5%',
   },
   {
     Header: '',
     accessor: 'entry_2_points',
-    width: 10,
-    minWidth: 10,
-    maxWidth: 10,
+    width: '5%',
   },
   {
     Header: 'Away',
     accessor: (row) => LeagueTeamAndManagerName(row, true, true),
-    width: 200,
-    minWidth: 200,
-    maxWidth: 200,
+    width: '35%',
   }
 ];

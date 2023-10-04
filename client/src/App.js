@@ -26,29 +26,16 @@ import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 const LayoutContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 100vh;
-  max-height: 100vh;
-`;
-
-const ThirdContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  width: 33%;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1rem;
 `;
 
 const ContentContainer = styled.div`
-  display: flex;
-  width: 75vw;
+  flex: 1;
+  min-height: 90vh;
   height: 90vh;
   overflow-y: auto;
   padding: 1rem;
   justify-content: center;
 `;
-
-const TableContainer = styled.div``;
 
 const screwfixId = 589414;
 const badgersId = 728798;
@@ -61,6 +48,7 @@ const App = () => {
   const [badgersFixtures, setBadgersFixtures] = useState(null);
   const [badgeFixTable, setBadgeFixTable] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchGameweekNumber = async () => {
@@ -125,36 +113,28 @@ const App = () => {
     }
   };
 
-  // const fetchLiveScores = async () => {
-  //   try {
-  //     const liveScores = await fetchLivePlayerScores(gameweekNumber);
-  //     console.log('LIVE SCORES', liveScores);
-  //   } catch (error) {
-  //     console.error(`Error: ${error.message}`);
-  //   }
-  // };
-
-  // const fetchManagerPicks = async () => {
-  //   try {
-  //     const managerPicks = await fetchManagerPicksByEvent(
-  //       1034149,
-  //       gameweekNumber
-  //     );
-  //     console.log('manager picks', managerPicks);
-  //   } catch (error) {
-  //     console.error(`Error: ${error.message}`);
-  //   }
-  // };
-
   return (
     <Router>
       <LayoutContainer>
-        <Topbar gameweekNumber={gameweekNumber} />
-        <Sidebar />
+        <Topbar
+          gameweekNumber={gameweekNumber}
+          sidebarIsOpen={sidebarIsOpen}
+          setSidebarIsOpen={setSidebarIsOpen}
+        />
+        <Sidebar isOpen={sidebarIsOpen} setIsOpen={setSidebarIsOpen} />
         <ContentContainer>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/tables" element={<Tables />} />
+            <Route
+              path="/points-league"
+              element={
+                <CombinedPointsLeague
+                  screwfixTableData={screwfixTableData}
+                  badgersTableData={badgersTableData}
+                />
+              }
+            />
             <Route
               path="/fixtures"
               element={
@@ -165,15 +145,6 @@ const App = () => {
               }
             />
             <Route path="/live" element={<Live />} />
-            <Route
-              path="/points-league"
-              element={
-                <CombinedPointsLeague
-                  screwfixTableData={screwfixTableData}
-                  badgersTableData={badgersTableData}
-                />
-              }
-            />
           </Routes>
         </ContentContainer>
       </LayoutContainer>

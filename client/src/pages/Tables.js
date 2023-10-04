@@ -10,8 +10,10 @@ const badgersId = 728798;
 
 const BothLeaguesContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1rem;
+  height: 100%;
+  margin-bottom: 2rem;
   @media ${device.md} {
     flex-direction: column;
     align-items: center;

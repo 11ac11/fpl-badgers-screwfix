@@ -1,36 +1,50 @@
 import React from 'react';
 import styled from 'styled-components';
-import screwfixDiv2Image from '../images/screwfix-div-2.png';
+import screwfixDiv2CircleBWImage from '../images/screwfix_circle_logo_bw.png';
 import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
 import Image from './Image';
 import { device } from '../breakpoints';
 
 const TopbarContainer = styled.div`
   max-width: 100%;
-  width: 100vw;
+  width: 100%;
   height: 10vh;
-  min-height: 80px;
+  min-height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 2rem;
 
   @media ${device.sm} {
     background: var(--gradient);
-    min-height: 50px;
+    height: 8vh;
+    min-height: 30px;
+    padding: 0 0.5rem;
+  }
+`;
+
+const LeftSide = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 100%;
+
+  @media ${device.sm} {
+    gap: 1rem;
   }
 `;
 
 const ImageContainer = styled.div`
   display: flex;
   gap: 2rem;
-  margin-left: 1rem;
   height: 90%;
-  max-height: 90%;
+  max-height: 50px;
   align-items: center;
 
   @media ${device.sm} {
     gap: 1rem;
+    height: 60%;
+    min-height: 30px;
   }
 `;
 
@@ -51,13 +65,13 @@ const GameweekText = styled.span`
 `;
 
 const GameweekNumber = styled.span`
-  margin: 0 1rem;
+  padding: 0 1rem;
   font-size: 80px;
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   @media ${device.sm} {
-    margin: 0 0.5rem;
+    padding: 0 0.5rem;
     font-size: 2rem;
     background: var(--black);
     -webkit-background-clip: text;
@@ -65,21 +79,19 @@ const GameweekNumber = styled.span`
   }
 `;
 
-export const Topbar = ({ gameweekNumber }) => {
+export const Topbar = ({ gameweekNumber, sidebarIsOpen, setSidebarIsOpen }) => {
   return (
     <TopbarContainer>
-      <ImageContainer>
-        <HeaderLogo
-          src={badgersDiv1CircleImage}
-          alt="Badgers division one"
-          grayscale={true}
-        />
-        <HeaderLogo
-          src={screwfixDiv2Image}
-          alt="Screwfix division two"
-          grayscale={true}
-        />
-      </ImageContainer>
+      <LeftSide>
+        <button onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>Menu</button>
+        <ImageContainer>
+          <HeaderLogo src={badgersDiv1CircleImage} alt="Badgers division one" />
+          <HeaderLogo
+            src={screwfixDiv2CircleBWImage}
+            alt="Screwfix division two"
+          />
+        </ImageContainer>
+      </LeftSide>
       <GameweekContainer>
         <GameweekText>Gameweek:</GameweekText>
         <GameweekNumber>{gameweekNumber}</GameweekNumber>
