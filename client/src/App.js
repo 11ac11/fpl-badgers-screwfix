@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { leagueColumns, fixtureColumns, badgeFixColumns } from './tableUtils';
 import screwfixDiv2Image from './images/screwfix-div-2.png';
 import badgersDiv1Image from './images/badgers-div-1.png';
-import { Topbar } from './ui/Topbar';
+import { Topbar } from './ui/Topbar/Topbar';
 import { Sidebar } from './ui/Sidebar';
 import { Tables } from './pages/Tables';
 import { Home } from './pages/Home';

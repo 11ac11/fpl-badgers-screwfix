@@ -3,6 +3,7 @@
 :root {
   --turq: #37e0c1;
   --green: #5bff89;
+  --grey: #656565;
   --black: #1c1c1c;
   --white: #F9F9F9;
   --gradient: linear-gradient(91deg, var(--turq) 0%, var(--green) 29%);
@@ -10,6 +11,16 @@
 
 * {
   box-sizing: border-box;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
 }
 
 body {

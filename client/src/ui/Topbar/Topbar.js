@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import screwfixDiv2CircleBWImage from '../images/screwfix_circle_logo_bw.png';
-import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
-import Image from './Image';
-import { device } from '../breakpoints';
+import screwfixDiv2CircleBWImage from '../../images/screwfix_circle_logo_bw.png';
+import badgersDiv1CircleImage from '../../images/badger_circle_logo.png';
+import Image from '../Image';
+import { device } from '../../breakpoints';
+import { Hamburger } from './Hamburger';
 
 const TopbarContainer = styled.div`
   max-width: 100%;
@@ -65,11 +66,15 @@ const GameweekText = styled.span`
 `;
 
 const GameweekNumber = styled.span`
-  padding: 0 1rem;
-  font-size: 80px;
+  margin: 0 1rem;
+  height: 4rem;
+  width: 4rem;
+  display: flex;
+  font-size: 50px;
   background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
   @media ${device.sm} {
     padding: 0 0.5rem;
     font-size: 2rem;
@@ -83,7 +88,10 @@ export const Topbar = ({ gameweekNumber, sidebarIsOpen, setSidebarIsOpen }) => {
   return (
     <TopbarContainer>
       <LeftSide>
-        <button onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>Menu</button>
+        <Hamburger
+          onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
+          isOpen={sidebarIsOpen}
+        />
         <ImageContainer>
           <HeaderLogo src={badgersDiv1CircleImage} alt="Badgers division one" />
           <HeaderLogo

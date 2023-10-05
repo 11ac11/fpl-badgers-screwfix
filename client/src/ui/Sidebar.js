@@ -35,7 +35,7 @@ const SidebarContainer = styled.div`
   }
 
   a {
-    color: grey;
+    color: var(--grey);
     font-size: 24px;
   }
 
