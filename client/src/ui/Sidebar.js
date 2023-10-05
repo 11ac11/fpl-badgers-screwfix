@@ -4,13 +4,24 @@ import { Link } from 'react-router-dom';
 import { device } from '../breakpoints';
 
 const SidebarContainer = styled.div`
-  font-size: 32px;
-  padding-left: 2rem;
-  height: 90vh;
-  flex: 0 0 20%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  &.sidebar {
+    font-size: 32px;
+    position: relative;
+    padding-left: 2rem;
+    height: 90vh;
+    flex: 0 0 0%;
+    width: 0;
+    left: -20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: left 0.3s ease;
+  }
+
+  &.sidebar.open {
+    left: 0;
+    flex: 0 0 20%;
+  }
 
   ul {
     list-style-type: none;
@@ -77,19 +88,11 @@ const StatSection = styled.div`
   }
 `;
 
-const OpenCloseArrow = styled.button`
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  color: inherit;
-  text-align: inherit;
-`;
+export const Sidebar = ({ isOpen }) => {
+  const sidebarClassName = isOpen ? 'sidebar open' : 'sidebar';
 
-export const Sidebar = ({ isOpen, setIsOpen }) => {
-  return isOpen ? (
-    <SidebarContainer>
+  return (
+    <SidebarContainer className={sidebarClassName}>
       <NavSection>
         <ul>
           <li>
@@ -115,5 +118,5 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
         <span>Screwfix: Player Y</span>
       </StatSection>
     </SidebarContainer>
-  ) : null;
+  );
 };
