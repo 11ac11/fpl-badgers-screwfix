@@ -5,6 +5,7 @@ import { device } from '../breakpoints';
 
 const SidebarContainer = styled.div`
   &.sidebar {
+    background-color: var(--white);
     font-size: 32px;
     position: relative;
     padding-left: 2rem;
@@ -20,6 +21,7 @@ const SidebarContainer = styled.div`
 
   &.sidebar.open {
     left: 0;
+    width: 20vw;
     flex: 0 0 20%;
   }
 
@@ -55,7 +57,9 @@ const SidebarContainer = styled.div`
   }
 `;
 
-const NavSection = styled.nav``;
+const NavSection = styled.nav`
+  top: -20%;
+`;
 
 const StatSection = styled.div`
   height: 20%;
@@ -88,7 +92,7 @@ const StatSection = styled.div`
   }
 `;
 
-export const Sidebar = ({ isOpen }) => {
+export const Sidebar = ({ isOpen, setIsOpen }) => {
   const sidebarClassName = isOpen ? 'sidebar open' : 'sidebar';
 
   return (
@@ -96,16 +100,24 @@ export const Sidebar = ({ isOpen }) => {
       <NavSection>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={() => setIsOpen(false)}>
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/tables">Tables</Link>
+            <Link to="/tables" onClick={() => setIsOpen(false)}>
+              Tables
+            </Link>
           </li>
           <li>
-            <Link to="/points-league">Points League</Link>
+            <Link to="/points-league" onClick={() => setIsOpen(false)}>
+              Points League
+            </Link>
           </li>
           <li>
-            <Link to="/fixtures">Fixtures</Link>
+            <Link to="/fixtures" onClick={() => setIsOpen(false)}>
+              Fixtures
+            </Link>
           </li>
           {/* <li>
             <Link to="/live">Live Gameweek</Link>

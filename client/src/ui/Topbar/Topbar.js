@@ -67,10 +67,10 @@ const GameweekText = styled.span`
 
 const GameweekNumber = styled.span`
   margin: 0 1rem;
-  height: 4rem;
-  width: 4rem;
+  height: 3rem;
+  width: 3rem;
   display: flex;
-  font-size: 50px;
+  font-size: 40px;
   background: var(--gradient);
   border-radius: 100%;
   align-items: center;
