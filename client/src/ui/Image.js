@@ -8,6 +8,8 @@ const StyledImage = styled.img`
 `;
 
 const Image = ({ src, alt, width, height, grayscale = false }) => {
+
+  // TODO: remove this
   return (
     <StyledImage
       src={src}
