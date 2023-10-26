@@ -65,6 +65,10 @@ tr {
   height: 3.5rem;
 }
 
+.fixture-th {
+  display: none;
+}
+
 tr:first-of-type {
   border-radius: 50% 0 0 0;
 }
