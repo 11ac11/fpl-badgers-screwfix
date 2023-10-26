@@ -11,7 +11,7 @@ const TeamName = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '75%')};;
+  width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '50%')};;
 `
 
 const ManagerName = styled.p`
@@ -19,6 +19,9 @@ const ManagerName = styled.p`
   margin: 0;
   padding: 0;
   font-size: 0.6rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   ${({ fixturesTable }) => fixturesTable && `width: 100%`};
   max-width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '40%')};
   text-align: ${({ fixturesTable }) => (fixturesTable ? 'center' : 'right')};
@@ -30,6 +33,7 @@ const ManagerTeamCombined = styled.div`
   flex-direction: ${({ fixturesTable }) => (fixturesTable ? 'column' : 'row')};
   align-items: center;
   justify-content: space-between;
+  min-height: 20px;
 `;
 
 const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) => {
