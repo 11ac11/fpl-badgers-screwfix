@@ -78,7 +78,7 @@ tr:first-of-type {
   background: var(--gradient)
 }
 
-.league-tr:nth-child(n+18) {
+.league-tr:nth-last-child(-n+3) {
   background: var(--gradientRed);
 
 }
