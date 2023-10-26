@@ -63,6 +63,7 @@ const Table = ({
                   <td
                     {...cell.getCellProps({
                       style: {
+                        width: cell.column.width,
                         fontSize: cell.fontSize,
                         textAlign: cell.column.Header.includes('points')
                           ? 'center'

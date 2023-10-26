@@ -4,6 +4,7 @@ import Image from './ui/Image';
 import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from './images/badger_circle_logo.png';
 import { badgersDivisionId } from './App';
+import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
 
 const TeamName = styled.p`
   margin: 0;
@@ -123,11 +124,43 @@ export const leagueColumns = [
 
 export const fixtureColumns = [
   {
+    Header: 'Emoji',
+    accessor: 'emoji_1',
+    Cell: (row) => {
+      // console.log(row)
+      const entryOnePoints = row.cell.row.original.entry_1_points
+      const entryTwoPoints = row.cell.row.original.entry_2_points
+      const cellStyles = {
+        fontSize: '1.4rem',
+        whiteSpace: 'nowrap'
+      }
+      let emojiStr = ''
+      if (entryOnePoints >= entryTwoPoints) emojiStr += '⚽️ '
+      if (entryOnePoints > 90) emojiStr += '🔥 '
+      if (entryOnePoints < 40) emojiStr += '😭 '
+      const highestPoints = getHighestPoints(row.data)
+      const lowestPoints = getLowestPoints(row.data)
+      const closestGame = getClosestGame(row.data)
+      if (highestPoints.team === row.cell.row.original.entry_1_name) {
+        emojiStr += '🐐 '
+      }
+      if (lowestPoints.team === row.cell.row.original.entry_1_name) {
+        emojiStr += '😳 '
+      }
+      if (closestGame.homeTeam === row.cell.row.original.entry_1_name) {
+        emojiStr += '🤝 '
+      }
+      return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
+    },
+    width: '10%',
+  },
+  {
     Header: 'Home',
     accessor: (row) => LeagueTeamAndManagerName(row, true),
     width: '35%',
     style: { textAlign: 'right' },
   },
+
   {
     Header: '',
     accessor: 'entry_1_points',
@@ -164,7 +197,39 @@ export const fixtureColumns = [
     Header: 'Away',
     accessor: (row) => LeagueTeamAndManagerName(row, true, true),
     width: '35%',
-  }
+  },
+  {
+    Header: '',
+    accessor: 'emoji_2',
+    Cell: (row) => {
+      const entryOnePoints = row.cell.row.original.entry_1_points
+      const entryTwoPoints = row.cell.row.original.entry_2_points
+      const cellStyles = {
+        fontSize: '1.4rem',
+        whiteSpace: 'nowrap'
+      }
+      let emojiStr = ''
+      if (entryOnePoints <= entryTwoPoints) emojiStr += '⚽️ '
+      if (entryTwoPoints > 90) emojiStr += '🔥 '
+      if (entryTwoPoints < 40) emojiStr += '😭 '
+
+      const highestPoints = getHighestPoints(row.data)
+      const lowestPoints = getLowestPoints(row.data)
+      const closestGame = getClosestGame(row.data)
+
+      if (highestPoints.team === row.cell.row.original.entry_2_name) {
+        emojiStr += '🐐 '
+      }
+      if (lowestPoints.team === row.cell.row.original.entry_2_name) {
+        emojiStr += '😳 '
+      }
+      if (closestGame.awayTeam === row.cell.row.original.entry_2_name) {
+        emojiStr += '🤝 '
+      }
+      return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
+    },
+    width: '10%',
+  },
 ];
 
 const sharedFixtureStyles = {
