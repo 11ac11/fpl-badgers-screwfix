@@ -27,19 +27,17 @@ export const CombinedPointsLeague = ({
     if (screwfixTableData && badgersTableData) {
       const screwfixNewRank = screwfixTableData.standings.results.map(
         (team) => {
-          const { rank, ...rest } = team;
-          return { rank: `${rank} (S)`, ...rest };
+          return { ...team, league: 'screwfix' };
         }
       );
       const badgersNewRank = badgersTableData.standings.results.map((team) => {
-        const { rank, ...rest } = team;
-        return { rank: `${rank} (B)`, ...rest };
+        return { ...team, league: 'badgers' };
       });
 
       const bothLeagues = [...badgersNewRank, ...screwfixNewRank];
       setCombinedLeagueData(bothLeagues);
     }
-  }, [screwfixTableData, badgersTableData, bothLeaguesSorted]);
+  }, [screwfixTableData, badgersTableData]);
 
   console.log(screwfixTableData, badgersTableData, bothLeaguesSorted);
 

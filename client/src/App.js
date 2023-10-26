@@ -37,8 +37,8 @@ const ContentContainer = styled.div`
   justify-content: center;
 `;
 
-const screwfixId = 589414;
-const badgersId = 728798;
+export const screwfixId = 589414;
+export const badgersId = 728798;
 
 const App = () => {
   const [gameweekNumber, setGameweekNumber] = useState(null);
@@ -46,7 +46,6 @@ const App = () => {
   const [screwfixFixtures, setScrewfixFixtures] = useState(null);
   const [badgersTableData, setBadgersTableData] = useState(null);
   const [badgersFixtures, setBadgersFixtures] = useState(null);
-  const [badgeFixTable, setBadgeFixTable] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
@@ -54,6 +53,7 @@ const App = () => {
     const fetchGameweekNumber = async () => {
       try {
         const res = await findCurrentGameweekNumber();
+        console.log('GAMEWEEK', res);
         setGameweekNumber(res);
       } catch (error) {
         console.error('Error fetching gameweek number:', error);
@@ -81,7 +81,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log(gameweekNumber, ' ---------------------------- ');
     if (gameweekNumber) {
       fetchFixturesData();
     }
@@ -90,7 +89,7 @@ const App = () => {
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
     for (const event of data) {
-      if (event.is_current === true) {
+      if (!!event.is_current) {
         return event.id;
       }
     }
@@ -103,11 +102,11 @@ const App = () => {
       const screwFixFixtures = await fetchFixtures(screwfixId, gameweekNumber);
       const badgersFixtures = await fetchFixtures(badgersId, gameweekNumber);
       if (screwFixFixtures) {
-        console.log('hitttttinng', screwFixFixtures);
         setScrewfixFixtures(screwFixFixtures);
       }
-      //console.log('SF fixtures: ', screwFixFixtures);
-      setBadgersFixtures(badgersFixtures);
+      if (badgersFixtures) {
+        setBadgersFixtures(badgersFixtures);
+      }
     } catch (error) {
       console.error(`Error: ${error.message}`);
     }
@@ -121,10 +120,25 @@ const App = () => {
           sidebarIsOpen={sidebarIsOpen}
           setSidebarIsOpen={setSidebarIsOpen}
         />
-        <Sidebar isOpen={sidebarIsOpen} setIsOpen={setSidebarIsOpen} />
+        <Sidebar
+          isOpen={sidebarIsOpen}
+          setIsOpen={setSidebarIsOpen}
+          screwfixTableData={screwfixTableData}
+          badgersTableData={badgersTableData}
+        />
         <ContentContainer>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  screwfixTableData={screwfixTableData}
+                  badgersTableData={badgersTableData}
+                  screwfixFix={screwfixFixtures}
+                  badgersFix={badgersFixtures}
+                />
+              }
+            />
             <Route path="/tables" element={<Tables />} />
             <Route
               path="/points-league"

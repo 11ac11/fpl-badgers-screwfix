@@ -25,6 +25,7 @@ const FixturesContainer = styled.div`
 `;
 
 export const Fixtures = ({ screwfixFix, badgersFix }) => {
+  console.log('fixtures', screwfixFix);
   return (
     <BothFixturescontainer>
       {badgersFix?.results && (

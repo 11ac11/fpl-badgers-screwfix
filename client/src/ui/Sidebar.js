@@ -10,9 +10,9 @@ const SidebarContainer = styled.div`
     position: relative;
     padding-left: 2rem;
     height: 90vh;
-    flex: 0 0 0%;
-    width: 0;
-    left: -20%;
+    width: 0vw;
+    flex: 0 0 0;
+    left: -22%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -21,8 +21,8 @@ const SidebarContainer = styled.div`
 
   &.sidebar.open {
     left: 0;
-    width: 20vw;
-    flex: 0 0 20%;
+    width: 22vw;
+    flex: 0 0 22%;
   }
 
   ul {
@@ -92,8 +92,15 @@ const StatSection = styled.div`
   }
 `;
 
-export const Sidebar = ({ isOpen, setIsOpen }) => {
+export const Sidebar = ({
+  isOpen,
+  setIsOpen,
+  screwfixTableData,
+  badgersTableData,
+}) => {
   const sidebarClassName = isOpen ? 'sidebar open' : 'sidebar';
+  const badgersLeader = badgersTableData?.standings?.results[0]?.player_name;
+  const screwfixLeader = screwfixTableData?.standings?.results[0]?.player_name;
 
   return (
     <SidebarContainer className={sidebarClassName}>
@@ -126,8 +133,8 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
       </NavSection>
       <StatSection>
         <h3>Leaders:</h3>
-        <span>Badgers: Player X</span>
-        <span>Screwfix: Player Y</span>
+        <span>Badgers: {badgersLeader}</span>
+        <span>Screwfix: {screwfixLeader}</span>
       </StatSection>
     </SidebarContainer>
   );

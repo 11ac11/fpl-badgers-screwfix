@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { device } from './breakpoints';
+import Image from './ui/Image';
+import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
+import badgersDiv1CircleImage from './images/badger_circle_logo.png';
 
 const TeamName = styled.p`
   margin: 0;
@@ -38,6 +41,15 @@ const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) =
     )
 }
 
+const renderLeagueImage = (row) => {
+  console.log(row)
+  const isBadger = (row.league == 'badgers')
+  console.log(isBadger)
+  return (
+    <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
+  )
+}
+
 export const leagueColumns = [
   {
     Header: '#',
@@ -47,6 +59,12 @@ export const leagueColumns = [
     maxWidth: 50,
     sortable: false,
     canSort: false
+  },
+  {
+    Header: 'League',
+    accessor: (row) => renderLeagueImage(row),
+    width: 50,
+    minWidth: 50
   },
   {
     Header: 'Team',
