@@ -8,6 +8,7 @@
   --white: #F9F9F9;
   --gradient: linear-gradient(90deg, var(--turq) 0%, var(--green) 29%);
   --gradientRev: linear-gradient(270deg, var(--turq) 0%, var(--green) 29%);
+  --gradientRed: linear-gradient(142deg, rgb(255 199 195) 0%, rgb(232 187 180) 46%, rgb(243 192 183) 100%);
 }
 
 * {
@@ -77,8 +78,9 @@ tr:first-of-type {
   background: var(--gradient)
 }
 
-.league-table tr:nth-last-child(3) {
-  border-top: 1px solid red;
+.league-tr:nth-child(n+18) {
+  background: var(--gradientRed);
+
 }
 
 /* Dark overlay color for every other row */
