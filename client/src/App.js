@@ -30,15 +30,18 @@ const LayoutContainer = styled.div`
 
 const ContentContainer = styled.div`
   flex: 1;
+  width: 100vw;
   min-height: 90vh;
   height: 90vh;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 1rem 2rem;
   justify-content: center;
 `;
 
-export const screwfixId = 589414;
-export const badgersId = 728798;
+export const screwfixId = 589414 || 72656; // league id || division id
+export const badgersId = 728798
+export const screwfixDivisionId = 72656
+export const badgersDivisionId = 95564
 
 const App = () => {
   const [gameweekNumber, setGameweekNumber] = useState(null);
@@ -115,16 +118,16 @@ const App = () => {
   return (
     <Router>
       <LayoutContainer>
-        <Topbar
-          gameweekNumber={gameweekNumber}
-          sidebarIsOpen={sidebarIsOpen}
-          setSidebarIsOpen={setSidebarIsOpen}
-        />
         <Sidebar
           isOpen={sidebarIsOpen}
           setIsOpen={setSidebarIsOpen}
           screwfixTableData={screwfixTableData}
           badgersTableData={badgersTableData}
+        />
+        <Topbar
+          gameweekNumber={gameweekNumber}
+          sidebarIsOpen={sidebarIsOpen}
+          setSidebarIsOpen={setSidebarIsOpen}
         />
         <ContentContainer>
           <Routes>

@@ -3,6 +3,7 @@ import { device } from './breakpoints';
 import Image from './ui/Image';
 import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from './images/badger_circle_logo.png';
+import { badgersDivisionId } from './App';
 
 const TeamName = styled.p`
   margin: 0;
@@ -11,7 +12,7 @@ const TeamName = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '50%')};;
+  width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '50%')};;
 `
 
 const ManagerName = styled.p`
@@ -22,15 +23,15 @@ const ManagerName = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  ${({ fixturesTable }) => fixturesTable && `width: 100%`};
-  max-width: ${({ fixturesTable }) => (fixturesTable ? '100%' : '40%')};
-  text-align: ${({ fixturesTable }) => (fixturesTable ? 'center' : 'right')};
-  text-align: ${({ player2 }) => player2 ? 'left' : 'right'};
+  ${({ $fixturesTable }) => $fixturesTable && `width: 100%`};
+  max-width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '40%')};
+  text-align: ${({ $fixturesTable }) => ($fixturesTable ? 'center' : 'right')};
+  text-align: ${({ $player2 }) => $player2 ? 'left' : 'right'};
 `
 
 const ManagerTeamCombined = styled.div`
   display: flex;
-  flex-direction: ${({ fixturesTable }) => (fixturesTable ? 'column' : 'row')};
+  flex-direction: ${({ $fixturesTable }) => ($fixturesTable ? 'column' : 'row')};
   align-items: center;
   justify-content: space-between;
   min-height: 20px;
@@ -38,17 +39,15 @@ const ManagerTeamCombined = styled.div`
 
 const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) => {
   return (
-    <ManagerTeamCombined style={{ textAlign: fixturesTable && !player2 ? 'right' : 'left'}} fixturesTable={fixturesTable}>
-      <TeamName fixturesTable={fixturesTable}>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
-      <ManagerName fixturesTable={fixturesTable} player2={player2}>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
+    <ManagerTeamCombined style={{ textAlign: fixturesTable && !player2 ? 'right' : 'left'}} $fixturesTable={fixturesTable}>
+      <TeamName $fixturesTable={fixturesTable}>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
+      <ManagerName $fixturesTable={fixturesTable} $player2={player2}>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
     </ManagerTeamCombined>
     )
 }
 
 const renderLeagueImage = (row) => {
-  console.log(row)
-  const isBadger = (row.league == 'badgers')
-  console.log(isBadger)
+  const isBadger = (row.division == badgersDivisionId)
   return (
     <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
   )
@@ -74,7 +73,6 @@ export const leagueColumns = [
     Header: 'Team',
     accessor: (row) => LeagueTeamAndManagerName(row),
     width: 300,
-    style: { textAlign: 'left' },
     sortable: false,
   },
   {
@@ -83,7 +81,6 @@ export const leagueColumns = [
     width: 10,
     minWidth: 10,
     maxWidth: 10,
-    style: { textAlign: 'center' },
     sortable: false,
   },
   {
@@ -92,7 +89,6 @@ export const leagueColumns = [
     width: 10,
     minWidth: 10,
     maxWidth: 10,
-    style: { textAlign: 'center' },
     sortable: false,
   },
   {
@@ -101,7 +97,6 @@ export const leagueColumns = [
     width: 10,
     minWidth: 10,
     maxWidth: 10,
-    style: { textAlign: 'center' },
     sortable: false,
   },
   {
@@ -111,7 +106,7 @@ export const leagueColumns = [
     minWidth: 40,
     maxWidth: 40,
     fontSize: 8,
-    sortable: true, // Enable sorting for this column
+    sortable: true,
   },
   {
     Header: 'Total Points',
@@ -120,7 +115,7 @@ export const leagueColumns = [
     minWidth: 40,
     maxWidth: 40,
     fontSize: '8px',
-    sortable: true, // Enable sorting for this column
+    sortable: true,
   },
 ];
 

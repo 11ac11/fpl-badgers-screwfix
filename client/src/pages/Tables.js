@@ -38,7 +38,7 @@ export const Tables = () => {
       try {
         const screwfixData = await fetchLeagueStandings(screwfixId);
         setLeagueTwoData(screwfixData);
-        // console.log('SF league data: ', screwfixData);
+        console.log('SF league data: ', screwfixData);
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }

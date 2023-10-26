@@ -5,24 +5,30 @@ import { device } from '../breakpoints';
 
 const SidebarContainer = styled.div`
   &.sidebar {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
     background-color: var(--white);
     font-size: 32px;
-    position: relative;
+    height: 100vh;
     padding-left: 2rem;
-    height: 90vh;
-    width: 0vw;
-    flex: 0 0 0;
-    left: -22%;
+    padding-right: 2rem;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transition: left 0.3s ease;
+    /* From https://css.glass */
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9.4px);
+    -webkit-backdrop-filter: blur(9.4px);
   }
 
-  &.sidebar.open {
-    left: 0;
-    width: 22vw;
-    flex: 0 0 22%;
+  &.sidebar.closed {
+    left: -100%;
   }
 
   ul {
@@ -58,7 +64,8 @@ const SidebarContainer = styled.div`
 `;
 
 const NavSection = styled.nav`
-  top: -20%;
+  position: relative;
+  top: 10%;
 `;
 
 const StatSection = styled.div`
@@ -98,7 +105,7 @@ export const Sidebar = ({
   screwfixTableData,
   badgersTableData,
 }) => {
-  const sidebarClassName = isOpen ? 'sidebar open' : 'sidebar';
+  const sidebarClassName = isOpen ? 'sidebar' : 'sidebar closed';
   const badgersLeader = badgersTableData?.standings?.results[0]?.player_name;
   const screwfixLeader = screwfixTableData?.standings?.results[0]?.player_name;
 

@@ -8,6 +8,7 @@ const Container = styled.button`
   justify-content: space-between;
   transform-origin: 1px;
   cursor: pointer;
+  z-index: 50;
 
   &:hover {
     .lineOne,
@@ -18,7 +19,7 @@ const Container = styled.button`
   }
 
   ${(props) =>
-    props.isOpen &&
+    props.$isOpen &&
     css`
       .lineOne {
         transform: rotate(45deg) translate(3px, 10px);
@@ -43,9 +44,9 @@ const Line = styled.div`
 export const Hamburger = ({ onClick, isOpen }) => {
   return (
     <Container onClick={onClick} $isOpen={isOpen}>
-      <Line className={isOpen ? 'lineOne open' : 'lineOne'} />
-      <Line className={isOpen ? 'lineTwo open' : 'lineTwo'} />
-      <Line className={isOpen ? 'lineThree open' : 'lineThree'} />
+      <Line className={isOpen ? 'lineOne' : 'lineOne closed'} />
+      <Line className={isOpen ? 'lineTwo' : 'lineTwo closed'} />
+      <Line className={isOpen ? 'lineThree' : 'lineThree closed'} />
     </Container>
   );
 };

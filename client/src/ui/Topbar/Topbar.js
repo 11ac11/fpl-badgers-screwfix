@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import screwfixDiv2CircleBWImage from '../../images/screwfix_circle_logo_bw.png';
 import badgersDiv1CircleImage from '../../images/badger_circle_logo.png';
 import Image from '../Image';
@@ -65,6 +65,12 @@ const GameweekText = styled.span`
   }
 `;
 
+const gradientFloat = keyframes`
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+`
+
 const GameweekNumber = styled.span`
   margin: 0 1rem;
   height: 3rem;
@@ -72,9 +78,13 @@ const GameweekNumber = styled.span`
   display: flex;
   font-size: 40px;
   background: var(--gradient);
+  background-size: 400% 400%;
   border-radius: 100%;
   align-items: center;
   justify-content: center;
+  animation-name: ${gradientFloat};
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
   @media ${device.sm} {
     padding: 0 0.5rem;
     font-size: 2rem;
@@ -82,7 +92,9 @@ const GameweekNumber = styled.span`
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
 `;
+
 
 export const Topbar = ({ gameweekNumber, sidebarIsOpen, setSidebarIsOpen }) => {
   return (

@@ -23,11 +23,10 @@ const Table = ({
   return (
     <table {...getTableProps()} className={`table ${tableClassName}`}>
       <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+        {headerGroups.map((headerGroup, index) => (
+          <tr key={index} {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              //console.log(column.getSortByToggleProps()),
-              <th
+              <th key={`${column.id}${index}`}
                 onClick={
                   column.sortable
                     ? column.getHeaderProps(column.getSortByToggleProps())
@@ -53,11 +52,11 @@ const Table = ({
         ))}
       </thead>
       <tbody {...getTableBodyProps()} className={`tbody ${tbodyClassName}`}>
-        {rows.map((row) => {
+        {rows.map((row, index) => {
           prepareRow(row);
           return (
             //console.log(row),
-            <tr {...row.getRowProps()} className={`tr ${trClassName}`}>
+            <tr key={index} {...row.getRowProps()} className={`tr ${trClassName}`}>
               {row.cells.map((cell) => {
                 return (
                   <td
