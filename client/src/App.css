@@ -6,7 +6,8 @@
   --grey: #656565;
   --black: #1c1c1c;
   --white: #F9F9F9;
-  --gradient: linear-gradient(91deg, var(--turq) 0%, var(--green) 29%);
+  --gradient: linear-gradient(90deg, var(--turq) 0%, var(--green) 29%);
+  --gradientRev: linear-gradient(270deg, var(--turq) 0%, var(--green) 29%);
 }
 
 * {
@@ -49,6 +50,11 @@ th {
 th, td {
   padding: 0.3rem 0.5rem;
   max-height: 10px;
+}
+
+th.fixture-score, td.fixture-score {
+  padding: 0 0;
+  font-size: 1.25rem;
 }
 
 tr {

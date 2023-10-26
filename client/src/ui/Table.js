@@ -58,6 +58,7 @@ const Table = ({
             //console.log(row),
             <tr key={index} {...row.getRowProps()} className={`tr ${trClassName}`}>
               {row.cells.map((cell) => {
+                console.log(cell)
                 return (
                   <td
                     {...cell.getCellProps({
@@ -68,7 +69,7 @@ const Table = ({
                           : 'left',
                       },
                     })}
-                    className={`td ${tdClassName}`}
+                    className={`td ${tdClassName} ${cell.column.id.includes('points') && 'fixture-score'}`}
                   >
                     {cell.column.id === 'index'
                       ? row.index + 1

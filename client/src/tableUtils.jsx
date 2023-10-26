@@ -57,17 +57,19 @@ export const leagueColumns = [
   {
     Header: '#',
     accessor: 'rank',
+    Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
     width: 50,
-    minWidth: 50,
-    maxWidth: 50,
+    minWidth: 20,
+    maxWidth: 20,
     sortable: false,
     canSort: false
   },
   {
     Header: 'League',
+    Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
     accessor: (row) => renderLeagueImage(row),
-    width: 50,
-    minWidth: 50
+    width: 20,
+    minWidth: 20
   },
   {
     Header: 'Team',
@@ -129,11 +131,13 @@ export const fixtureColumns = [
   {
     Header: '',
     accessor: 'entry_1_points',
+    Cell: (row) => <div style={{ ...sharedFixtureStyles }} className='fixture-score'>{row.value}</div>,
     width: '5%',
   },
   {
     Header: '',
     accessor: 'entry_2_points',
+    Cell: (row) => <div style={{ ...sharedFixtureStyles, borderRadius: '0% 20% 20% 0%', background: 'var(--gradientRev)' }} className='fixture-score'>{row.value}</div>,
     width: '5%',
   },
   {
@@ -142,3 +146,12 @@ export const fixtureColumns = [
     width: '35%',
   }
 ];
+
+const sharedFixtureStyles = {
+  background: 'var(--gradient)',
+  borderRadius: '20% 0% 0% 20%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '0.1rem'
+}
