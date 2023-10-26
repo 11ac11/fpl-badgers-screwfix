@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Table from '../ui/Table';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
 
 import { fixtureColumns } from '../tableUtils';
+import { ScreenshotButton } from '../utils/ScreenshotButton';
 
 const BothFixturescontainer = styled.div`
   display: flex;
@@ -26,8 +27,11 @@ const FixturesContainer = styled.div`
 
 export const Fixtures = ({ screwfixFix, badgersFix }) => {
   console.log('fixtures', screwfixFix);
+  const contentRef = useRef(null);
+
   return (
-    <BothFixturescontainer>
+    <ScreenshotButton contentRef={contentRef}>
+    <BothFixturescontainer ref={contentRef}>
       {badgersFix?.results && (
         <FixturesContainer>
           <Table
@@ -57,5 +61,6 @@ export const Fixtures = ({ screwfixFix, badgersFix }) => {
         </FixturesContainer>
       )}
     </BothFixturescontainer>
+    </ScreenshotButton>
   );
 };

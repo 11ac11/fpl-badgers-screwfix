@@ -41,7 +41,6 @@ a {
 
 table {
   border-collapse: collapse;
-  border-radius: 10%;
 }
 
 th {
@@ -68,10 +67,6 @@ tr {
 
 .fixture-th {
   display: none;
-}
-
-tr:first-of-type {
-  border-radius: 50% 0 0 0;
 }
 
 .league-tr:nth-child(-n+6) {
