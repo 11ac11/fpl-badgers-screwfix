@@ -131,13 +131,33 @@ export const fixtureColumns = [
   {
     Header: '',
     accessor: 'entry_1_points',
-    Cell: (row) => <div style={{ ...sharedFixtureStyles }} className='fixture-score'>{row.value}</div>,
+    Cell: (row) => {
+      const entryOnePoints = row.cell.row.original.entry_1_points
+      const entryTwoPoints = row.cell.row.original.entry_2_points
+      const cellStyles = {
+        ...sharedFixtureStyles,
+        color: entryOnePoints >= entryTwoPoints ? 'var(--black)' : '#00000061',
+        textDecoration: entryOnePoints >= entryTwoPoints ? 'underline' : 'none'
+      }
+      return (<div style={{ ...cellStyles }} className='fixture-score'>{row.value}</div>)
+    },
     width: '5%',
   },
   {
     Header: '',
     accessor: 'entry_2_points',
-    Cell: (row) => <div style={{ ...sharedFixtureStyles, borderRadius: '0% 20% 20% 0%', background: 'var(--gradientRev)' }} className='fixture-score'>{row.value}</div>,
+    Cell: (row) => {
+      const entryOnePoints = row.cell.row.original.entry_1_points
+      const entryTwoPoints = row.cell.row.original.entry_2_points
+      const cellStyles = {
+        ...sharedFixtureStyles,
+        borderRadius: '0% 20% 20% 0%',
+        background: 'var(--gradientRev)',
+        color: entryOnePoints <= entryTwoPoints ? 'var(--black)' : '#00000061',
+        textDecoration: entryOnePoints <= entryTwoPoints ? 'underline' : 'none'
+      }
+      return (<div style={{ ...cellStyles }} className='fixture-score'>{row.value}</div>)
+    },
     width: '5%',
   },
   {
