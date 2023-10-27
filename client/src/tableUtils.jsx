@@ -127,7 +127,7 @@ export const fixtureColumns = [
     Header: 'Emoji',
     accessor: 'emoji_1',
     Cell: (row) => {
-      // console.log(row)
+      console.log(row)
       const entryOnePoints = row.cell.row.original.entry_1_points
       const entryTwoPoints = row.cell.row.original.entry_2_points
       const cellStyles = {
@@ -135,6 +135,9 @@ export const fixtureColumns = [
         whiteSpace: 'nowrap'
       }
       let emojiStr = ''
+      if (!entryOnePoints && !entryTwoPoints) {
+        return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
+      }
       if (entryOnePoints >= entryTwoPoints) emojiStr += '⚽️ '
       if (entryOnePoints > 90) emojiStr += '🔥 '
       if (entryOnePoints < 40) emojiStr += '😭 '
@@ -167,6 +170,13 @@ export const fixtureColumns = [
     Cell: (row) => {
       const entryOnePoints = row.cell.row.original.entry_1_points
       const entryTwoPoints = row.cell.row.original.entry_2_points
+      const futureFixtureStyle = {
+        ...sharedFixtureStyles,
+        background: 'var(--grey)',
+      }
+      if (!entryOnePoints && !entryTwoPoints) {
+        return (<div style={{ ...futureFixtureStyle }}>{ '-' } </div>)
+      }
       const cellStyles = {
         ...sharedFixtureStyles,
         color: entryOnePoints >= entryTwoPoints ? 'var(--black)' : '#00000061',
@@ -182,6 +192,14 @@ export const fixtureColumns = [
     Cell: (row) => {
       const entryOnePoints = row.cell.row.original.entry_1_points
       const entryTwoPoints = row.cell.row.original.entry_2_points
+      const futureFixtureStyle = {
+        ...sharedFixtureStyles,
+        borderRadius: '0% 20% 20% 0%',
+        background: 'var(--grey)',
+      }
+      if (!entryOnePoints && !entryTwoPoints) {
+        return (<div style={{ ...futureFixtureStyle }}>{ '-' } </div>)
+      }
       const cellStyles = {
         ...sharedFixtureStyles,
         borderRadius: '0% 20% 20% 0%',
@@ -207,26 +225,30 @@ export const fixtureColumns = [
       const entryTwoPoints = row.cell.row.original.entry_2_points
       const cellStyles = {
         fontSize: '1.4rem',
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
+        textAlign: 'right'
       }
       let emojiStr = ''
-      if (entryOnePoints <= entryTwoPoints) emojiStr += '⚽️ '
-      if (entryTwoPoints > 90) emojiStr += '🔥 '
-      if (entryTwoPoints < 40) emojiStr += '😭 '
+      if (!entryOnePoints && !entryTwoPoints) {
+        return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
+      }
 
       const highestPoints = getHighestPoints(row.data)
       const lowestPoints = getLowestPoints(row.data)
       const closestGame = getClosestGame(row.data)
 
-      if (highestPoints.team === row.cell.row.original.entry_2_name) {
-        emojiStr += '🐐 '
+      if (closestGame.awayTeam === row.cell.row.original.entry_2_name) {
+        emojiStr += '🤝 '
       }
       if (lowestPoints.team === row.cell.row.original.entry_2_name) {
         emojiStr += '😳 '
       }
-      if (closestGame.awayTeam === row.cell.row.original.entry_2_name) {
-        emojiStr += '🤝 '
+      if (highestPoints.team === row.cell.row.original.entry_2_name) {
+        emojiStr += '🐐 '
       }
+      if (entryTwoPoints < 40) emojiStr += '😭 '
+      if (entryTwoPoints > 90) emojiStr += '🔥 '
+      if (entryOnePoints <= entryTwoPoints) emojiStr += '⚽️ '
       return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
     },
     width: '10%',

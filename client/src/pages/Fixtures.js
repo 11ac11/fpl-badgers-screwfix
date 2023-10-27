@@ -12,7 +12,7 @@ const BothFixturescontainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
-  @media ${device.md} {
+  @media ${device.lg} {
     flex-direction: column;
     align-items: center;
   }
@@ -22,7 +22,7 @@ const FixturesContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
-  @media ${device.md} {
+  @media ${device.lg} {
     width: 100%;
   }
 `;
@@ -33,6 +33,9 @@ const SelectorWrap = styled.div`
   margin-right: auto;
   margin-bottom: 2rem;
   @media ${device.md} {
+    width: 50%;
+  }
+  @media ${device.sm} {
     width: 100%;
   }
 `;

@@ -14,7 +14,7 @@ const BothLeaguesContainer = styled.div`
   gap: 1rem;
   height: 100%;
   margin-bottom: 2rem;
-  @media ${device.md} {
+  @media ${device.lg} {
     flex-direction: column;
     align-items: center;
   }
@@ -24,7 +24,7 @@ const LeagueContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 45%;
-  @media ${device.md} {
+  @media ${device.lg} {
     width: 100%;
   }
 `;
