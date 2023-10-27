@@ -63,7 +63,6 @@ export const Tables = () => {
   return (
     <BothLeaguesContainer>
       <LeagueContainer>
-        {/* <Image src={badgersDiv1Image} alt="Badgers divison one" width="20%" /> */}
         {leagueOneData?.standings?.results && (
           <Table
             columns={leagueColumns}
@@ -78,7 +77,6 @@ export const Tables = () => {
         )}
       </LeagueContainer>
       <LeagueContainer>
-        {/* <Image src={screwfixDiv2Image} alt="Screwfix divison two" width="20%" /> */}
         {leagueTwoData?.standings?.results && (
           <Table
             columns={leagueColumns}
