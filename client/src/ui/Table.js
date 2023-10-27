@@ -58,7 +58,7 @@ const Table = ({
             //console.log(row),
             <tr key={index} {...row.getRowProps()} className={`tr ${trClassName}`}>
               {row.cells.map((cell) => {
-                console.log('cell', cell)
+                //console.log('cell', cell)
                 return (
                   <td
                     {...cell.getCellProps({

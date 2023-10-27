@@ -39,7 +39,7 @@ export const CombinedPointsLeague = ({
     }
   }, [screwfixTableData, badgersTableData]);
 
-  console.log(screwfixTableData, badgersTableData, bothLeaguesSorted);
+  //console.log(screwfixTableData, badgersTableData, bothLeaguesSorted);
 
   return (
     <LeagueContainer>

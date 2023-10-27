@@ -128,9 +128,14 @@ export const Sidebar = ({
               Points League
             </Link>
           </li>
+          {/* <li>
+            <Link to="/current" onClick={() => setIsOpen(false)}>
+              Current Gameweek
+            </Link>
+          </li> */}
           <li>
-            <Link to="/fixtures" onClick={() => setIsOpen(false)}>
-              Fixtures
+            <Link to="/fixtures-results" onClick={() => setIsOpen(false)}>
+              Fixtures/Results
             </Link>
           </li>
           {/* <li>

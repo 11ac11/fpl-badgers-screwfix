@@ -9,12 +9,7 @@ import {
   fetchManagerPicksByEvent,
   getAllGameweekInfo,
 } from './api/requests';
-import Table from './ui/Table';
-import Image from './ui/Image';
 import styled from 'styled-components';
-import { leagueColumns, fixtureColumns, badgeFixColumns } from './tableUtils';
-import screwfixDiv2Image from './images/screwfix-div-2.png';
-import badgersDiv1Image from './images/badgers-div-1.png';
 import { Topbar } from './ui/Topbar/Topbar';
 import { Sidebar } from './ui/Sidebar';
 import { Tables } from './pages/Tables';
@@ -38,7 +33,7 @@ const ContentContainer = styled.div`
   justify-content: center;
 `;
 
-export const screwfixId = 589414 || 72656; // league id || division id
+export const screwfixId = 589414
 export const badgersId = 728798
 export const screwfixDivisionId = 72656
 export const badgersDivisionId = 95564
@@ -56,7 +51,7 @@ const App = () => {
     const fetchGameweekNumber = async () => {
       try {
         const res = await findCurrentGameweekNumber();
-        console.log('GAMEWEEK', res);
+        console.log('GAMEWEEK: ', res);
         setGameweekNumber(res);
       } catch (error) {
         console.error('Error fetching gameweek number:', error);
@@ -83,12 +78,6 @@ const App = () => {
     // fetchManagerPicks();
   }, []);
 
-  useEffect(() => {
-    if (gameweekNumber) {
-      fetchFixturesData();
-    }
-  }, [gameweekNumber]);
-
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
     for (const event of data) {
@@ -98,21 +87,6 @@ const App = () => {
     }
     // Return a default value (e.g., -1) if no current event is found
     return -1;
-  };
-
-  const fetchFixturesData = async () => {
-    try {
-      const screwFixFixtures = await fetchFixtures(screwfixId, gameweekNumber);
-      const badgersFixtures = await fetchFixtures(badgersId, gameweekNumber);
-      if (screwFixFixtures) {
-        setScrewfixFixtures(screwFixFixtures);
-      }
-      if (badgersFixtures) {
-        setBadgersFixtures(badgersFixtures);
-      }
-    } catch (error) {
-      console.error(`Error: ${error.message}`);
-    }
   };
 
   return (
@@ -153,11 +127,18 @@ const App = () => {
               }
             />
             <Route
-              path="/fixtures"
+              path="/current"
               element={
                 <Fixtures
-                  screwfixFix={screwfixFixtures}
-                  badgersFix={badgersFixtures}
+                  gameweekNumber={gameweekNumber}
+                />
+              }
+            />
+                        <Route
+              path="/fixtures-results"
+              element={
+                <Fixtures
+                  gameweekNumber={gameweekNumber}
                 />
               }
             />
