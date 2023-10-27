@@ -58,13 +58,14 @@ const Table = ({
             //console.log(row),
             <tr key={index} {...row.getRowProps()} className={`tr ${trClassName}`}>
               {row.cells.map((cell) => {
-                console.log(cell)
+                console.log('cell', cell)
                 return (
                   <td
                     {...cell.getCellProps({
                       style: {
                         width: cell.column.width,
                         fontSize: cell.fontSize,
+                        padding: cell?.column?.style?.padding,
                         textAlign: cell.column.Header.includes('points')
                           ? 'center'
                           : 'left',

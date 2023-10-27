@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-
 import html2canvas from 'html2canvas';
-import { writeText } from 'clipboard-polyfill';
 
 export const ScreenshotButton = ({contentRef, children}) => {
     const [isScreenshotCopied, setScreenshotCopied] = useState(false);
 
     const captureScreenshot = (contentRef) => {
-      console.log(contentRef)
         if (contentRef.current) {
           html2canvas(contentRef.current).then(function (canvas) {
             const imgData = canvas.toDataURL('image/png');

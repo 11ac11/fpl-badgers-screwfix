@@ -158,7 +158,7 @@ export const fixtureColumns = [
     Header: 'Home',
     accessor: (row) => LeagueTeamAndManagerName(row, true),
     width: '35%',
-    style: { textAlign: 'right' },
+    style: { textAlign: 'right', padding: '0.3rem 1rem 0.3rem 0rem' },
   },
 
   {
@@ -197,6 +197,7 @@ export const fixtureColumns = [
     Header: 'Away',
     accessor: (row) => LeagueTeamAndManagerName(row, true, true),
     width: '35%',
+    style: { padding: '0.3rem 0rem 0.3rem 1rem' },
   },
   {
     Header: '',

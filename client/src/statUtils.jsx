@@ -68,8 +68,6 @@ export const getClosestGame = (entries) => {
             awayTeam = entry.entry_2_name;
             pointsDifference = entryDifference
         }
-        console.log(pointsDifference)
-
     }
     return { homeTeam, awayTeam, pointsDifference };
 }

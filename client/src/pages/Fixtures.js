@@ -19,48 +19,56 @@ const BothFixturescontainer = styled.div`
 const FixturesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 50%;
   @media ${device.md} {
     width: 100%;
   }
 `;
 
 export const Fixtures = ({ screwfixFix, badgersFix }) => {
+  const [badgersTableData, setBadgersTableData] = useState(null)
+  const [screwfixTableData, setScrewfixTableData] = useState(null)
   console.log('fixtures', screwfixFix);
+  useEffect(() => {
+    setBadgersTableData(badgersFix?.results)
+    setScrewfixTableData(screwfixFix?.results)
+    console.log(badgersTableData)
+  }, [badgersFix, screwfixFix])
+
   const contentRef = useRef(null);
 
   return (
     <ScreenshotButton contentRef={contentRef}>
-    <BothFixturescontainer ref={contentRef}>
-      {badgersFix?.results && (
-        <FixturesContainer>
-          <Table
-            columns={fixtureColumns}
-            data={badgersFix?.results}
-            tableClassName="fixture-table"
-            theadClassName="fixture-thead"
-            thClassName="fixture-th"
-            tbodyClassName="fixture-tbody"
-            trClassName="fixture-tr"
-            tdClassName="fixture-td"
-          />
-        </FixturesContainer>
-      )}
-      {screwfixFix?.results && (
-        <FixturesContainer>
-          <Table
-            columns={fixtureColumns}
-            data={screwfixFix?.results}
-            tableClassName="fixture-table"
-            theadClassName="fixture-thead"
-            thClassName="fixture-th"
-            tbodyClassName="fixture-tbody"
-            trClassName="fixture-tr"
-            tdClassName="fixture-td"
-          />
-        </FixturesContainer>
-      )}
-    </BothFixturescontainer>
+      <BothFixturescontainer ref={contentRef}>
+        {badgersTableData && badgersTableData.length !== 0 && (
+          <FixturesContainer>
+            <Table
+              columns={fixtureColumns}
+              data={badgersTableData}
+              tableClassName="fixture-table"
+              theadClassName="fixture-thead"
+              thClassName="fixture-th"
+              tbodyClassName="fixture-tbody"
+              trClassName="fixture-tr"
+              tdClassName="fixture-td"
+            />
+          </FixturesContainer>
+        )}
+        {screwfixFix?.results && (
+          <FixturesContainer>
+            <Table
+              columns={fixtureColumns}
+              data={screwfixFix?.results}
+              tableClassName="fixture-table"
+              theadClassName="fixture-thead"
+              thClassName="fixture-th"
+              tbodyClassName="fixture-tbody"
+              trClassName="fixture-tr"
+              tdClassName="fixture-td"
+            />
+          </FixturesContainer>
+        )}
+      </BothFixturescontainer>
     </ScreenshotButton>
   );
 };
