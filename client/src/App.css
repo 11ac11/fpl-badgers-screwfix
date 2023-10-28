@@ -41,6 +41,8 @@ a {
 
 table {
   border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 20px;
 }
 
 th {
@@ -81,6 +83,10 @@ tr {
 /* Dark overlay color for every other row */
 tr:nth-child(even) {
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.025);
+}
+
+.customSelect {
+  caret-color: transparent;
 }
 
 @media (max-width: 600px) {

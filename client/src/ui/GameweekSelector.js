@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from 'react-select'
 
 
 export const GameweekSelector = ({ gameweekNumber, setGameweekToView }) => {
+
+    useEffect(() => {
+        if (gameweekNumber) {
+            setGameweekToView(gameweekNumber)
+        }
+        console.log(gameweekNumber, 'in selector')
+    }, [gameweekNumber])
+
     const generateGameweekOptions = () => {
         const options = [];
         for (let i = 1; i <= 38; i++) {
@@ -37,10 +45,15 @@ export const GameweekSelector = ({ gameweekNumber, setGameweekToView }) => {
         }),
     };
 
+    const defaultOption = gameweekNumber
+    ? gameweekOptions.find((option) => option.value === gameweekNumber)
+    : gameweekOptions[gameweekNumber];
+    //console.log(defaultView)
+
 
     return (
-        <Select
-            defaultValue={gameweekOptions.find(option => option.value === gameweekNumber)}
+        gameweekNumber && <Select
+            defaultValue={defaultOption}
             options={gameweekOptions}
             onChange={(selectedOption) => setGameweekToView(selectedOption.value)}
             styles={customStyles} // Apply the custom styles

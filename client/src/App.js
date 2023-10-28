@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './App.css';
 import './fonts/fonts.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -17,6 +17,8 @@ import { Home } from './pages/Home';
 import { Live } from './pages/Live';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
+import { GeneralContext } from './GeneralContextProvider'; // Replace with the actual path to your context provider
+
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -39,7 +41,10 @@ export const screwfixDivisionId = 72656
 export const badgersDivisionId = 95564
 
 const App = () => {
-  const [gameweekNumber, setGameweekNumber] = useState(null);
+  const { gameweekContextData } = useContext(GeneralContext);
+  const { currentGameweekNumber } = gameweekContextData;
+
+  //console.log('context in app ', gameweekContextData)
   const [screwfixTableData, setScrewfixTableData] = useState(null);
   const [screwfixFixtures, setScrewfixFixtures] = useState(null);
   const [badgersTableData, setBadgersTableData] = useState(null);
@@ -48,19 +53,6 @@ const App = () => {
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
   useEffect(() => {
-    const fetchGameweekNumber = async () => {
-      try {
-        const res = await findCurrentGameweekNumber();
-        console.log('GAMEWEEK: ', res);
-        setGameweekNumber(res);
-      } catch (error) {
-        console.error('Error fetching gameweek number:', error);
-        // Handle the error appropriately
-      }
-    };
-
-    fetchGameweekNumber();
-
     const fetchLeaguesData = async () => {
       try {
         const screwfixData = await fetchLeagueStandings(screwfixId);
@@ -78,16 +70,6 @@ const App = () => {
     // fetchManagerPicks();
   }, []);
 
-  const findCurrentGameweekNumber = async () => {
-    const data = await getAllGameweekInfo();
-    for (const event of data) {
-      if (!!event.is_current) {
-        return event.id;
-      }
-    }
-    // Return a default value (e.g., -1) if no current event is found
-    return -1;
-  };
 
   return (
     <Router>
@@ -99,7 +81,7 @@ const App = () => {
           badgersTableData={badgersTableData}
         />
         <Topbar
-          gameweekNumber={gameweekNumber}
+          gameweekNumber={currentGameweekNumber}
           sidebarIsOpen={sidebarIsOpen}
           setSidebarIsOpen={setSidebarIsOpen}
         />
@@ -130,7 +112,7 @@ const App = () => {
               path="/current"
               element={
                 <Fixtures
-                  gameweekNumber={gameweekNumber}
+                  gameweekNumber={currentGameweekNumber}
                 />
               }
             />
@@ -138,7 +120,7 @@ const App = () => {
               path="/fixtures-results"
               element={
                 <Fixtures
-                  gameweekNumber={gameweekNumber}
+                  gameweekNumber={currentGameweekNumber}
                 />
               }
             />

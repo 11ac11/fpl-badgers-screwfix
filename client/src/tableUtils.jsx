@@ -127,7 +127,7 @@ export const fixtureColumns = [
     Header: 'Emoji',
     accessor: 'emoji_1',
     Cell: (row) => {
-      console.log(row)
+      //console.log(row)
       const entryOnePoints = row.cell.row.original.entry_1_points
       const entryTwoPoints = row.cell.row.original.entry_2_points
       const cellStyles = {
@@ -138,9 +138,9 @@ export const fixtureColumns = [
       if (!entryOnePoints && !entryTwoPoints) {
         return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
       }
-      if (entryOnePoints >= entryTwoPoints) emojiStr += '⚽️ '
+      if (entryOnePoints > entryTwoPoints) emojiStr += '⚽️ '
       if (entryOnePoints > 90) emojiStr += '🔥 '
-      if (entryOnePoints < 40) emojiStr += '😭 '
+      if (entryOnePoints < 40) emojiStr += '😳 '
       const highestPoints = getHighestPoints(row.data)
       const lowestPoints = getLowestPoints(row.data)
       const closestGame = getClosestGame(row.data)
@@ -148,7 +148,7 @@ export const fixtureColumns = [
         emojiStr += '🐐 '
       }
       if (lowestPoints.team === row.cell.row.original.entry_1_name) {
-        emojiStr += '😳 '
+        emojiStr += '😭 '
       }
       if (closestGame.homeTeam === row.cell.row.original.entry_1_name) {
         emojiStr += '🤝 '
@@ -241,14 +241,14 @@ export const fixtureColumns = [
         emojiStr += '🤝 '
       }
       if (lowestPoints.team === row.cell.row.original.entry_2_name) {
-        emojiStr += '😳 '
+        emojiStr += '😭 '
       }
       if (highestPoints.team === row.cell.row.original.entry_2_name) {
         emojiStr += '🐐 '
       }
-      if (entryTwoPoints < 40) emojiStr += '😭 '
+      if (entryTwoPoints < 40) emojiStr += '😳 '
       if (entryTwoPoints > 90) emojiStr += '🔥 '
-      if (entryOnePoints <= entryTwoPoints) emojiStr += '⚽️ '
+      if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
       return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
     },
     width: '10%',
@@ -261,5 +261,4 @@ const sharedFixtureStyles = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: '0.1rem'
-}
+  padding: '0.1rem 0.6rem'}

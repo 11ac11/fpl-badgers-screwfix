@@ -27,11 +27,22 @@ const FixturesContainer = styled.div`
   }
 `;
 
+const TopbarWrap = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 2rem;
+  @media ${device.md} {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`
+
 const SelectorWrap = styled.div`
   width: 30%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 2rem;
+  @media ${device.lg} {
+    width: 25%;
+  }
   @media ${device.md} {
     width: 50%;
   }
@@ -40,12 +51,37 @@ const SelectorWrap = styled.div`
   }
 `;
 
+const EmojiKeyWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+  p {
+    font-family: JetBrains Mono;
+    font-size: 0.6rem;
+    margin: 0;
+  }
+  @media ${device.md} {
+    margin-right: auto;
+  }
+`
+
+const EmojiPairWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  p.emoji {
+    font-size: 1.4rem;
+  }
+`
+
 export const Fixtures = ({ gameweekNumber }) => {
   const [badgersTableData, setBadgersTableData] = useState(null)
   const [screwfixTableData, setScrewfixTableData] = useState(null)
   const [gameweekToView, setGameweekToView] = useState(gameweekNumber)
 
   useEffect(() => {
+    console.log('hitting gameweekToView')
     if (gameweekToView) {
       fetchFixturesData();
     }
@@ -71,16 +107,36 @@ export const Fixtures = ({ gameweekNumber }) => {
 
   const contentRef = useRef(null);
 
+  const emojiKeys = [
+    ['⚽️ ', 'winner'],
+    ['🐐 ', `week's GOAT`],
+    ['😭 ', `week's worst`],
+    ['🔥 ', 'over 90 points'],
+    ['😳 ', 'under 40 points'],
+    ['🤝 ', 'closest game']
+  ]
+
+
   return (
-    screwfixTableData && badgersTableData && (
-      <>
-        <SelectorWrap>
-          <GameweekSelector
-            gameweekNumber={gameweekNumber}
-            gameweekToView={gameweekToView}
-            setGameweekToView={setGameweekToView}
+    <>
+    <TopbarWrap>
+      <SelectorWrap>
+        <GameweekSelector
+          gameweekNumber={gameweekNumber}
+          gameweekToView={gameweekToView}
+          setGameweekToView={setGameweekToView}
           />
-        </SelectorWrap>
+      </SelectorWrap>
+      <EmojiKeyWrap>
+      { emojiKeys.map((emojiPair) => {
+        return <EmojiPairWrap>
+          <div><p className="emoji">{emojiPair[0]}</p></div>
+          <div><p>{emojiPair[1]}</p></div>
+        </EmojiPairWrap>
+      })}
+      </EmojiKeyWrap>
+    </TopbarWrap>
+      {  screwfixTableData && badgersTableData && (
         <BothFixturescontainer ref={contentRef}>
           {badgersTableData && badgersTableData.length !== 0 && (
             <FixturesContainer>
@@ -111,6 +167,7 @@ export const Fixtures = ({ gameweekNumber }) => {
             </FixturesContainer>
           )}
         </BothFixturescontainer>
-      </>)
+      )}
+    </>
   );
 };
