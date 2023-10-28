@@ -44,11 +44,10 @@ const App = () => {
   const { gameweekContextData } = useContext(GeneralContext);
   const { currentGameweekNumber } = gameweekContextData;
 
-  //console.log('context in app ', gameweekContextData)
+  console.log(gameweekContextData)
+
   const [screwfixTableData, setScrewfixTableData] = useState(null);
-  const [screwfixFixtures, setScrewfixFixtures] = useState(null);
   const [badgersTableData, setBadgersTableData] = useState(null);
-  const [badgersFixtures, setBadgersFixtures] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
@@ -93,8 +92,6 @@ const App = () => {
                 <Home
                   screwfixTableData={screwfixTableData}
                   badgersTableData={badgersTableData}
-                  screwfixFix={screwfixFixtures}
-                  badgersFix={badgersFixtures}
                 />
               }
             />

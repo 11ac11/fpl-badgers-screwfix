@@ -2,8 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { getHighestPoints, getLowestPoints, closestGame } from '../statUtils';
 
 export const Home = ({
-  screwfixTableData,
-  badgersTableData,
   screwfixFix,
   badgersFix,
 }) => {
