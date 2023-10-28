@@ -17,7 +17,7 @@ import { Home } from './pages/Home';
 import { Live } from './pages/Live';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
-import { GeneralContext } from './GeneralContextProvider'; // Replace with the actual path to your context provider
+import { GeneralContext } from './state/GeneralContextProvider'; // Replace with the actual path to your context provider
 
 
 const LayoutContainer = styled.div`

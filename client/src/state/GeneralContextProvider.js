@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
-import { getAllGameweekInfo } from './api/requests';
+import { getAllGameweekInfo } from '../api/requests';
 
 const GeneralContext = createContext();
 
@@ -35,7 +35,7 @@ const GeneralContextProvider = ({ children }) => {
         badgersId,
         screwfixDivisionId,
         badgersDivisionId,
-        currentGameweekNumber: 10,
+        currentGameweekNumber: gameweekNumber,
       };
 
       setGameweekContextData(data);
