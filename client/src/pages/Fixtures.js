@@ -116,7 +116,6 @@ export const Fixtures = ({ gameweekNumber }) => {
     ['🤝 ', 'closest game']
   ]
 
-
   return (
     <>
     <TopbarWrap>

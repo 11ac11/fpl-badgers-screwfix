@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { leagueColumns } from '../tableUtils';
 import { device } from '../breakpoints';
 
-
 const BothLeaguesContainer = styled.div`
   display: flex;
   justify-content: center;
