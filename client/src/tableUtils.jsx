@@ -5,6 +5,20 @@ import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from './images/badger_circle_logo.png';
 import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
 
+const ManagerTeamCombined = styled.div`
+  display: flex;
+  flex-direction: ${({ $fixturesTable }) => $fixturesTable ? 'column' : 'row'};
+  align-items: center;
+  justify-content: space-between;
+  min-height: 20px;
+  padding: 0.3rem 1rem 0.3rem 0rem;
+  width: 100%;
+  @media ${device.sm} {
+    flex-direction: column;
+    padding: 0.2rem 0.2rem 0.2rem 0rem;
+  }
+`;
+
 const TeamName = styled.p`
   margin: 0;
   padding: 0;
@@ -13,15 +27,18 @@ const TeamName = styled.p`
   overflow: hidden;
   white-space: nowrap;
   width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '50%')};
+  text-align: ${({ $fixturesTable, $isHome }) => $fixturesTable && !$isHome ? 'right' : 'left'};
 
   @media ${device.xl} {
     font-size: 1.2rem;
   }
 
   @media ${device.sm} {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     width: 100%;
-    text-align: left;
+    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left'};
+    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 1px'};
+    ;
   }
 `
 
@@ -36,7 +53,7 @@ const ManagerName = styled.p`
   ${({ $fixturesTable }) => $fixturesTable && `width: 100%`};
   max-width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '40%')};
   text-align: ${({ $fixturesTable }) => ($fixturesTable ? 'center' : 'right')};
-  text-align: ${({ $player2 }) => $player2 ? 'left' : 'right'};
+  text-align: ${({ $isHome }) => $isHome ? 'left' : 'right'};
 
   @media ${device.xl} {
     font-size: 0.8rem;
@@ -46,36 +63,112 @@ const ManagerName = styled.p`
     font-size: 0.5rem;
     width: 100%;
     max-width: 100%;
-    text-align: left;
+    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left'};
+    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 0.5px'};
   }
 `
 
-const ManagerTeamCombined = styled.div`
-  display: flex;
-  flex-direction: ${({ $fixturesTable }) => ($fixturesTable ? 'column' : 'row')};
-  align-items: center;
-  justify-content: space-between;
-  min-height: 20px;
-
+const EmojiContainer = styled.div`
+  ${({ $isHome }) => $isHome ? 'padding-left: 0.2rem' : 'padding-right: 0.2rem'};
+  font-size: 1.4rem;
+  white-space: nowrap;
+  text-align: ${({ $isHome }) => $isHome ? 'left' : 'right'};
   @media ${device.sm} {
-    flex-direction: column;
+    font-size: 0.8rem;
+    white-space: unset;
   }
 `;
 
-const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) => {
+const PointsContainer = styled.div`
+  background: ${({ $isHome }) => $isHome ? 'var(--gradient)' : 'var(--gradientRev)' };
+  border-radius: ${({ $isHome }) => $isHome ? `20% 0% 0% 20%` : '0% 20% 20% 0%'};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.6rem;
+  font-size: 1.8rem;
+  @media ${device.sm} {
+    font-size: 1.2rem;
+    padding: 0.1rem 0.4rem;
+  }
+`
+
+const LeagueTeamAndManagerName = (row, fixturesTable = false, isHome = false) => {
   return (
-    <ManagerTeamCombined style={{ textAlign: fixturesTable && !player2 ? 'right' : 'left'}} $fixturesTable={fixturesTable}>
-      <TeamName $fixturesTable={fixturesTable}>{!player2 ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
-      <ManagerName $fixturesTable={fixturesTable} $player2={player2}>{!player2 ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
+    <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
+      <TeamName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
+      <ManagerName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
     </ManagerTeamCombined>
     )
 }
 
-const renderLeagueImage = (row) => {
+const RenderLeagueImage = (row) => {
   const isBadger = (row.division == 95564)
   return (
     <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
   )
+}
+
+const RenderEmojis = (row, isHome) => {
+  const entryOnePoints = row.cell.row.original.entry_1_points
+  const entryTwoPoints = row.cell.row.original.entry_2_points
+  let emojiStr = ''
+  if (!entryOnePoints && !entryTwoPoints) {
+    return (<EmojiContainer $isHome={isHome}>{ emojiStr } </EmojiContainer>)
+  }
+  const highestPoints = getHighestPoints(row.data)
+  const lowestPoints = getLowestPoints(row.data)
+  const closestGame = getClosestGame(row.data)
+  if (isHome) {
+    if (entryOnePoints > entryTwoPoints) emojiStr += '⚽️ '
+    if (entryOnePoints > 90) emojiStr += '🔥 '
+    if (entryOnePoints < 40) emojiStr += '😳 '
+    if (highestPoints.team === row.cell.row.original.entry_1_name) {
+      emojiStr += '🐐 '
+    }
+    if (lowestPoints.team === row.cell.row.original.entry_1_name) {
+      emojiStr += '😭 '
+    }
+    if (closestGame.homeTeam === row.cell.row.original.entry_1_name) {
+      emojiStr += '🤝 '
+    }
+  } else {
+    if (closestGame.awayTeam === row.cell.row.original.entry_2_name) {
+      emojiStr += '🤝 '
+    }
+    if (lowestPoints.team === row.cell.row.original.entry_2_name) {
+      emojiStr += '😭 '
+    }
+    if (highestPoints.team === row.cell.row.original.entry_2_name) {
+      emojiStr += '🐐 '
+    }
+    if (entryTwoPoints < 40) emojiStr += '😳 '
+    if (entryTwoPoints > 90) emojiStr += '🔥 '
+    if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
+  }
+  return (<EmojiContainer $isHome={isHome}>{ emojiStr } </EmojiContainer>)
+}
+
+const RenderPoints = (row, isHome) => {
+  const entryOnePoints = row.cell.row.original.entry_1_points
+  const entryTwoPoints = row.cell.row.original.entry_2_points
+  const futureFixtureStyle = {
+    background: 'var(--grey)',
+  }
+  if (!entryOnePoints && !entryTwoPoints) {
+    return (<PointsContainer style={{ ...futureFixtureStyle }} $isHome={isHome}>{ '-' } </PointsContainer>)
+  }
+  const homeCellStyles = {
+    color: entryOnePoints >= entryTwoPoints ? 'var(--black)' : '#00000061',
+    textDecoration: entryOnePoints >= entryTwoPoints ? 'underline' : 'none'
+  }
+  const awayCellStyles = {
+    color: entryOnePoints <= entryTwoPoints ? 'var(--black)' : '#00000061',
+    textDecoration: entryOnePoints <= entryTwoPoints ? 'underline' : 'none'
+  }
+  const finalStyles = isHome ? homeCellStyles : awayCellStyles
+
+  return (<PointsContainer style={{ ...finalStyles }} className='fixture-score' $isHome={isHome}>{row.value}</PointsContainer>)
 }
 
 export const leagueColumns = [
@@ -83,18 +176,17 @@ export const leagueColumns = [
     Header: '#',
     accessor: 'rank',
     Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
-    width: 50,
+    width: 20,
     minWidth: 20,
     maxWidth: 20,
     sortable: false,
     canSort: false
   },
   {
-    Header: 'League',
+    Header: 'L',
     Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
-    accessor: (row) => renderLeagueImage(row),
-    width: 20,
-    minWidth: 20
+    accessor: (row) => RenderLeagueImage(row),
+    width: 10,
   },
   {
     Header: 'Team',
@@ -150,139 +242,35 @@ export const fixtureColumns = [
   {
     Header: 'Emoji',
     accessor: 'emoji_1',
-    Cell: (row) => {
-      console.log(row)
-      const entryOnePoints = row.cell.row.original.entry_1_points
-      const entryTwoPoints = row.cell.row.original.entry_2_points
-      const cellStyles = {
-        fontSize: '1.4rem',
-        whiteSpace: 'nowrap'
-      }
-      let emojiStr = ''
-      if (!entryOnePoints && !entryTwoPoints) {
-        return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
-      }
-      if (entryOnePoints > entryTwoPoints) emojiStr += '⚽️ '
-      if (entryOnePoints > 90) emojiStr += '🔥 '
-      if (entryOnePoints < 40) emojiStr += '😳 '
-      const highestPoints = getHighestPoints(row.data)
-      const lowestPoints = getLowestPoints(row.data)
-      const closestGame = getClosestGame(row.data)
-      if (highestPoints.team === row.cell.row.original.entry_1_name) {
-        emojiStr += '🐐 '
-      }
-      if (lowestPoints.team === row.cell.row.original.entry_1_name) {
-        emojiStr += '😭 '
-      }
-      if (closestGame.homeTeam === row.cell.row.original.entry_1_name) {
-        emojiStr += '🤝 '
-      }
-      return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
-    },
+    Cell: (row) => RenderEmojis(row, true),
     width: '10%',
   },
   {
     Header: 'Home',
     accessor: (row) => LeagueTeamAndManagerName(row, true),
     width: '35%',
-    style: { textAlign: 'right', padding: '0.3rem 1rem 0.3rem 0rem' },
   },
-
   {
     Header: '',
     accessor: 'entry_1_points',
-    Cell: (row) => {
-      const entryOnePoints = row.cell.row.original.entry_1_points
-      const entryTwoPoints = row.cell.row.original.entry_2_points
-      const futureFixtureStyle = {
-        ...sharedFixtureStyles,
-        background: 'var(--grey)',
-      }
-      if (!entryOnePoints && !entryTwoPoints) {
-        return (<div style={{ ...futureFixtureStyle }}>{ '-' } </div>)
-      }
-      const cellStyles = {
-        ...sharedFixtureStyles,
-        color: entryOnePoints >= entryTwoPoints ? 'var(--black)' : '#00000061',
-        textDecoration: entryOnePoints >= entryTwoPoints ? 'underline' : 'none'
-      }
-      return (<div style={{ ...cellStyles }} className='fixture-score'>{row.value}</div>)
-    },
+    Cell: (row) => RenderPoints(row, true),
     width: '5%',
   },
   {
     Header: '',
     accessor: 'entry_2_points',
-    Cell: (row) => {
-      const entryOnePoints = row.cell.row.original.entry_1_points
-      const entryTwoPoints = row.cell.row.original.entry_2_points
-      const futureFixtureStyle = {
-        ...sharedFixtureStyles,
-        borderRadius: '0% 20% 20% 0%',
-        background: 'var(--grey)',
-      }
-      if (!entryOnePoints && !entryTwoPoints) {
-        return (<div style={{ ...futureFixtureStyle }}>{ '-' } </div>)
-      }
-      const cellStyles = {
-        ...sharedFixtureStyles,
-        borderRadius: '0% 20% 20% 0%',
-        background: 'var(--gradientRev)',
-        color: entryOnePoints <= entryTwoPoints ? 'var(--black)' : '#00000061',
-        textDecoration: entryOnePoints <= entryTwoPoints ? 'underline' : 'none'
-      }
-      return (<div style={{ ...cellStyles }} className='fixture-score'>{row.value}</div>)
-    },
+    Cell: (row) => RenderPoints(row, false),
     width: '5%',
   },
   {
     Header: 'Away',
     accessor: (row) => LeagueTeamAndManagerName(row, true, true),
     width: '35%',
-    style: { padding: '0.3rem 0rem 0.3rem 1rem' },
   },
   {
-    Header: '',
+    Header: 'Emoji2',
     accessor: 'emoji_2',
-    Cell: (row) => {
-      const entryOnePoints = row.cell.row.original.entry_1_points
-      const entryTwoPoints = row.cell.row.original.entry_2_points
-      const cellStyles = {
-        fontSize: '1.4rem',
-        whiteSpace: 'nowrap',
-        textAlign: 'right'
-      }
-      let emojiStr = ''
-      if (!entryOnePoints && !entryTwoPoints) {
-        return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
-      }
-
-      const highestPoints = getHighestPoints(row.data)
-      const lowestPoints = getLowestPoints(row.data)
-      const closestGame = getClosestGame(row.data)
-
-      if (closestGame.awayTeam === row.cell.row.original.entry_2_name) {
-        emojiStr += '🤝 '
-      }
-      if (lowestPoints.team === row.cell.row.original.entry_2_name) {
-        emojiStr += '😭 '
-      }
-      if (highestPoints.team === row.cell.row.original.entry_2_name) {
-        emojiStr += '🐐 '
-      }
-      if (entryTwoPoints < 40) emojiStr += '😳 '
-      if (entryTwoPoints > 90) emojiStr += '🔥 '
-      if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
-      return (<div style={{ ...cellStyles }}>{ emojiStr } </div>)
-    },
+    Cell: (row) => RenderEmojis(row, false),
     width: '10%',
   },
 ];
-
-const sharedFixtureStyles = {
-  background: 'var(--gradient)',
-  borderRadius: '20% 0% 0% 20%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '0.1rem 0.6rem'}

@@ -82,10 +82,18 @@ export const getTopOfTable = (tableData) => {
 
 
 export const getBottomOfTable = (tableData) => {
+    console.log(tableData)
     const firstPlace = tableData.standings.results[19]
     const winner = firstPlace.player_name
     const points = firstPlace.total
     const team = firstPlace.entry_name
 
     return { winner, points, team };
+}
+
+export const getLeagueTotalPoints = (tableData) => {
+    const leagueResults = tableData.standings.results
+    const totalPoints = leagueResults.reduce((total, player) => total + player.points_for, 0);
+
+    return totalPoints;
 }

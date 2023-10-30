@@ -50,7 +50,7 @@ th {
 }
 
 th, td {
-  padding: 0.3rem 1rem;
+  padding: 0.1rem 0.75rem;
   max-height: 10px;
 }
 
@@ -101,9 +101,13 @@ tr:nth-child(even) {
 }
 
 @media (max-width: 600px) {
-  th, td {
-    font-size: 0.75rem;
+  .fixture-th, .fixture-td {
+    font-size: 0.5rem;
     padding: 0.1rem 0.25rem;
+  }
+  th, td {
+    padding: 0.2rem 0.5rem;
+    max-height: 10px;
   }
 }
 

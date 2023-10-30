@@ -37,6 +37,12 @@ const Background = styled.div`
     animation-iteration-count: infinite;
   }
 
+  @media ${device.md} {
+    &.stats-background::before {
+      font-size: 30rem;
+    }
+  }
+
   @media ${device.sm} {
     &.stats-background::before {
       font-size: 20rem;
@@ -67,12 +73,14 @@ const StatContainer = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: space-around;
-  @media ${device.sm} {
-    padding: 0.5rem;
+  @media ${device.md} {
     gap: 0.5rem;
     width: 100%;
     max-width: 100%;
     min-width: 100%;
+  }
+  @media ${device.sm} {
+    padding: 0.5rem;
   }
 `
 
@@ -92,6 +100,9 @@ const StatEmoji = styled.div`
 const ManagerName = styled.div`
   font-family: JetBrains Mono;
   font-size: 1.2rem;
+  @media ${device.md} {
+    font-size: 1rem;
+  }
   @media ${device.sm} {
     font-size: 0.8rem;
   }
@@ -100,13 +111,16 @@ const ManagerName = styled.div`
 const TeamName = styled(ManagerName)`
   font-family: 'Jockey One';
   font-size: 1.5rem;
+  @media ${device.md} {
+    font-size: 1.25rem;
+  }
   @media ${device.sm} {
     font-size: 1rem;
   }
 `
 
 const PointsTotal = styled.div`
-  width: 10%;
+  width: 25%;
   font-size: 3rem;
   text-align: right;
 
@@ -119,7 +133,7 @@ export const Home = ({}) => {
 
 
   const { gameweekContextData } = useContext(GeneralContext);
-  const { gameweekAwards, currentGameweekNumber } = gameweekContextData
+  const { gameweekAwards, currentGameweekNumber, badgersTotalPoints, screwfixTotalPoints } = gameweekContextData
 
   const awardsForMapping = gameweekAwards && Object.entries(gameweekAwards)
 
@@ -146,6 +160,26 @@ export const Home = ({}) => {
     <Background className="stats-background" $gameWeek={ currentGameweekNumber }>
     { gameweekContextData && awardsForMapping && (
       <AllStatsContainer>
+        <StatContainer>
+          <LeagueImg>
+            <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%"/>
+          </LeagueImg>
+          <PointsTotal>
+            {badgersTotalPoints}
+          </PointsTotal>
+        </StatContainer>
+        <StatContainer>
+          <LeagueImg>
+            <Image
+              src={screwfixDiv2CircleBWImage}
+              alt="Screwfix division two"
+              width="100%"
+              />
+          </LeagueImg>
+          <PointsTotal>
+            {screwfixTotalPoints}
+          </PointsTotal>
+        </StatContainer>
         { awardsForMapping.map((award, key) => {
           const awardName = award[0]
           const awardData = award[1]

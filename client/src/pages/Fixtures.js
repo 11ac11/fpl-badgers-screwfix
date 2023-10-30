@@ -63,6 +63,11 @@ const EmojiKeyWrap = styled.div`
   }
   @media ${device.md} {
     margin-right: auto;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    p {
+      font-size: 0.6rem;
+    }
   }
 `
 
@@ -72,6 +77,11 @@ const EmojiPairWrap = styled.div`
   gap: 0.5rem;
   p.emoji {
     font-size: 1.4rem;
+  }
+  @media ${device.md} {
+    p.emoji {
+      font-size: 1rem;
+    }
   }
 `
 

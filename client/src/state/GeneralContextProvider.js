@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
 import { fetchFixtures, getAllGameweekInfo, fetchLeagueStandings } from '../api/requests';
-import { getClosestGame, getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable } from '../statUtils';
+import { getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable, getLeagueTotalPoints } from '../statUtils';
 
 const GeneralContext = createContext();
 
@@ -92,7 +92,9 @@ const GeneralContextProvider = ({ children }) => {
         sfFixturesThisGw: screwfixFixtureData,
         screwfixTableData,
         badgersTableData,
-        gameweekAwards
+        gameweekAwards,
+        badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
+        screwfixTotalPoints: getLeagueTotalPoints(screwfixTableData)
       };
 
       setGameweekContextData(data);
