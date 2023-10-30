@@ -3,7 +3,6 @@ import { device } from './breakpoints';
 import Image from './ui/Image';
 import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from './images/badger_circle_logo.png';
-import { badgersDivisionId } from './App';
 import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
 
 const TeamName = styled.p`
@@ -48,7 +47,7 @@ const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) =
 }
 
 const renderLeagueImage = (row) => {
-  const isBadger = (row.division == badgersDivisionId)
+  const isBadger = (row.division == 95564)
   return (
     <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
   )
@@ -127,7 +126,7 @@ export const fixtureColumns = [
     Header: 'Emoji',
     accessor: 'emoji_1',
     Cell: (row) => {
-      //console.log(row)
+      console.log(row)
       const entryOnePoints = row.cell.row.original.entry_1_points
       const entryTwoPoints = row.cell.row.original.entry_2_points
       const cellStyles = {

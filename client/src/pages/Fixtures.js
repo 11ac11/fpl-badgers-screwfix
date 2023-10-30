@@ -58,7 +58,7 @@ const EmojiKeyWrap = styled.div`
   margin-left: auto;
   p {
     font-family: JetBrains Mono;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     margin: 0;
   }
   @media ${device.md} {
@@ -76,8 +76,8 @@ const EmojiPairWrap = styled.div`
 `
 
 export const Fixtures = ({ gameweekNumber }) => {
-  const [badgersTableData, setBadgersTableData] = useState(null)
-  const [screwfixTableData, setScrewfixTableData] = useState(null)
+  const [badgersFixtureData, setBadgersFixtureData] = useState(null)
+  const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
   const [gameweekToView, setGameweekToView] = useState(gameweekNumber)
 
   useEffect(() => {
@@ -95,10 +95,10 @@ export const Fixtures = ({ gameweekNumber }) => {
       const screwFixFixtures = await fetchFixtures(screwfixId, gameweekToView);
       const badgersFixtures = await fetchFixtures(badgersId, gameweekToView);
       if (screwFixFixtures) {
-        setScrewfixTableData(screwFixFixtures.results);
+        setScrewfixFixtureData(screwFixFixtures.results);
       }
       if (badgersFixtures) {
-        setBadgersTableData(badgersFixtures.results);
+        setBadgersFixtureData(badgersFixtures.results);
       }
     } catch (error) {
       console.error(`Error: ${error.message}`);
@@ -136,13 +136,13 @@ export const Fixtures = ({ gameweekNumber }) => {
       })}
       </EmojiKeyWrap>
     </TopbarWrap>
-      {  screwfixTableData && badgersTableData && (
+      {  screwfixFixtureData && badgersFixtureData && (
         <BothFixturescontainer ref={contentRef}>
-          {badgersTableData && badgersTableData.length !== 0 && (
+          {badgersFixtureData && badgersFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
-                data={badgersTableData}
+                data={badgersFixtureData}
                 tableClassName="fixture-table"
                 theadClassName="fixture-thead"
                 thClassName="fixture-th"
@@ -152,11 +152,11 @@ export const Fixtures = ({ gameweekNumber }) => {
               />
             </FixturesContainer>
           )}
-          {screwfixTableData && screwfixTableData.length !== 0 && (
+          {screwfixFixtureData && screwfixFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
-                data={screwfixTableData}
+                data={screwfixFixtureData}
                 tableClassName="fixture-table"
                 theadClassName="fixture-thead"
                 thClassName="fixture-th"

@@ -19,8 +19,6 @@ const SidebarContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     transition: left 0.3s ease;
-    /* From https://css.glass */
-    /* From https://css.glass */
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(9.4px);

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
-import { fetchFixtures, getAllGameweekInfo } from '../api/requests';
-import { getClosestGame, getHighestPoints, getLowestPoints } from '../statUtils';
+import { fetchFixtures, getAllGameweekInfo, fetchLeagueStandings } from '../api/requests';
+import { getClosestGame, getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable } from '../statUtils';
 
 const GeneralContext = createContext();
 
 const GeneralContextProvider = ({ children }) => {
   const [gameweekContextData, setGameweekContextData] = useState({});
   const [gameweekNumber, setGameweekNumber] = useState(0)
-  const [badgersTableData, setBadgersTableData] = useState(null)
-  const [screwfixTableData, setScrewfixTableData] = useState(null)
+  const [badgersFixtureData, setBadgersFixtureData] = useState(null)
+  const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
+  const [screwfixTableData, setScrewfixTableData] = useState(null);
+  const [badgersTableData, setBadgersTableData] = useState(null);
 
   const screwfixId = 589414;
   const badgersId = 728798;
@@ -24,7 +26,6 @@ const GeneralContextProvider = ({ children }) => {
         setGameweekNumber(res);
       } catch (error) {
         console.error('Error fetching gameweek number:', error);
-        // Handle the error appropriately
       }
     };
 
@@ -40,10 +41,10 @@ const GeneralContextProvider = ({ children }) => {
           const screwFixFixtures = await fetchFixtures(screwfixId, gameweekNumber);
           const badgersFixtures = await fetchFixtures(badgersId, gameweekNumber);
           if (screwFixFixtures) {
-            setScrewfixTableData(screwFixFixtures.results);
+            setScrewfixFixtureData(screwFixFixtures.results);
           }
           if (badgersFixtures) {
-            setBadgersTableData(badgersFixtures.results);
+            setBadgersFixtureData(badgersFixtures.results);
           }
         } catch (error) {
           console.error(`Error: ${error.message}`);
@@ -51,17 +52,35 @@ const GeneralContextProvider = ({ children }) => {
       };
 
       fetchFixturesData()
+
+      const fetchLeaguesData = async () => {
+        try {
+          const screwfixData = await fetchLeagueStandings(screwfixId);
+          const badgersLeague = await fetchLeagueStandings(badgersId);
+
+          setScrewfixTableData(screwfixData);
+          setBadgersTableData(badgersLeague);
+        } catch (error) {
+          console.error(`Error: ${error.message}`);
+        }
+      };
+
+      fetchLeaguesData();
     }
   }, [gameweekNumber]);
 
   useEffect(() => {
-    if (screwfixTableData, badgersTableData) {
+    if (screwfixFixtureData, badgersFixtureData, badgersTableData, screwfixTableData) {
 
       const gameweekAwards = {
-        screwfixHighest: getHighestPoints(screwfixTableData),
-        screwfixLowest: getLowestPoints(screwfixTableData),
-        badgersHighest: getHighestPoints(badgersTableData),
-        badgersLowest: getLowestPoints(badgersTableData),
+        badgersHighest: getHighestPoints(badgersFixtureData),
+        screwfixHighest: getHighestPoints(screwfixFixtureData),
+        badgersLowest: getLowestPoints(badgersFixtureData),
+        screwfixLowest: getLowestPoints(screwfixFixtureData),
+        badgersTop: getTopOfTable(badgersTableData),
+        screwfixTop: getTopOfTable(screwfixTableData),
+        badgersBottom: getBottomOfTable(badgersTableData),
+        screwfixBottom: getBottomOfTable(screwfixTableData),
       }
       const data = {
         screwfixId,
@@ -69,18 +88,16 @@ const GeneralContextProvider = ({ children }) => {
         screwfixDivisionId,
         badgersDivisionId,
         currentGameweekNumber: gameweekNumber,
-        sfFixturesThisGw: screwfixTableData,
-        baFixturesThisGw: badgersTableData,
+        baFixturesThisGw: badgersFixtureData,
+        sfFixturesThisGw: screwfixFixtureData,
+        screwfixTableData,
+        badgersTableData,
         gameweekAwards
       };
 
       setGameweekContextData(data);
     }
-  }, [screwfixTableData, badgersTableData])
-
-  useEffect(() => {
-
-  })
+  }, [screwfixFixtureData, badgersFixtureData, badgersTableData, screwfixTableData])
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();

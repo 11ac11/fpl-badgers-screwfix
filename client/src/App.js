@@ -2,13 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import './App.css';
 import './fonts/fonts.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import {
-  fetchFixtures,
-  fetchLeagueStandings,
-  fetchLivePlayerScores,
-  fetchManagerPicksByEvent,
-  getAllGameweekInfo,
-} from './api/requests';
 import styled from 'styled-components';
 import { Topbar } from './ui/Topbar/Topbar';
 import { Sidebar } from './ui/Sidebar';
@@ -17,7 +10,7 @@ import { Home } from './pages/Home';
 import { Live } from './pages/Live';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
-import { GeneralContext } from './state/GeneralContextProvider'; // Replace with the actual path to your context provider
+import { GeneralContext } from './state/GeneralContextProvider';
 
 
 const LayoutContainer = styled.div`
@@ -35,39 +28,13 @@ const ContentContainer = styled.div`
   justify-content: center;
 `;
 
-export const screwfixId = 589414
-export const badgersId = 728798
-export const screwfixDivisionId = 72656
-export const badgersDivisionId = 95564
-
 const App = () => {
   const { gameweekContextData } = useContext(GeneralContext);
-  const { currentGameweekNumber } = gameweekContextData;
+  const { currentGameweekNumber, badgersTableData, screwfixTableData } = gameweekContextData;
 
-  console.log(gameweekContextData)
-
-  const [screwfixTableData, setScrewfixTableData] = useState(null);
-  const [badgersTableData, setBadgersTableData] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchLeaguesData = async () => {
-      try {
-        const screwfixData = await fetchLeagueStandings(screwfixId);
-        const badgersLeague = await fetchLeagueStandings(badgersId);
-
-        setScrewfixTableData(screwfixData);
-        setBadgersTableData(badgersLeague);
-      } catch (error) {
-        console.error(`Error: ${error.message}`);
-      }
-    };
-
-    fetchLeaguesData();
-    // fetchLiveScores();
-    // fetchManagerPicks();
-  }, []);
 
 
   return (

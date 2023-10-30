@@ -3,6 +3,7 @@
 :root {
   --turq: #37e0c1;
   --green: #5bff89;
+  --lightgrey: #f0f0f0;
   --grey: #656565;
   --black: #1c1c1c;
   --white: #F9F9F9;
@@ -60,7 +61,7 @@ th.fixture-score, td.fixture-score {
 }
 
 tr {
-  background-color: rgba(240, 240, 240, 1);
+  background-color: var(--lightgrey);
 }
 
 .fixture-tr {
@@ -77,7 +78,18 @@ tr {
 
 .league-tr:nth-last-child(-n+3) {
   background: var(--gradientRed);
+}
 
+.top-half .league-tr:nth-last-child(-n+3) {
+  background: unset;
+}
+
+.bottom-half .league-tr:nth-child(-n+6) {
+  background: unset;
+}
+
+.top-half .league-tr {
+  background-color: var(--lightgrey);
 }
 
 /* Dark overlay color for every other row */
