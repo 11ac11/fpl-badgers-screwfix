@@ -16,14 +16,15 @@ import { GeneralContext } from './state/GeneralContextProvider';
 const LayoutContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  max-height: 100vh;
+  overflow-y: auto;
 `;
 
 const ContentContainer = styled.div`
   flex: 1;
   width: 100vw;
   min-height: 90vh;
-  height: 90vh;
-  overflow-y: auto;
+  height: 100%;
   padding: 1rem 2rem;
   justify-content: center;
 `;

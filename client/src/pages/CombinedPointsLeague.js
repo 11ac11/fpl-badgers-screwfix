@@ -18,8 +18,10 @@ const BothLeaguesContainer = styled.div`
 
 const LeagueContainer = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: center;
+  flex-direction: column;
+  @media ${device.lg} {
+    width: 100%;
+  }
 `;
 
 export const CombinedPointsLeague = ({
@@ -56,26 +58,30 @@ export const CombinedPointsLeague = ({
     <LeagueContainer>
       {bothLeaguesSorted && (
       <BothLeaguesContainer>
-        <Table
-          columns={leagueColumns}
-          data={bothLeaguesSorted.slice(0, 20)}
-          tableClassName="league-table top-half"
-          theadClassName="league-thead"
-          thClassName="league-th"
-          tbodyClassName="league-tbody"
-          trClassName="league-tr"
-          tdClassName="league-td"
-        />
-        <Table
-          columns={leagueColumns}
-          data={bothLeaguesSorted.slice(-20)}
-          tableClassName="league-table bottom-half"
-          theadClassName="league-thead"
-          thClassName="league-th"
-          tbodyClassName="league-tbody"
-          trClassName="league-tr"
-          tdClassName="league-td"
-        />
+        <LeagueContainer>
+          <Table
+            columns={leagueColumns}
+            data={bothLeaguesSorted.slice(0, 20)}
+            tableClassName="league-table top-half"
+            theadClassName="league-thead"
+            thClassName="league-th"
+            tbodyClassName="league-tbody"
+            trClassName="league-tr"
+            tdClassName="league-td"
+          />
+        </LeagueContainer>
+        <LeagueContainer>
+          <Table
+            columns={leagueColumns}
+            data={bothLeaguesSorted.slice(-20)}
+            tableClassName="league-table bottom-half"
+            theadClassName="league-thead"
+            thClassName="league-th"
+            tbodyClassName="league-tbody"
+            trClassName="league-tr"
+            tdClassName="league-td"
+          />
+        </LeagueContainer>
       </BothLeaguesContainer>
       )}
     </LeagueContainer>

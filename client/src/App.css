@@ -33,7 +33,6 @@ body {
   color: var(--black);
   font-size: 14px;
   background-color: var(--white);
-  overflow: hidden;
 }
 
 a {
@@ -105,5 +104,11 @@ tr:nth-child(even) {
   th, td {
     font-size: 0.75rem;
     padding: 0.1rem 0.25rem;
+  }
+}
+
+@media (min-width: 1441px) {
+  .fixture-tr {
+    height: 4.5rem;
   }
 }

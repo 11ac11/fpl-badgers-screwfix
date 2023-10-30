@@ -12,7 +12,11 @@ const TeamName = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '50%')};;
+  width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '50%')};
+
+  @media ${device.xl} {
+    font-size: 1.2rem;
+  }
 `
 
 const ManagerName = styled.p`
@@ -27,6 +31,10 @@ const ManagerName = styled.p`
   max-width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '40%')};
   text-align: ${({ $fixturesTable }) => ($fixturesTable ? 'center' : 'right')};
   text-align: ${({ $player2 }) => $player2 ? 'left' : 'right'};
+
+  @media ${device.xl} {
+    font-size: 0.8rem;
+  }
 `
 
 const ManagerTeamCombined = styled.div`
