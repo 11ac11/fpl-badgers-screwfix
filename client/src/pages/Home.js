@@ -4,6 +4,7 @@ import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
 import Image from '../ui/Image';
 import { GeneralContext } from '../state/GeneralContextProvider';
 import styled, { keyframes } from 'styled-components';
+import { device } from '../breakpoints';
 
 const gradientFloat = keyframes`
   0% { background-position: 0% 50%; }
@@ -35,6 +36,12 @@ const Background = styled.div`
     animation-duration: 8s;
     animation-iteration-count: infinite;
   }
+
+  @media ${device.sm} {
+    &.stats-background::before {
+      font-size: 20rem;
+    }
+  }
 `
 
 const AllStatsContainer = styled.div`
@@ -43,6 +50,9 @@ const AllStatsContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
+  @media ${device.sm} {
+    gap: 0.75rem;
+  }
 `
 
 const StatContainer = styled.div`
@@ -53,11 +63,17 @@ const StatContainer = styled.div`
   backdrop-filter: blur(50px);
   padding: 1rem;
   border-radius: 2rem;
-  font-size: 1.5rem;
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: space-around;
+  @media ${device.sm} {
+    padding: 0.5rem;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  }
 `
 
 const LeagueImg = styled.div`
@@ -76,17 +92,27 @@ const StatEmoji = styled.div`
 const ManagerName = styled.div`
   font-family: JetBrains Mono;
   font-size: 1.2rem;
+  @media ${device.sm} {
+    font-size: 0.8rem;
+  }
 `
 
 const TeamName = styled(ManagerName)`
   font-family: 'Jockey One';
   font-size: 1.5rem;
+  @media ${device.sm} {
+    font-size: 1rem;
+  }
 `
 
 const PointsTotal = styled.div`
   width: 10%;
   font-size: 3rem;
   text-align: right;
+
+  @media ${device.sm} {
+    font-size: 2rem;
+  }
 `
 
 export const Home = ({}) => {

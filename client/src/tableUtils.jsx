@@ -17,6 +17,12 @@ const TeamName = styled.p`
   @media ${device.xl} {
     font-size: 1.2rem;
   }
+
+  @media ${device.sm} {
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: left;
+  }
 `
 
 const ManagerName = styled.p`
@@ -35,6 +41,13 @@ const ManagerName = styled.p`
   @media ${device.xl} {
     font-size: 0.8rem;
   }
+
+  @media ${device.sm} {
+    font-size: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+  }
 `
 
 const ManagerTeamCombined = styled.div`
@@ -43,6 +56,10 @@ const ManagerTeamCombined = styled.div`
   align-items: center;
   justify-content: space-between;
   min-height: 20px;
+
+  @media ${device.sm} {
+    flex-direction: column;
+  }
 `;
 
 const LeagueTeamAndManagerName = (row, fixturesTable = false, player2 = false) => {

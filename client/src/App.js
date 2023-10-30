@@ -11,6 +11,7 @@ import { Live } from './pages/Live';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 import { GeneralContext } from './state/GeneralContextProvider';
+import { device } from './breakpoints';
 
 
 const LayoutContainer = styled.div`
@@ -27,6 +28,10 @@ const ContentContainer = styled.div`
   height: 100%;
   padding: 1rem 2rem;
   justify-content: center;
+
+  @media ${device.sm} {
+    padding: 0.5rem 1rem;
+  }
 `;
 
 const App = () => {

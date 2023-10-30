@@ -51,12 +51,18 @@ const SidebarContainer = styled.div`
 
   @media ${device.md} {
     justify-content: center;
+
+    &.sidebar {
+      width: 100%;
+    }
+
     li {
+      justify-content: space-between;
       margin: 0.25rem 0;
     }
 
     a {
-      font-size: 16px;
+      font-size: 2.5rem;
     }
   }
 `;

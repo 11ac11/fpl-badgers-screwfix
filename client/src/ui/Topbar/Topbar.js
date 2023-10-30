@@ -17,7 +17,6 @@ const TopbarContainer = styled.div`
   padding: 0 2rem;
 
   @media ${device.sm} {
-    background: var(--gradient);
     height: 8vh;
     min-height: 30px;
     padding: 0 0.5rem;
@@ -86,11 +85,10 @@ const GameweekNumber = styled.span`
   animation-duration: 8s;
   animation-iteration-count: infinite;
   @media ${device.sm} {
+    height: 2rem;
+    width: 2rem;
     padding: 0 0.5rem;
-    font-size: 2rem;
-    background: var(--black);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.6rem;
   }
 
 `;
