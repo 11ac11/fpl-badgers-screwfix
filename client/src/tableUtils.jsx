@@ -183,7 +183,7 @@ export const leagueColumns = [
     canSort: false
   },
   {
-    Header: 'L',
+    Header: 'Lg.',
     Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
     accessor: (row) => RenderLeagueImage(row),
     width: 10,
@@ -219,21 +219,19 @@ export const leagueColumns = [
     sortable: false,
   },
   {
-    Header: 'League points',
+    Header: 'Lg P',
     accessor: 'total',
-    width: 40,
-    minWidth: 40,
-    maxWidth: 40,
-    fontSize: 8,
+    width: 50,
+    minWidth: 50,
+    maxWidth: 50,
     sortable: true,
   },
   {
-    Header: 'Total Points',
+    Header: 'To P',
     accessor: 'points_for',
-    width: 40,
-    minWidth: 40,
-    maxWidth: 40,
-    fontSize: '8px',
+    width: 50,
+    minWidth: 50,
+    maxWidth: 50,
     sortable: true,
   },
 ];

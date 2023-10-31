@@ -68,7 +68,7 @@ const StatContainer = styled.div`
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(50px);
   padding: 1rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
   display: flex;
   gap: 1rem;
   align-items: center;

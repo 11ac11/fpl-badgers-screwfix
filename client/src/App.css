@@ -43,11 +43,14 @@ a {
 table {
   border-collapse: collapse;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 1rem;
 }
 
 th {
   text-align: left;
+  color: var(--black);
+  font-size: 1rem;
+  font-weight: 100;
 }
 
 th, td {
@@ -61,7 +64,8 @@ th.fixture-score, td.fixture-score {
 }
 
 tr {
-  background-color: var(--lightgrey);
+  background: var(--lightgrey);
+  background-attachment: fixed;
 }
 
 .fixture-tr {
@@ -73,24 +77,25 @@ tr {
 }
 
 .league-tr:nth-child(-n+6) {
-  background: var(--gradient)
+  background: var(--gradient);
+  background-attachment: fixed;
 }
 
 .league-tr:nth-last-child(-n+3) {
   background: var(--gradientRed);
+  background-attachment: fixed;
 }
 
 .top-half .league-tr:nth-last-child(-n+3) {
-  background: unset;
+  background: var(--lightgrey);
+  background-attachment: fixed;
 }
 
 .bottom-half .league-tr:nth-child(-n+6) {
-  background: unset;
+  background: var(--lightgrey);
+  background-attachment: fixed;
 }
 
-.top-half .league-tr {
-  background-color: var(--lightgrey);
-}
 
 /* Dark overlay color for every other row */
 tr:nth-child(even) {

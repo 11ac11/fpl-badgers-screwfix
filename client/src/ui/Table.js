@@ -34,9 +34,7 @@ const Table = ({
                     : null
                 }
                 style={{
-                  minWidth: column.minWidth,
                   width: column.width,
-                  fontSize: column.fontSize || 'inherit',
                 }}
                 className={`th ${thClassName}`}
               >
