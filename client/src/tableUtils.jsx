@@ -219,7 +219,7 @@ export const leagueColumns = [
     sortable: false,
   },
   {
-    Header: 'Lg P',
+    Header: 'LP',
     accessor: 'total',
     width: 50,
     minWidth: 50,
@@ -227,7 +227,7 @@ export const leagueColumns = [
     sortable: true,
   },
   {
-    Header: 'To P',
+    Header: 'TP',
     accessor: 'points_for',
     width: 50,
     minWidth: 50,
