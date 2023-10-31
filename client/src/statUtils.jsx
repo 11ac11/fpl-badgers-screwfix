@@ -74,7 +74,7 @@ export const getClosestGame = (entries) => {
 export const getTopOfTable = (tableData) => {
     const firstPlace = tableData.standings.results[0]
     const winner = firstPlace.player_name
-    const points = firstPlace.total
+    const points = '1st'
     const team = firstPlace.entry_name
 
     return { winner, points, team };
@@ -85,7 +85,7 @@ export const getBottomOfTable = (tableData) => {
     console.log(tableData)
     const firstPlace = tableData.standings.results[19]
     const winner = firstPlace.player_name
-    const points = firstPlace.total
+    const points = '20th'
     const team = firstPlace.entry_name
 
     return { winner, points, team };
@@ -95,5 +95,5 @@ export const getLeagueTotalPoints = (tableData) => {
     const leagueResults = tableData.standings.results
     const totalPoints = leagueResults.reduce((total, player) => total + player.points_for, 0);
 
-    return totalPoints;
+    return totalPoints.toLocaleString('en-GB');
 }

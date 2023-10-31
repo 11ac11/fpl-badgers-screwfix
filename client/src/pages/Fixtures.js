@@ -121,8 +121,8 @@ export const Fixtures = ({ gameweekNumber }) => {
     ['⚽️ ', 'winner'],
     ['🐐 ', `week's GOAT`],
     ['😭 ', `week's worst`],
-    ['🔥 ', 'over 90 points'],
-    ['😳 ', 'under 40 points'],
+    ['🔥 ', '> 90 pts'],
+    ['😳 ', '< 40 pts'],
     ['🤝 ', 'closest game']
   ]
 
