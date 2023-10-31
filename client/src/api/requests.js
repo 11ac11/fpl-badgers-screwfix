@@ -1,4 +1,4 @@
-const serverUrl = 'http://localhost:3001'; // Update with your server's URL
+const serverUrl = process.env.REACT_APP_SERVER_URL; // update with your server's URL
 
 export const getAllGameweekInfo = async () => {
   try {
