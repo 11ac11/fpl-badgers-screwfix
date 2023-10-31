@@ -35,7 +35,7 @@ const Container = styled.button`
 
 const Line = styled.div`
   height: 2px;
-  width: 20px;
+  width: 25px;
   background: var(--black);
   border-radius: 1rem;
   transition: all 0.2s linear;

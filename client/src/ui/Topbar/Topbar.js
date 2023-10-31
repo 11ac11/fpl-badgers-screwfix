@@ -19,7 +19,7 @@ const TopbarContainer = styled.div`
   @media ${device.sm} {
     height: 8vh;
     min-height: 30px;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
   }
 `;
 
@@ -60,7 +60,7 @@ const GameweekContainer = styled.div`
 const GameweekText = styled.span`
   font-size: 28px;
   @media ${device.sm} {
-    font-size: 0.8rem;
+    font-size: 1.4rem;
   }
 `;
 
@@ -85,10 +85,9 @@ const GameweekNumber = styled.span`
   animation-duration: 8s;
   animation-iteration-count: infinite;
   @media ${device.sm} {
-    height: 2rem;
-    width: 2rem;
-    padding: 0 0.5rem;
-    font-size: 1.6rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    font-size: 2rem;
   }
 
 `;

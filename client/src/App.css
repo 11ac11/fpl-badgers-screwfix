@@ -29,9 +29,10 @@ button {
 body {
   /* font-family: 'Premier League W01', sans-serif; */
   font-family: 'Jockey One';
-  font-weight: 600;
+  font-weight: 500;
   color: var(--black);
   font-size: 14px;
+  -webkit-font-smoothing: antialiased;
   background-color: var(--white);
 }
 
