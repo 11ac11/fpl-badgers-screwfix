@@ -143,7 +143,7 @@ export const Sidebar = ({
             </Link>
           </li>
           {/* <li>
-            <Link to="/live">Live Gameweek</Link>
+            <Link to="/team" onClick={() => setIsOpen(false)}>Team</Link>
           </li> */}
         </ul>
       </NavSection>

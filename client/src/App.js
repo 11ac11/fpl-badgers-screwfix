@@ -12,6 +12,7 @@ import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 import { GeneralContext } from './state/GeneralContextProvider';
 import { device } from './breakpoints';
+import { Team } from './pages/Team';
 
 
 const LayoutContainer = styled.div`
@@ -79,17 +80,17 @@ const App = () => {
               }
             />
             <Route
-              path="/current"
+              path="/fixtures-results"
               element={
                 <Fixtures
                   gameweekNumber={currentGameweekNumber}
                 />
               }
             />
-                        <Route
-              path="/fixtures-results"
+            <Route
+              path="/team"
               element={
-                <Fixtures
+                <Team
                   gameweekNumber={currentGameweekNumber}
                 />
               }

@@ -3,6 +3,7 @@ import Table from '../ui/Table';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
 import { fetchFixtures } from '../api/requests';
+import { calculateLivePoints } from '../livePointsUtil';
 
 import { fixtureColumns } from '../tableUtils';
 import { GameweekSelector } from '../ui/GameweekSelector';
@@ -86,6 +87,7 @@ const EmojiPairWrap = styled.div`
 `
 
 export const Fixtures = ({ gameweekNumber }) => {
+  const [loading, setLoading] = useState(false)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
   const [gameweekToView, setGameweekToView] = useState(gameweekNumber)
@@ -104,6 +106,18 @@ export const Fixtures = ({ gameweekNumber }) => {
       const badgersId = 728798
       const screwFixFixtures = await fetchFixtures(screwfixId, gameweekToView);
       const badgersFixtures = await fetchFixtures(badgersId, gameweekToView);
+      if (gameweekToView === gameweekNumber) {
+        setLoading(true)
+        console.log('KL orig', screwFixFixtures)
+        const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
+        setScrewfixFixtureData(livePointsScrewfix);
+
+        console.log('KL new', livePointsScrewfix)
+        const livePointsBadgers = await calculateLivePoints(badgersFixtures.results)
+        setBadgersFixtureData(livePointsBadgers);
+        setLoading(false)
+        return
+      }
       if (screwFixFixtures) {
         setScrewfixFixtureData(screwFixFixtures.results);
       }
@@ -145,9 +159,10 @@ export const Fixtures = ({ gameweekNumber }) => {
       })}
       </EmojiKeyWrap>
     </TopbarWrap>
-      {  screwfixFixtureData && badgersFixtureData && (
-        <BothFixturescontainer ref={contentRef}>
-          {badgersFixtureData && badgersFixtureData.length !== 0 && (
+      { loading
+        ? <div>Loading live scores, this might take a few seconds...</div>
+        : <BothFixturescontainer ref={contentRef}>
+          { badgersFixtureData && badgersFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
@@ -161,7 +176,7 @@ export const Fixtures = ({ gameweekNumber }) => {
               />
             </FixturesContainer>
           )}
-          {screwfixFixtureData && screwfixFixtureData.length !== 0 && (
+          { screwfixFixtureData && screwfixFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
@@ -176,7 +191,7 @@ export const Fixtures = ({ gameweekNumber }) => {
             </FixturesContainer>
           )}
         </BothFixturescontainer>
-      )}
+      }
     </>
   );
 };

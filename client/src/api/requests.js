@@ -17,15 +17,12 @@ export const getAllGameweekInfo = async () => {
   }
 };
 
-export const fetchTeam = async (managerId = 1034149) => {
+export const getPlayerNames = async () => {
   try {
-    const response = await fetch(`${serverUrl}/`);
-
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
+    const response = await fetch(`${serverUrl}/event/current/players`);
 
     const data = await response.json();
+    console.log('playerNames ', data)
     // Process the data as needed
     return data;
   } catch (error) {
@@ -72,7 +69,7 @@ export const fetchFixtures = async (leagueId, gameweek) => {
 
 export const fetchLivePlayerScores = async (gameweekNumber) => {
   try {
-    const response = await fetch(`${serverUrl}/event/${gameweekNumber}/live/`);
+    const response = await fetch(`${serverUrl}/event/${gameweekNumber}/live`);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
@@ -90,7 +87,7 @@ export const fetchLivePlayerScores = async (gameweekNumber) => {
 export const fetchManagerPicksByEvent = async (managerId, gameweekNumber) => {
   try {
     const response = await fetch(
-      `${serverUrl}/team/${managerId}/event/${gameweekNumber}/picks/`
+      `${serverUrl}/team/${managerId}/event/${gameweekNumber}/picks`
     );
 
     if (!response.ok) {

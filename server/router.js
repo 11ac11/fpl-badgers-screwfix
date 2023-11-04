@@ -8,13 +8,14 @@ import {
   getAllGameweekInfo,
   getLeagueFixtures,
   getLeagueStandings,
-  getTeamPicksForGameweek,
+  getCustomPlayerList
 } from './controller.js';
 
 router.get('/event/current', getAllGameweekInfo);
+// router.get('/event/current/players', getPlayerNames);
 router.get('/event/:eventId/live/', getLiveGameweek);
 router.get('/:leagueId/standings', getLeagueStandings);
 router.get('/:leagueId/fixtures/:gameweek', getLeagueFixtures);
-router.get('/team/:playerId/event/:eventId/picks/', getTeamPicksForGameweek);
+router.get('/team/:playerId/event/:eventId/picks/', getCustomPlayerList);
 
 export { router };

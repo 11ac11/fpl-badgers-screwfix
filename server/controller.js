@@ -10,7 +10,6 @@ export const getAllGameweekInfo = async (req, res) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data)
     res.json(data.events);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred' });
@@ -57,17 +56,92 @@ export const getLeagueFixtures = async (req, res) => {
   }
 };
 
-export const getTeamPicksForGameweek = async (req, res) => {
-  //console.log(req.params);
-  const playerId = req.params.playerId;
-  const eventId = req.params.eventId;
-  const url = `${fplApiBaseString}/entry/${playerId}/event/${eventId}/picks/`;
+// export const getTeamPicksForGameweek = async (req, res) => {
+//   const playerId = req.params.playerId;
+//   const eventId = req.params.eventId;
+//   const url = `${fplApiBaseString}/entry/${playerId}/event/${eventId}/picks/`;
+
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     res.json(data);
+//   } catch (error) {
+//     res.status(500).json({ error: 'An error occurred' });
+//   }
+// };
+
+// export const getPlayerNames = async (req, res) => {
+//   const url = `${fplApiBaseString}/bootstrap-static/`;
+
+//   try {
+//     const response = await fetch(url);
+//     const data = await response.json();
+//     const players = data.elements
+//     const customObject = players.map((player) => {
+//       return {
+//         id: player.id,
+//         web_name: player.web_name
+//       };
+//     });
+
+//     res.json(customObject);
+//   } catch (error) {
+//     res.status(500).json({ error: 'An error occurred' });
+//   }
+// };
+
+export const getCustomPlayerList = async (req, res) => {
+  const player_id = req.params.playerId;
+  const event_id = req.params.eventId;
+  const picksUrl = `${fplApiBaseString}/entry/${player_id}/event/${event_id}/picks/`;
+  const playerInfoUrl = `${fplApiBaseString}/bootstrap-static/`;
+  const liveUrl = `${fplApiBaseString}/event/${event_id}/live/`;
+
 
   try {
-    const response = await fetch(url);
-    const data = await response.json();
-    res.json(data);
+    const picksResponse = await fetch(picksUrl)
+    const picksData = await picksResponse.json()
+    const picks = picksData.picks
+
+    const playerInfoResponse = await fetch(playerInfoUrl)
+    const playerData = await playerInfoResponse.json()
+    const players = playerData.elements
+
+    const refinedPlayerObject = players.map((player) => {
+      return {
+        id: player.id,
+        web_name: player.web_name
+      };
+    });
+
+    const liveResponse = await fetch(liveUrl)
+    const liveData = await liveResponse.json()
+    const livePoints = liveData.elements
+
+    const mergeObjectsById = (array1, array2, array3) => {
+      const mergedArray = array1.map(obj1 => {
+        const matchingObj2 = array2.find(obj2 => obj2.element === obj1.id);
+        const matchingObj3 = array3.find(obj3 => obj3.id === obj1.id);
+
+        if (matchingObj2 && matchingObj3) {
+          // Merge the objects from array2 and array3, excluding the 'element' property
+          const { element, ...mergedObject } = { ...obj1, ...matchingObj2 };
+          // Include the 'stats' property from array3
+          mergedObject.stats = matchingObj3.stats;
+          return mergedObject;
+        }
+        // If there is no match in either array2 or array3, return null
+        return null;
+      }).filter(Boolean); // Filter out the null values (no match)
+
+      // Sort the mergedArray by the 'position' property in ascending order
+      return mergedArray.sort((a, b) => a.position - b.position);
+    }
+
+    const finalData = mergeObjectsById(refinedPlayerObject, picks, livePoints)
+
+    res.json(finalData);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred' });
   }
-};
+}

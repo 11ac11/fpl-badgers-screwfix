@@ -4,6 +4,7 @@ import Image from './ui/Image';
 import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from './images/badger_circle_logo.png';
 import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
+import { TablePoints } from './ui/TablePoints';
 
 const ManagerTeamCombined = styled.div`
   display: flex;
@@ -79,20 +80,6 @@ const EmojiContainer = styled.div`
   }
 `;
 
-const PointsContainer = styled.div`
-  background: ${({ $isHome }) => $isHome ? 'var(--gradient)' : 'var(--gradientRev)' };
-  border-radius: ${({ $isHome }) => $isHome ? `20% 0% 0% 20%` : '0% 20% 20% 0%'};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.1rem 0.6rem;
-  font-size: 1.8rem;
-  @media ${device.sm} {
-    font-size: 1.2rem;
-    padding: 0.1rem 0.4rem;
-  }
-`
-
 const LeagueTeamAndManagerName = (row, fixturesTable = false, isHome = false) => {
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
@@ -147,28 +134,6 @@ const RenderEmojis = (row, isHome) => {
     if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
   }
   return (<EmojiContainer $isHome={isHome}>{ emojiStr } </EmojiContainer>)
-}
-
-const RenderPoints = (row, isHome) => {
-  const entryOnePoints = row.cell.row.original.entry_1_points
-  const entryTwoPoints = row.cell.row.original.entry_2_points
-  const futureFixtureStyle = {
-    background: 'var(--grey)',
-  }
-  if (!entryOnePoints && !entryTwoPoints) {
-    return (<PointsContainer style={{ ...futureFixtureStyle }} $isHome={isHome}>{ '-' } </PointsContainer>)
-  }
-  const homeCellStyles = {
-    color: entryOnePoints >= entryTwoPoints ? 'var(--black)' : '#00000061',
-    textDecoration: entryOnePoints >= entryTwoPoints ? 'underline' : 'none'
-  }
-  const awayCellStyles = {
-    color: entryOnePoints <= entryTwoPoints ? 'var(--black)' : '#00000061',
-    textDecoration: entryOnePoints <= entryTwoPoints ? 'underline' : 'none'
-  }
-  const finalStyles = isHome ? homeCellStyles : awayCellStyles
-
-  return (<PointsContainer style={{ ...finalStyles }} className='fixture-score' $isHome={isHome}>{row.value}</PointsContainer>)
 }
 
 export const leagueColumns = [
@@ -251,13 +216,13 @@ export const fixtureColumns = [
   {
     Header: '',
     accessor: 'entry_1_points',
-    Cell: (row) => RenderPoints(row, true),
+    Cell: (row) => <TablePoints row={ row } isHome={ true } />,
     width: '5%',
   },
   {
     Header: '',
     accessor: 'entry_2_points',
-    Cell: (row) => RenderPoints(row, false),
+    Cell: (row) => <TablePoints row={ row } isHome={ false } />,
     width: '5%',
   },
   {
