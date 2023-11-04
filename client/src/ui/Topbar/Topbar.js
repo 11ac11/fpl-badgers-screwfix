@@ -71,7 +71,7 @@ const gradientFloat = keyframes`
 `
 
 const GameweekNumber = styled.span`
-  margin: 0 1rem;
+  margin-left: 1rem;
   height: 3rem;
   width: 3rem;
   display: flex;
