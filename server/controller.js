@@ -138,9 +138,10 @@ export const getCustomPlayerList = async (req, res) => {
       return mergedArray.sort((a, b) => a.position - b.position);
     }
 
-    const finalData = mergeObjectsById(refinedPlayerObject, picks, livePoints)
+    const picksLivePoints = mergeObjectsById(refinedPlayerObject, picks, livePoints)
+    const updatedFixtureInfo = { ...picksData, picks: picksLivePoints }
 
-    res.json(finalData);
+    res.json(updatedFixtureInfo);
   } catch (error) {
     res.status(500).json({ error: 'An error occurred' });
   }

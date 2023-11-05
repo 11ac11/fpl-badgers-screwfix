@@ -3,7 +3,6 @@ import Select from 'react-select'
 
 
 export const GameweekSelector = ({ gameweekNumber, setGameweekToView }) => {
-
     useEffect(() => {
         if (gameweekNumber) {
             setGameweekToView(gameweekNumber)
@@ -46,10 +45,8 @@ export const GameweekSelector = ({ gameweekNumber, setGameweekToView }) => {
     };
 
     const defaultOption = gameweekNumber
-    ? gameweekOptions.find((option) => option.value === gameweekNumber)
-    : gameweekOptions[gameweekNumber];
-    //console.log(defaultView)
-
+        ? gameweekOptions.find((option) => option.value === gameweekNumber)
+        : gameweekOptions[gameweekNumber];
 
     return (
         gameweekNumber && <Select

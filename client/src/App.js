@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import './fonts/fonts.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -39,10 +39,8 @@ const App = () => {
   const { gameweekContextData } = useContext(GeneralContext);
   const { currentGameweekNumber, badgersTableData, screwfixTableData } = gameweekContextData;
 
-  const [isUpdating, setIsUpdating] = useState(false);
+  // const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
-
-
 
   return (
     <Router>

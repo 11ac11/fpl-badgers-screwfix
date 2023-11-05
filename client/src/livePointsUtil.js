@@ -35,14 +35,14 @@ export const calculateLivePoints = async (normalFixtureList) => {
     const entryTwoPicks = await fetchData(item.entry_2_entry, item.event);
 
     if (entryOnePicks && entryTwoPicks) {
-      const newPointsEntry1 = calculateTeamTotalPoints(entryOnePicks);
-      const newPointsEntry2 = calculateTeamTotalPoints(entryTwoPicks);
+      const newPointsEntry1 = calculateTeamTotalPoints(entryOnePicks.picks);
+      const newPointsEntry2 = calculateTeamTotalPoints(entryTwoPicks.picks);
 
       // Create a new object with the updated "entry_1_points" and "entry_2_points" properties
       return {
         ...item, // Copy the original object
-        entry_1_points: newPointsEntry1, // Update the "entry_1_points" property
-        entry_2_points: newPointsEntry2, // Update the "entry_2_points" property
+        entry_1_points: (newPointsEntry1 - entryOnePicks.entry_history.event_transfers_cost), // Update the "entry_1_points" property
+        entry_2_points: (newPointsEntry2 - entryTwoPicks.entry_history.event_transfers_cost), // Update the "entry_2_points" property
       };
     } else {
       // Handle the case where data fetching failed for some reason

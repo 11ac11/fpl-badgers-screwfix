@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import { fetchManagerPicksByEvent } from '../api/requests';
 
 export const Team = ({ gameweekNumber }) => {
 

@@ -130,16 +130,10 @@ const PointsTotal = styled.div`
 `
 
 export const Home = ({}) => {
-
-
   const { gameweekContextData } = useContext(GeneralContext);
   const { gameweekAwards, currentGameweekNumber, badgersTotalPoints, screwfixTotalPoints } = gameweekContextData
 
   const awardsForMapping = gameweekAwards && Object.entries(gameweekAwards)
-
-  // console.log(awardsForMapping)
-
-  console.log('context', gameweekContextData)
 
   const renderEmojiForAward = (awardName) => {
     if (awardName.includes('Highest')) {
@@ -154,7 +148,6 @@ export const Home = ({}) => {
         return '';
     }
   }
-
 
   return (
     <Background className="stats-background" $gameWeek={ currentGameweekNumber }>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Table from '../ui/Table';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
@@ -93,7 +93,6 @@ export const Fixtures = ({ gameweekNumber }) => {
   const [gameweekToView, setGameweekToView] = useState(gameweekNumber)
 
   useEffect(() => {
-    console.log('hitting gameweekToView')
     if (gameweekToView) {
       fetchFixturesData();
     }
@@ -108,11 +107,9 @@ export const Fixtures = ({ gameweekNumber }) => {
       const badgersFixtures = await fetchFixtures(badgersId, gameweekToView);
       if (gameweekToView === gameweekNumber) {
         setLoading(true)
-        console.log('KL orig', screwFixFixtures)
         const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
         setScrewfixFixtureData(livePointsScrewfix);
 
-        console.log('KL new', livePointsScrewfix)
         const livePointsBadgers = await calculateLivePoints(badgersFixtures.results)
         setBadgersFixtureData(livePointsBadgers);
         setLoading(false)

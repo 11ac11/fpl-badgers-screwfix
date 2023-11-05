@@ -90,7 +90,7 @@ const LeagueTeamAndManagerName = (row, fixturesTable = false, isHome = false) =>
 }
 
 const RenderLeagueImage = (row) => {
-  const isBadger = (row.division == 95564)
+  const isBadger = (row.division === 95564)
   return (
     <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
   )
