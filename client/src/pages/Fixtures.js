@@ -184,7 +184,7 @@ export const Fixtures = ({ gameweekNumber }) => {
       </EmojiKeyWrap>
     </TopbarWrap>
       { loading
-        ? <div>Loading live scores, this might take a few seconds...</div>
+        ? <div>Loading live scores, this might take ~20 seconds, don't refresh...</div>
         : <BothFixturescontainer ref={contentRef}>
           { badgersFixtureData && badgersFixtureData.length !== 0 && (
             <FixturesContainer>

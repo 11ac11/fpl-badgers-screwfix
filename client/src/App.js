@@ -57,6 +57,7 @@ const App = () => {
           setSidebarIsOpen={setSidebarIsOpen}
         />
         <ContentContainer>
+          { !currentGameweekNumber && `Please wait around 20 seconds. We are using a free server, so it shuts down when inactive and boots up when someone visits the page. Maybe I'll pay for one soon to stop this happening...`}
           <Routes>
             <Route
               path="/"
