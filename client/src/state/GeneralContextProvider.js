@@ -106,7 +106,6 @@ const GeneralContextProvider = ({ children }) => {
     for (const event of data) {
       if (!!event.is_current) {
         const twoDaysCheck = isTwoDaysAway(event.deadline_time)
-        console.log(twoDaysCheck)
         return twoDaysCheck ? event.id + 1 : event.id
       }
     }
