@@ -103,7 +103,6 @@ const GeneralContextProvider = ({ children }) => {
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
-    console.log('data here', data)
     for (const event of data) {
       if (!!event.is_current) {
         const twoDaysCheck = isTwoDaysAway(event.deadline_time)
