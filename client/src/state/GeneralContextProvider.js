@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
 import { fetchFixtures, getAllGameweekInfo, fetchLeagueStandings } from '../api/requests';
-import { getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable, getLeagueTotalPoints } from '../statUtils';
+import { getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable, getLeagueTotalPoints } from '../utils/statUtils';
+import { isTwoDaysAway } from '../utils/timeCheckers';
 
 const GeneralContext = createContext();
 
@@ -102,9 +103,12 @@ const GeneralContextProvider = ({ children }) => {
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
+    console.log('data here', data)
     for (const event of data) {
       if (!!event.is_current) {
-        return event.id;
+        const twoDaysCheck = isTwoDaysAway(event.deadline_time)
+        console.log(twoDaysCheck)
+        return twoDaysCheck ? event.id + 1 : event.id
       }
     }
     return -1;

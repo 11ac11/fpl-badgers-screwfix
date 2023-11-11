@@ -146,3 +146,16 @@ export const getCustomPlayerList = async (req, res) => {
     res.status(500).json({ error: 'An error occurred' });
   }
 }
+
+export const getRealFixtures = async (req, res) => {
+  const gameweek = req.params.gameweekNumber;
+  const url = `${fplApiBaseString}/fixtures/?event=${gameweek}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred' });
+  }
+};

@@ -102,3 +102,22 @@ export const fetchManagerPicksByEvent = async (managerId, gameweekNumber) => {
     throw error;
   }
 };
+
+export const fetchRealFixtures = async (gameweekNumber) => {
+  try {
+    const response = await fetch(
+      `${serverUrl}/realfixtures/${gameweekNumber}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    const data = await response.json();
+    // Process the data as needed
+    return data;
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    throw error;
+  }
+};

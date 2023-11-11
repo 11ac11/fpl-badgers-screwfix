@@ -1,4 +1,4 @@
-import { fetchManagerPicksByEvent } from "./api/requests";
+import { fetchManagerPicksByEvent } from "../api/requests";
 
 export const calculateLivePoints = async (normalFixtureList) => {
   const fetchData = async (managerId, gameweekNumber) => {

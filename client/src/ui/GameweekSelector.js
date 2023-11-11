@@ -7,7 +7,6 @@ export const GameweekSelector = ({ gameweekNumber, setGameweekToView }) => {
         if (gameweekNumber) {
             setGameweekToView(gameweekNumber)
         }
-        console.log(gameweekNumber, 'in selector')
     }, [gameweekNumber])
 
     const generateGameweekOptions = () => {

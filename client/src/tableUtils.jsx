@@ -3,7 +3,7 @@ import { device } from './breakpoints';
 import Image from './ui/Image';
 import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from './images/badger_circle_logo.png';
-import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
+import { getClosestGame, getHighestPoints, getLowestPoints } from './utils/statUtils';
 import { TablePoints } from './ui/TablePoints';
 
 const ManagerTeamCombined = styled.div`

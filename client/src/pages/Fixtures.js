@@ -3,10 +3,12 @@ import Table from '../ui/Table';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
 import { fetchFixtures } from '../api/requests';
-import { calculateLivePoints } from '../livePointsUtil';
+import { calculateLivePoints } from '../utils/livePointsUtil';
 
 import { fixtureColumns } from '../tableUtils';
 import { GameweekSelector } from '../ui/GameweekSelector';
+import { fetchRealFixtures } from '../api/requests';
+import { isPastThreeHoursLater } from '../utils/timeCheckers';
 // import { ScreenshotButton } from '../utils/ScreenshotButton';
 
 const BothFixturescontainer = styled.div`
@@ -91,13 +93,36 @@ export const Fixtures = ({ gameweekNumber }) => {
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
   const [gameweekToView, setGameweekToView] = useState(gameweekNumber)
+  const [allGamesFinished, setAllGamesFinished] = useState(false)
+  const [firstGameStarted, setFirstGameStarted] = useState(false)
+  const [finishedCheckComplete, setFinishedCheckComplete] = useState(false)
 
   useEffect(() => {
     if (gameweekToView) {
-      fetchFixturesData();
+      fetchRealFixturesData();
+      if (finishedCheckComplete) {
+        fetchFixturesData();
+      }
     }
-  }, [gameweekToView]);
+  }, [gameweekToView, finishedCheckComplete]);
 
+  const fetchRealFixturesData = async () => {
+    try {
+      const realFixtures = await fetchRealFixtures(gameweekNumber)
+      if (realFixtures && realFixtures.length > 0) {
+        setFirstGameStarted(realFixtures[0].started)
+        const finalFixture = realFixtures[realFixtures.length - 1]
+        const finalGameDateTime = finalFixture.kickoff_time
+        const shouldBeUpdated = isPastThreeHoursLater(finalGameDateTime)
+        shouldBeUpdated
+          ? setAllGamesFinished(true)
+          : setAllGamesFinished(false)
+        setFinishedCheckComplete(true)
+      }
+    } catch (error) {
+    console.error(`Error: ${error.message}`);
+    }
+  }
 
   const fetchFixturesData = async () => {
     try {
@@ -105,7 +130,9 @@ export const Fixtures = ({ gameweekNumber }) => {
       const badgersId = 728798
       const screwFixFixtures = await fetchFixtures(screwfixId, gameweekToView);
       const badgersFixtures = await fetchFixtures(badgersId, gameweekToView);
-      if (gameweekToView === gameweekNumber) {
+      console.log('all games?', allGamesFinished, finishedCheckComplete)
+      if (gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished) {
+        console.log('confirmation using custom function')
         setLoading(true)
         const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
         setScrewfixFixtureData(livePointsScrewfix);
