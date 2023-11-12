@@ -22,7 +22,7 @@ const spinAnimation = keyframes`
 const LoadingCircle = styled.div`
   width: ${(props) => props.width || '80px'};
   max-width: 80px;
-  aspect-ratio: 1;
+  aspect-ratio: 1/1;
   border: 10px solid var(--green);
   border-radius: 50%;
   border-top: 10px solid var(--turq);
