@@ -6,7 +6,7 @@ import { device } from '../breakpoints';
 const SidebarContainer = styled.div`
   &.sidebar {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     left: 0;
     top: 0;
     background-color: var(--white);

@@ -14,16 +14,17 @@ const CountdownWrapper = styled.div`
   align-content: center;
   justify-content: center;
   align-items: center;
-  z-index: 50;
+  z-index: 2;
   flex-direction: column;
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(1px);
 `;
 
 const ModalWrap = styled.div`
-  background: var(--lightgrey);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(50px);
   display: flex;
   flex-direction: column;
   align-items: center;
