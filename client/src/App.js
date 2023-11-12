@@ -13,6 +13,7 @@ import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 import { GeneralContext } from './state/GeneralContextProvider';
 import { device } from './breakpoints';
 import { Team } from './pages/Team';
+import { Countdown } from './ui/Countdown';
 
 
 const LayoutContainer = styled.div`
@@ -56,8 +57,14 @@ const App = () => {
           sidebarIsOpen={sidebarIsOpen}
           setSidebarIsOpen={setSidebarIsOpen}
         />
+          { !currentGameweekNumber &&
+          <Countdown
+            countdownTitle={'Starting the server'}
+            displayText={`This uses a free server, so it shuts down when inactive and needs to boot up again when someone visits the page.`}
+            startTime={20}
+            countdownCompleteText={'Nearly there, just a bit longer...'}
+          /> }
         <ContentContainer>
-          { !currentGameweekNumber && `Please wait around 20 seconds. We are using a free server, so it shuts down when inactive and boots up when someone visits the page. Maybe I'll pay for one soon to stop this happening...`}
           <Routes>
             <Route
               path="/"

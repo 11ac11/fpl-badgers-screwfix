@@ -9,6 +9,7 @@ import { fixtureColumns } from '../tableUtils';
 import { GameweekSelector } from '../ui/GameweekSelector';
 import { fetchRealFixtures } from '../api/requests';
 import { isPastThreeHoursLater } from '../utils/timeCheckers';
+import { Countdown } from '../ui/Countdown';
 // import { ScreenshotButton } from '../utils/ScreenshotButton';
 
 const BothFixturescontainer = styled.div`
@@ -184,7 +185,13 @@ export const Fixtures = ({ gameweekNumber }) => {
       </EmojiKeyWrap>
     </TopbarWrap>
       { loading
-        ? <div>Loading live scores, this might take ~20 seconds, don't refresh...</div>
+        ?
+          <Countdown
+            countdownTitle={'Loading live scores'}
+            displayText={`This might take ~20 seconds, don't refresh...`}
+            startTime={20}
+            countdownCompleteText={'Nearly there, just a bit longer...'}
+          />
         : <BothFixturescontainer ref={contentRef}>
           { badgersFixtureData && badgersFixtureData.length !== 0 && (
             <FixturesContainer>
