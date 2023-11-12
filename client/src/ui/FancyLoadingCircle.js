@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
+import { device } from "../breakpoints";
 
 const spinAnimation = keyframes`
   0% {
@@ -27,6 +28,12 @@ const LoadingCircle = styled.div`
   border-radius: 50%;
   border-top: 10px solid var(--turq);
   animation: ${spinAnimation} 1s linear infinite;
+  margin: 1rem 0;
+
+  @media ${device.sm} {
+    width: ${(props) => (props.width / 1.5) || '50px'};
+    margin: 0.5rem 0;
+  }
 `;
 
 export const FancyLoadingCircle = ({width}) => {

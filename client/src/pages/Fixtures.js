@@ -188,7 +188,7 @@ export const Fixtures = ({ gameweekNumber }) => {
         ?
           <Countdown
             countdownTitle={'Loading live scores'}
-            displayText={`This might take ~20 seconds, don't refresh...`}
+            displayText={`This might take about 20 seconds.`}
             startTime={20}
             countdownCompleteText={'Nearly there, just a bit longer...'}
           />

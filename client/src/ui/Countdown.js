@@ -29,7 +29,7 @@ const ModalWrap = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 50%;
+  min-height: 50%;
   width: 50%;
   padding: 2rem;
   border-radius: 1rem;
@@ -49,11 +49,17 @@ const CountdownTitle = styled.span`
 
 const CountdownText = styled.div`
   font-size: 1.2rem;
+  @media ${device.xs} {
+    font-size: 1rem;
+  }
 `
 const CountdownTime = styled.span`
   font-family: monospace;
   font-size: 5rem;
   font-variant-numeric: tabular-nums;
+  @media ${device.xs} {
+    font-size: 2.5rem;
+  }
 `
 
 const PostCountdownText = styled(CountdownText)``
@@ -77,7 +83,7 @@ export const Countdown = ({ startTime, countdownTitle, displayText, countdownCom
         <CountdownTitle>{countdownTitle}</CountdownTitle>
         <CountdownText>{displayText}</CountdownText>
         <span>Please wait...</span>
-        <FancyLoadingCircle width='20%'/>
+        <FancyLoadingCircle width='80px'/>
         {time > 0 ? <CountdownTime>00:{time < 10 ? `0${time}` : time}</CountdownTime> : <PostCountdownText>{countdownCompleteText}</PostCountdownText>}
       </ModalWrap>
     </CountdownWrapper>
