@@ -21,13 +21,14 @@ const spinAnimation = keyframes`
 
 const LoadingCircle = styled.div`
   width: ${(props) => props.width || '80px'};
-  height: ${(props) => props.height || '80px'};
+  max-width: 80px;
+  aspect-ratio: 1;
   border: 10px solid var(--green);
   border-radius: 50%;
   border-top: 10px solid var(--turq);
   animation: ${spinAnimation} 1s linear infinite;
 `;
 
-export const FancyLoadingCircle = ({width, height}) => {
-  return <LoadingCircle width={width} height={height} />;
+export const FancyLoadingCircle = ({width}) => {
+  return <LoadingCircle width={width} />;
 };

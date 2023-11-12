@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FancyLoadingCircle } from "./FancyLoadingCircle";
+import { device } from "../breakpoints";
 
 const CountdownWrapper = styled.div`
   text-align: center;
@@ -26,11 +27,19 @@ const ModalWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: 50%;
   width: 50%;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 1rem;
+
+  @media ${device.sm} {
+    width: 75%;
+  }
+
+  @media ${device.xs} {
+    width: 90%;
+  }
 `
 
 const CountdownTitle = styled.span`
@@ -67,7 +76,7 @@ export const Countdown = ({ startTime, countdownTitle, displayText, countdownCom
         <CountdownTitle>{countdownTitle}</CountdownTitle>
         <CountdownText>{displayText}</CountdownText>
         <span>Please wait...</span>
-        <FancyLoadingCircle />
+        <FancyLoadingCircle width='20%'/>
         {time > 0 ? <CountdownTime>00:{time < 10 ? `0${time}` : time}</CountdownTime> : <PostCountdownText>{countdownCompleteText}</PostCountdownText>}
       </ModalWrap>
     </CountdownWrapper>
