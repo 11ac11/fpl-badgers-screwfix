@@ -61,7 +61,7 @@ const App = () => {
           <Countdown
             countdownTitle={'Starting the server'}
             displayText={`This uses a free server, so it shuts down when inactive and needs to boot up again when someone visits the page.`}
-            startTime={20}
+            startTime={40}
             countdownCompleteText={'Nearly there, just a bit longer...'}
           /> }
         <ContentContainer>
