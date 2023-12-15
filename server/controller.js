@@ -1,6 +1,6 @@
 'use strict';
 
-import fetch from 'node-fetch';
+const fetch = import('node-fetch').then(module => module.default || module);
 
 const fplApiBaseString = 'https://fantasy.premierleague.com/api';
 
