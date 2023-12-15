@@ -2,7 +2,7 @@
   "name": "badgers-screwfix",
   "version": "1.0.0",
   "description": "Badgers/Screwfix FPL hub",
-  "main": "index.js",
+  "main": "index.cjs",
   "author": "Alex Crump",
   "dependencies": {
     "cors": "^2.8.5",
@@ -13,7 +13,7 @@
     "request": "^2.88.2"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.cjs"
   },
   "type": "commonjs",
   "devDependencies": {
