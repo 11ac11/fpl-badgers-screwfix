@@ -11,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(router);
 
+console.log('working?')
+
 app.listen(PORT, (err) => {
   if (err) console.log('Problem on index with app.listen');
   else console.log(`Server running at http://localhost:${PORT}`);
