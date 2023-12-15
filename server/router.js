@@ -10,7 +10,7 @@ import {
   getLeagueStandings,
   getCustomPlayerList,
   getRealFixtures
-} from './controller.mjs';
+} from './controller.js';
 
 router.get('/event/current', getAllGameweekInfo);
 // router.get('/event/current/players', getPlayerNames);
