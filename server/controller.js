@@ -5,14 +5,16 @@ import fetch from 'node-fetch';
 const fplApiBaseString = 'https://fantasy.premierleague.com/api';
 
 export const getAllGameweekInfo = async (req, res) => {
+  console.log(req)
   const url = `${fplApiBaseString}/bootstrap-static/`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
+    console.log(response, data)
     res.json(data.events);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred' });
+    res.status(500).json({ error: 'An error occurred yo' });
   }
 };
 
