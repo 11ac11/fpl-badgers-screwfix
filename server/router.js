@@ -12,6 +12,9 @@ import {
   getRealFixtures
 } from './controller.js';
 
+router.get('/', (req, res) => {
+  res.send('Server is running!');
+});
 router.get('/event/current', getAllGameweekInfo);
 // router.get('/event/current/players', getPlayerNames);
 router.get('/event/:eventId/live/', getLiveGameweek);
