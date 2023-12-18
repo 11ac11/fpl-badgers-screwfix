@@ -13,7 +13,7 @@ export const getAllGameweekInfo = async (req, res) => {
     if (response.ok) {
       // Parse the JSON only if the response has content
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       res.json(data.events);
     } else {
       // Handle non-OK response status here
