@@ -15,5 +15,5 @@ console.log('working?')
 
 app.listen(PORT, (err) => {
   if (err) console.log('Problem on index with app.listen');
-  else console.log(`Server running at http://localhost:${PORT}`);
+  else console.log(`Server running at http://0.0.0.0:${PORT}`);
 });
