@@ -9,16 +9,21 @@ export const getAllGameweekInfo = async (req, res) => {
 
   try {
     const response = await fetch(url);
-    const data = await response.json();
-    console.log(response.status, response.statusText)
-    res.json(data.events);
+    // Check if the response status is OK (status code 200)
+    if (response.ok) {
+      // Parse the JSON only if the response has content
+      const data = await response.json();
+      console.log(data);
+      res.json(data.events);
+    } else {
+      // Handle non-OK response status here
+      console.error(`Error: ${response.status} - ${response.statusText}`);
+    }
   } catch (error) {
-    console.log(error)
-    res.json(error)
-
-    // res.status(500).json({ error: 'An error occurred yo' });
+    // Handle any other errors that might occur during the process
+    console.error('Error:', error.message);
   }
-};
+}
 
 export const getLiveGameweek = async (req, res) => {
   const event_id = req.params.eventId;
