@@ -11,9 +11,11 @@ export const getAllGameweekInfo = async (req, res) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(response, data)
+    console.log(response.status, response.statusText)
     res.json(data.events);
   } catch (error) {
+    console.log(error)
+
     res.status(500).json({ error: 'An error occurred yo' });
   }
 };
