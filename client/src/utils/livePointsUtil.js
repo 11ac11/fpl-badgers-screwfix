@@ -1,10 +1,11 @@
-import { fetchManagerPicksByEvent } from "../api/requests";
+// import { fetchManagerPicksByEvent } from "../api/requests";
 
 export const calculateLivePoints = async (normalFixtureList) => {
   const fetchData = async (managerId, gameweekNumber) => {
     try {
-      const res = await fetchManagerPicksByEvent(managerId, gameweekNumber);
-      return res;
+      // const res = await fetchManagerPicksByEvent(managerId, gameweekNumber);
+      // return res;
+      return
     } catch (error) {
       console.error(`Error: ${error.message}`);
       return null; // Return null or handle the error as needed

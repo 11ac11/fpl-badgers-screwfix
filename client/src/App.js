@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './App.css';
 import './fonts/fonts.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -57,13 +57,13 @@ const App = () => {
           sidebarIsOpen={sidebarIsOpen}
           setSidebarIsOpen={setSidebarIsOpen}
         />
-          { !currentGameweekNumber &&
+        {/* { !currentGameweekNumber &&
           <Countdown
             countdownTitle={'Starting the server'}
             displayText={`This uses a free server, so it shuts down when inactive and needs to boot up again when someone visits the page.`}
             startTime={40}
             countdownCompleteText={'Nearly there, just a bit longer...'}
-          /> }
+          /> } */}
         <ContentContainer>
           <Routes>
             <Route

@@ -36,7 +36,7 @@ export const Tables = () => {
   useEffect(() => {
     const fetchScrewfixStandings = async () => {
       try {
-        const screwfixData = await fetchLeagueStandings(screwfixId);
+        const screwfixData = await fetchLeagueStandings(screwfixId, 38);
         setLeagueTwoData(screwfixData);
         //console.log('SF league data: ', screwfixData);
       } catch (error) {
@@ -46,7 +46,7 @@ export const Tables = () => {
 
     const fetchBadgersStandings = async () => {
       try {
-        const badgersData = await fetchLeagueStandings(badgersId);
+        const badgersData = await fetchLeagueStandings(badgersId, 38);
         if (badgersData) {
           setLeagueOneData(badgersData);
         }

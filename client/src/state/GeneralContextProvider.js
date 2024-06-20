@@ -23,6 +23,7 @@ const GeneralContextProvider = ({ children }) => {
     const fetchGameweekNumber = async () => {
       try {
         const res = await findCurrentGameweekNumber();
+        console.log(res)
         setGameweekNumber(res);
       } catch (error) {
         console.error('Error fetching gameweek number:', error);
@@ -31,6 +32,15 @@ const GeneralContextProvider = ({ children }) => {
 
     fetchGameweekNumber();
   }, [])
+
+  useEffect(() => {
+    if (gameweekNumber) {
+      const data = {
+        currentGameweekNumber: gameweekNumber,
+      };
+      setGameweekContextData(data);
+    }
+  }, [gameweekNumber])
 
   useEffect(() => {
     if (gameweekNumber) {
@@ -103,7 +113,8 @@ const GeneralContextProvider = ({ children }) => {
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
-    for (const event of data) {
+    const events = data.events
+    for (const event of events) {
       if (!!event.is_current) {
         const twoDaysCheck = isTwoDaysAway(event.deadline_time)
         return twoDaysCheck ? event.id + 1 : event.id
