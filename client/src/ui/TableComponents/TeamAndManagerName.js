@@ -69,7 +69,7 @@ const ManagerName = styled.p`
 
 export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, gameweekContextData, firstGameStarted }) => {
   const innerWidth = useInnerWidth();
-  const canRenderForm = gameweekToView === gameweekContextData?.currentGameweekNumber || !firstGameStarted
+  const canRenderForm = !firstGameStarted && gameweekToView === gameweekContextData?.currentGameweekNumber
 
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
