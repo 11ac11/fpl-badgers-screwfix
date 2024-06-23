@@ -114,7 +114,7 @@ const TeamForm = ({ teamId, leagueId, isHome }) => {
             <OpacityContainer
               key={index}
               opacity={0.2 * (index + 1) + 0.1}
-              isHome={isHome}
+              $isHome={isHome}
             >
               {renderFixture(result, index)}
             </OpacityContainer>

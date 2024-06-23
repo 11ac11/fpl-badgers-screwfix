@@ -6,69 +6,8 @@ import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
 import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
 import { TablePoints } from '../ui/TablePoints';
 import TeamForm from '../ui/TeamForm';
+import { TeamAndManagerName } from '../ui/TableComponents/TeamAndManagerName';
 
-const ManagerTeamCombined = styled.div`
-  display: flex;
-  flex-direction: ${({ $fixturesTable }) => $fixturesTable ? 'column' : 'row'};
-  align-items: center;
-  justify-content: space-between;
-  min-height: 20px;
-  padding: 0.3rem 1rem 0.3rem 0rem;
-  width: 100%;
-  @media ${device.sm} {
-    flex-direction: column;
-    padding: 0.2rem 0.2rem 0.2rem 0rem;
-  }
-`;
-
-const TeamName = styled.p`
-  margin: 0;
-  padding: 0;
-  font-size: 0.9rem;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '50%')};
-  text-align: ${({ $fixturesTable, $isHome }) => $fixturesTable && !$isHome ? 'right' : 'left'};
-
-  @media ${device.xl} {
-    font-size: 1.2rem;
-  }
-
-  @media ${device.sm} {
-    font-size: 0.7rem;
-    width: 100%;
-    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left'};
-    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 1px'};
-    ;
-  }
-`
-
-const ManagerName = styled.p`
-  font-family: JetBrains Mono;
-  margin: 0;
-  padding: 0;
-  font-size: 0.6rem;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  ${({ $fixturesTable }) => $fixturesTable && `width: 100%`};
-  max-width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '40%')};
-  text-align: ${({ $fixturesTable }) => ($fixturesTable ? 'center' : 'right')};
-  text-align: ${({ $isHome }) => $isHome ? 'left' : 'right'};
-
-  @media ${device.xl} {
-    font-size: 0.8rem;
-  }
-
-  @media ${device.sm} {
-    font-size: 0.5rem;
-    width: 100%;
-    max-width: 100%;
-    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left'};
-    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 0.5px'};
-  }
-`
 
 const EmojiContainer = styled.div`
   ${({ $isHome }) => $isHome ? 'padding-left: 0.2rem' : 'padding-right: 0.2rem'};
@@ -81,17 +20,7 @@ const EmojiContainer = styled.div`
   }
 `;
 
-const LeagueTeamAndManagerName = (row, fixturesTable = false, isHome = false) => {
-  const renderForm = window.innerWidth < 600
-  const confirmPlayerId = row.entry_1_name
-  return (
-    <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
-      <TeamName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
-      <ManagerName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
-      {renderForm && <TeamForm teamId={row.entry_2_entry} leagueId={row.league} isHome={isHome} />}
-    </ManagerTeamCombined>
-  )
-}
+
 
 const RenderLeagueImage = (row) => {
   const isBadger = (row.division === 95564)
@@ -159,7 +88,7 @@ export const leagueColumns = [
   },
   {
     Header: 'Team',
-    accessor: (row) => LeagueTeamAndManagerName(row),
+    accessor: (row) => <TeamAndManagerName rowInfo={row} />,
     width: 300,
     sortable: false,
   },
@@ -202,44 +131,5 @@ export const leagueColumns = [
     minWidth: 50,
     maxWidth: 50,
     sortable: true,
-  },
-];
-
-export const fixtureColumns = [
-  {
-    Header: 'Emoji',
-    accessor: 'emoji_1',
-    Cell: (row) => <TeamForm teamId={row.row.original.entry_1_entry} leagueId={row.row.original.league} isHome={true} />,
-    // Cell: (row) => RenderEmojis(row, true),
-    width: '10%',
-  },
-  {
-    Header: 'Home',
-    accessor: (row) => LeagueTeamAndManagerName(row, true),
-    width: '35%',
-  },
-  {
-    Header: '',
-    accessor: 'entry_1_points',
-    Cell: (row) => <TablePoints row={row} isHome={true} />,
-    width: '5%',
-  },
-  {
-    Header: '',
-    accessor: 'entry_2_points',
-    Cell: (row) => <TablePoints row={row} isHome={false} />,
-    width: '5%',
-  },
-  {
-    Header: 'Away',
-    accessor: (row) => LeagueTeamAndManagerName(row, true, true),
-    width: '35%',
-  },
-  {
-    Header: 'Emoji2',
-    accessor: 'emoji_2',
-    // Cell: (row) => RenderEmojis(row, false),
-    Cell: (row) => window.innerWidth < 600 ? RenderEmojis(row, false) : <TeamForm teamId={row.row.original.entry_2_entry} leagueId={row.row.original.league} isHome={false} />,
-    width: '10%',
   },
 ];
