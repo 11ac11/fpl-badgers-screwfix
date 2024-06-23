@@ -33,11 +33,14 @@ const TeamName = styled.p`
   }
 
   @media ${device.sm} {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     width: 100%;
     ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left;'}
     ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 1px;'}
-    ;
+  }
+
+  @media ${device.xs} {
+    font-size: 0.7rem;
   }
 `
 
@@ -59,11 +62,15 @@ const ManagerName = styled.p`
   }
 
   @media ${device.sm} {
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     width: 100%;
     max-width: 100%;
     ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left;'}
     ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 0.5px;'}
+  }
+
+  @media ${device.xs} {
+    font-size: 0.5rem;
   }
 `
 
