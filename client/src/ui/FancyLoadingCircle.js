@@ -2,6 +2,12 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { device } from "../breakpoints";
 
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+
 const spinAnimation = keyframes`
   0% {
     transform: rotate(0deg);
@@ -36,6 +42,10 @@ const LoadingCircle = styled.div`
   }
 `;
 
-export const FancyLoadingCircle = ({width}) => {
-  return <LoadingCircle width={width} />;
+export const FancyLoadingCircle = ({ width }) => {
+  return (
+    <Container>
+      <LoadingCircle width={width} />
+    </Container>
+  )
 };

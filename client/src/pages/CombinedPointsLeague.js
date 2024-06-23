@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Table from '../ui/Table';
 import styled from 'styled-components';
-import { leagueColumns } from '../tableUtils';
+import { leagueColumns } from '../utils/tableUtils';
 import { device } from '../breakpoints';
 
 const BothLeaguesContainer = styled.div`
@@ -57,32 +57,32 @@ export const CombinedPointsLeague = ({
   return (
     <LeagueContainer>
       {bothLeaguesSorted && (
-      <BothLeaguesContainer>
-        <LeagueContainer>
-          <Table
-            columns={leagueColumns}
-            data={bothLeaguesSorted.slice(0, 20)}
-            tableClassName="league-table top-half"
-            theadClassName="league-thead"
-            thClassName="league-th"
-            tbodyClassName="league-tbody"
-            trClassName="league-tr"
-            tdClassName="league-td"
-          />
-        </LeagueContainer>
-        <LeagueContainer>
-          <Table
-            columns={leagueColumns}
-            data={bothLeaguesSorted.slice(-20)}
-            tableClassName="league-table bottom-half"
-            theadClassName="league-thead"
-            thClassName="league-th"
-            tbodyClassName="league-tbody"
-            trClassName="league-tr"
-            tdClassName="league-td"
-          />
-        </LeagueContainer>
-      </BothLeaguesContainer>
+        <BothLeaguesContainer>
+          <LeagueContainer>
+            <Table
+              columns={leagueColumns}
+              data={bothLeaguesSorted.slice(0, 20)}
+              tableClassName="league-table top-half"
+              theadClassName="league-thead"
+              thClassName="league-th"
+              tbodyClassName="league-tbody"
+              trClassName="league-tr"
+              tdClassName="league-td"
+            />
+          </LeagueContainer>
+          <LeagueContainer>
+            <Table
+              columns={leagueColumns}
+              data={bothLeaguesSorted.slice(-20)}
+              tableClassName="league-table bottom-half"
+              theadClassName="league-thead"
+              thClassName="league-th"
+              tbodyClassName="league-tbody"
+              trClassName="league-tr"
+              tdClassName="league-td"
+            />
+          </LeagueContainer>
+        </BothLeaguesContainer>
       )}
     </LeagueContainer>
   );

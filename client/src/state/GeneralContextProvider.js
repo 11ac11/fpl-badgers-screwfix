@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
-import { fetchFixtures, getAllGameweekInfo, fetchLeagueStandings } from '../api/requests';
+import { fetchFantasyFixtures, getAllGameweekInfo, fetchLeagueStandings } from '../api/requests';
 import { getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable, getLeagueTotalPoints } from '../utils/statUtils';
 import { isTwoDaysAway } from '../utils/timeCheckers';
 
@@ -13,6 +13,9 @@ const GeneralContextProvider = ({ children }) => {
   const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
   const [screwfixTableData, setScrewfixTableData] = useState(null);
   const [badgersTableData, setBadgersTableData] = useState(null);
+  const [prev5Results, setPrev5Results] = useState(null)
+
+  console.log(prev5Results)
 
   const screwfixId = 589414;
   const badgersId = 728798;
@@ -23,7 +26,6 @@ const GeneralContextProvider = ({ children }) => {
     const fetchGameweekNumber = async () => {
       try {
         const res = await findCurrentGameweekNumber();
-        console.log(res)
         setGameweekNumber(res);
       } catch (error) {
         console.error('Error fetching gameweek number:', error);
@@ -44,12 +46,10 @@ const GeneralContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (gameweekNumber) {
-      const fetchFixturesData = async () => {
+      const fetchFantasyFixturesData = async () => {
         try {
-          const screwfixId = 589414
-          const badgersId = 728798
-          const screwFixFixtures = await fetchFixtures(screwfixId, gameweekNumber);
-          const badgersFixtures = await fetchFixtures(badgersId, gameweekNumber);
+          const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekNumber);
+          const badgersFixtures = await fetchFantasyFixtures(badgersId, gameweekNumber);
           if (screwFixFixtures) {
             setScrewfixFixtureData(screwFixFixtures.results);
           }
@@ -61,12 +61,12 @@ const GeneralContextProvider = ({ children }) => {
         }
       };
 
-      fetchFixturesData()
+      fetchFantasyFixturesData()
 
       const fetchLeaguesData = async () => {
         try {
-          const screwfixData = await fetchLeagueStandings(screwfixId);
-          const badgersLeague = await fetchLeagueStandings(badgersId);
+          const screwfixData = await fetchLeagueStandings(screwfixId, gameweekNumber);
+          const badgersLeague = await fetchLeagueStandings(badgersId, gameweekNumber);
 
           setScrewfixTableData(screwfixData);
           setBadgersTableData(badgersLeague);
@@ -76,11 +76,12 @@ const GeneralContextProvider = ({ children }) => {
       };
 
       fetchLeaguesData();
+      fetchLast5Games()
     }
   }, [gameweekNumber]);
 
   useEffect(() => {
-    if (screwfixFixtureData, badgersFixtureData, badgersTableData, screwfixTableData) {
+    if (screwfixFixtureData && badgersFixtureData && badgersTableData && screwfixTableData && prev5Results) {
 
       const gameweekAwards = {
         badgersHighest: getHighestPoints(badgersFixtureData),
@@ -104,12 +105,13 @@ const GeneralContextProvider = ({ children }) => {
         badgersTableData,
         gameweekAwards,
         badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
-        screwfixTotalPoints: getLeagueTotalPoints(screwfixTableData)
+        screwfixTotalPoints: getLeagueTotalPoints(screwfixTableData),
+        prev5Results
       };
 
       setGameweekContextData(data);
     }
-  }, [screwfixFixtureData, badgersFixtureData, badgersTableData, screwfixTableData])
+  }, [screwfixFixtureData, badgersFixtureData, badgersTableData, screwfixTableData, prev5Results])
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
@@ -122,6 +124,23 @@ const GeneralContextProvider = ({ children }) => {
     }
     return -1;
   };
+
+  const fetchLast5Games = async () => {
+    const last5 = {
+      sf: {},
+      ba: {}
+    }
+    let i = gameweekNumber
+    while (i > gameweekNumber - 5 && i > 0) {
+      const screwFixFixtures = await fetchFantasyFixtures(screwfixId, i);
+      const badgersFixtures = await fetchFantasyFixtures(badgersId, i);
+      last5.sf[`gw${i}`] = screwFixFixtures.results
+      last5.ba[`gw${i}`] = badgersFixtures.results
+      i--;
+    }
+    setPrev5Results(last5)
+  }
+
 
   return (
     <GeneralContext.Provider value={{ gameweekContextData }}>

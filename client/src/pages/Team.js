@@ -9,8 +9,6 @@ export const Team = ({ gameweekNumber }) => {
   //   }
   // }, [gameweekNumber]);
 
-
-
   // const fetchPicks = async () => {
   //   try {
   //     const res = await fetchManagerPicksByEvent(1034149, gameweekNumber)

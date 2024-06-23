@@ -2,14 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import Table from '../ui/Table';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
-import { fetchFixtures } from '../api/requests';
+import { fetchFantasyFixtures } from '../api/requests';
 import { calculateLivePoints } from '../utils/livePointsUtil';
 
-import { fixtureColumns } from '../tableUtils';
+import { fixtureColumns } from '../utils/tableUtils';
 import { GameweekSelector } from '../ui/GameweekSelector';
-import { fetchRealFixtures } from '../api/requests';
+import { fetchRealFixtures as fetchPremFixtures } from '../api/requests';
 import { isPastThreeHoursLater } from '../utils/timeCheckers';
 import { Countdown } from '../ui/Countdown';
+import { FancyLoadingCircle } from '../ui/FancyLoadingCircle';
 // import { ScreenshotButton } from '../utils/ScreenshotButton';
 
 const BothFixturescontainer = styled.div`
@@ -89,7 +90,7 @@ const EmojiPairWrap = styled.div`
   }
 `
 
-export const Fixtures = ({ gameweekNumber }) => {
+export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
   const [loading, setLoading] = useState(false)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
@@ -100,16 +101,16 @@ export const Fixtures = ({ gameweekNumber }) => {
 
   useEffect(() => {
     if (gameweekToView) {
-      fetchRealFixturesData();
+      fetchPremFixturesData();
       if (finishedCheckComplete) {
-        fetchFixturesData();
+        fetchFantasyFixturesData();
       }
     }
   }, [gameweekToView, finishedCheckComplete]);
 
-  const fetchRealFixturesData = async () => {
+  const fetchPremFixturesData = async () => {
     try {
-      const realFixtures = await fetchRealFixtures(gameweekNumber)
+      const realFixtures = await fetchPremFixtures(gameweekNumber)
       if (realFixtures && realFixtures.length > 0) {
         setFirstGameStarted(realFixtures[0].started)
         const finalFixture = realFixtures[realFixtures.length - 1]
@@ -121,19 +122,17 @@ export const Fixtures = ({ gameweekNumber }) => {
         setFinishedCheckComplete(true)
       }
     } catch (error) {
-    console.error(`Error: ${error.message}`);
+      console.error(`Error: ${error.message}`);
     }
   }
 
-  const fetchFixturesData = async () => {
+  const fetchFantasyFixturesData = async () => {
     try {
       const screwfixId = 589414
       const badgersId = 728798
-      const screwFixFixtures = await fetchFixtures(screwfixId, gameweekToView);
-      const badgersFixtures = await fetchFixtures(badgersId, gameweekToView);
-      console.log('all games?', allGamesFinished, finishedCheckComplete)
+      const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
+      const badgersFixtures = await fetchFantasyFixtures(badgersId, gameweekToView);
       if (gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished) {
-        console.log('confirmation using custom function')
         setLoading(true)
         const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
         setScrewfixFixtureData(livePointsScrewfix);
@@ -167,33 +166,27 @@ export const Fixtures = ({ gameweekNumber }) => {
 
   return (
     <>
-    <TopbarWrap>
-      <SelectorWrap>
-        <GameweekSelector
-          gameweekNumber={gameweekNumber}
-          gameweekToView={gameweekToView}
-          setGameweekToView={setGameweekToView}
+      <TopbarWrap>
+        <SelectorWrap>
+          <GameweekSelector
+            gameweekNumber={gameweekNumber}
+            gameweekToView={gameweekToView}
+            setGameweekToView={setGameweekToView}
           />
-      </SelectorWrap>
-      <EmojiKeyWrap>
-      { emojiKeys.map((emojiPair) => {
-        return <EmojiPairWrap>
-          <div><p className="emoji">{emojiPair[0]}</p></div>
-          <div><p>{emojiPair[1]}</p></div>
-        </EmojiPairWrap>
-      })}
-      </EmojiKeyWrap>
-    </TopbarWrap>
-      { loading
-        ?
-          <Countdown
-            countdownTitle={'Loading live scores'}
-            displayText={`This might take about 20 seconds.`}
-            startTime={20}
-            countdownCompleteText={'Nearly there, just a bit longer...'}
-          />
+        </SelectorWrap>
+        <EmojiKeyWrap>
+          {emojiKeys.map((emojiPair, index) => {
+            return <EmojiPairWrap key={index}>
+              <div><p className="emoji">{emojiPair[0]}</p></div>
+              <div><p>{emojiPair[1]}</p></div>
+            </EmojiPairWrap>
+          })}
+        </EmojiKeyWrap>
+      </TopbarWrap>
+      {loading
+        ? <FancyLoadingCircle />
         : <BothFixturescontainer ref={contentRef}>
-          { badgersFixtureData && badgersFixtureData.length !== 0 && (
+          {badgersFixtureData && badgersFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
@@ -204,10 +197,11 @@ export const Fixtures = ({ gameweekNumber }) => {
                 tbodyClassName="fixture-tbody"
                 trClassName="fixture-tr"
                 tdClassName="fixture-td"
+                gameweekContextData={gameweekContextData}
               />
             </FixturesContainer>
           )}
-          { screwfixFixtureData && screwfixFixtureData.length !== 0 && (
+          {screwfixFixtureData && screwfixFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
@@ -218,6 +212,7 @@ export const Fixtures = ({ gameweekNumber }) => {
                 tbodyClassName="fixture-tbody"
                 trClassName="fixture-tr"
                 tdClassName="fixture-td"
+                gameweekContextData={gameweekContextData}
               />
             </FixturesContainer>
           )}

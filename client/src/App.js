@@ -14,6 +14,7 @@ import { GeneralContext } from './state/GeneralContextProvider';
 import { device } from './breakpoints';
 import { Team } from './pages/Team';
 import { Countdown } from './ui/Countdown';
+import { FancyLoadingCircle } from './ui/FancyLoadingCircle';
 
 
 const LayoutContainer = styled.div`
@@ -38,7 +39,7 @@ const ContentContainer = styled.div`
 
 const App = () => {
   const { gameweekContextData } = useContext(GeneralContext);
-  const { currentGameweekNumber, badgersTableData, screwfixTableData } = gameweekContextData;
+  const { currentGameweekNumber, badgersTableData, screwfixTableData, prev5Results } = gameweekContextData;
 
   // const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -57,53 +58,53 @@ const App = () => {
           sidebarIsOpen={sidebarIsOpen}
           setSidebarIsOpen={setSidebarIsOpen}
         />
-        {/* { !currentGameweekNumber &&
-          <Countdown
-            countdownTitle={'Starting the server'}
-            displayText={`This uses a free server, so it shuts down when inactive and needs to boot up again when someone visits the page.`}
-            startTime={40}
-            countdownCompleteText={'Nearly there, just a bit longer...'}
-          /> } */}
-        <ContentContainer>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  screwfixTableData={screwfixTableData}
-                  badgersTableData={badgersTableData}
+        {!currentGameweekNumber && !prev5Results?.sf ?
+          (
+            <FancyLoadingCircle />
+          ) : (
+            <ContentContainer>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      screwfixTableData={screwfixTableData}
+                      badgersTableData={badgersTableData}
+                    />
+                  }
                 />
-              }
-            />
-            <Route path="/tables" element={<Tables />} />
-            <Route
-              path="/points-league"
-              element={
-                <CombinedPointsLeague
-                  screwfixTableData={screwfixTableData}
-                  badgersTableData={badgersTableData}
+                <Route path="/tables" element={<Tables />} />
+                <Route
+                  path="/points-league"
+                  element={
+                    <CombinedPointsLeague
+                      screwfixTableData={screwfixTableData}
+                      badgersTableData={badgersTableData}
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/fixtures-results"
-              element={
-                <Fixtures
-                  gameweekNumber={currentGameweekNumber}
+                <Route
+                  path="/fixtures-results"
+                  element={
+                    <Fixtures
+                      gameweekNumber={currentGameweekNumber}
+                      gameweekContextData={gameweekContextData}
+                    />
+                  }
                 />
-              }
-            />
-            <Route
-              path="/team"
-              element={
-                <Team
-                  gameweekNumber={currentGameweekNumber}
+                <Route
+                  path="/team"
+                  element={
+                    <Team
+                      gameweekNumber={currentGameweekNumber}
+                    />
+                  }
                 />
-              }
-            />
-            <Route path="/live" element={<Live />} />
-          </Routes>
-        </ContentContainer>
+                <Route path="/live" element={<Live />} />
+              </Routes>
+            </ContentContainer>
+          )
+        }
       </LayoutContainer>
     </Router>
   );

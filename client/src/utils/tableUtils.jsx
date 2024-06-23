@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { device } from './breakpoints';
-import Image from './ui/Image';
-import screwfixDiv2CircleImage from './images/screwfix_circle_logo.png';
-import badgersDiv1CircleImage from './images/badger_circle_logo.png';
-import { getClosestGame, getHighestPoints, getLowestPoints } from './utils/statUtils';
-import { TablePoints } from './ui/TablePoints';
+import { device } from '../breakpoints';
+import Image from '../ui/Image';
+import screwfixDiv2CircleImage from '../images/screwfix_circle_logo.png';
+import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
+import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
+import { TablePoints } from '../ui/TablePoints';
+import TeamForm from '../ui/TeamForm';
 
 const ManagerTeamCombined = styled.div`
   display: flex;
@@ -86,7 +87,7 @@ const LeagueTeamAndManagerName = (row, fixturesTable = false, isHome = false) =>
       <TeamName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
       <ManagerName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
     </ManagerTeamCombined>
-    )
+  )
 }
 
 const RenderLeagueImage = (row) => {
@@ -96,12 +97,19 @@ const RenderLeagueImage = (row) => {
   )
 }
 
+const RenderTeamForm = (row, isHome) => {
+  const entryOneResults = row.cell.row.original
+  const entryTwoResults = row.cell.row.original
+
+  // console.log(entryOneResults, entryTwoResults)
+}
+
 const RenderEmojis = (row, isHome) => {
   const entryOnePoints = row.cell.row.original.entry_1_points
   const entryTwoPoints = row.cell.row.original.entry_2_points
   let emojiStr = ''
   if (!entryOnePoints && !entryTwoPoints) {
-    return (<EmojiContainer $isHome={isHome}>{ emojiStr } </EmojiContainer>)
+    return (<EmojiContainer $isHome={isHome}>{emojiStr} </EmojiContainer>)
   }
   const highestPoints = getHighestPoints(row.data)
   const lowestPoints = getLowestPoints(row.data)
@@ -133,7 +141,7 @@ const RenderEmojis = (row, isHome) => {
     if (entryTwoPoints > 90) emojiStr += '🔥 '
     if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
   }
-  return (<EmojiContainer $isHome={isHome}>{ emojiStr } </EmojiContainer>)
+  return (<EmojiContainer $isHome={isHome}>{emojiStr} </EmojiContainer>)
 }
 
 export const leagueColumns = [
@@ -205,7 +213,8 @@ export const fixtureColumns = [
   {
     Header: 'Emoji',
     accessor: 'emoji_1',
-    Cell: (row) => RenderEmojis(row, true),
+    Cell: (row) => <TeamForm teamId={row.row.original.entry_1_entry} leagueId={row.row.original.league} isHome={true} />,
+    // Cell: (row) => RenderEmojis(row, true),
     width: '10%',
   },
   {
@@ -216,13 +225,13 @@ export const fixtureColumns = [
   {
     Header: '',
     accessor: 'entry_1_points',
-    Cell: (row) => <TablePoints row={ row } isHome={ true } />,
+    Cell: (row) => <TablePoints row={row} isHome={true} />,
     width: '5%',
   },
   {
     Header: '',
     accessor: 'entry_2_points',
-    Cell: (row) => <TablePoints row={ row } isHome={ false } />,
+    Cell: (row) => <TablePoints row={row} isHome={false} />,
     width: '5%',
   },
   {
@@ -233,7 +242,8 @@ export const fixtureColumns = [
   {
     Header: 'Emoji2',
     accessor: 'emoji_2',
-    Cell: (row) => RenderEmojis(row, false),
+    // Cell: (row) => RenderEmojis(row, false),
+    Cell: (row) => <TeamForm teamId={row.row.original.entry_2_entry} leagueId={row.row.original.league} isHome={false} />,
     width: '10%',
   },
 ];

@@ -1,10 +1,10 @@
-// import { fetchManagerPicksByEvent } from "../api/requests";
+import { fetchManagerPicksByEvent } from "../api/requests";
 
 export const calculateLivePoints = async (normalFixtureList) => {
   const fetchData = async (managerId, gameweekNumber) => {
     try {
-      // const res = await fetchManagerPicksByEvent(managerId, gameweekNumber);
-      // return res;
+      const res = await fetchManagerPicksByEvent(managerId, gameweekNumber);
+      return res;
       return
     } catch (error) {
       console.error(`Error: ${error.message}`);
@@ -52,4 +52,24 @@ export const calculateLivePoints = async (normalFixtureList) => {
   }));
 
   return updatedArray;
+}
+
+const mergeObjectsById = (array1, array2, array3) => {
+  const mergedArray = array1.map(obj1 => {
+    const matchingObj2 = array2.find(obj2 => obj2.element === obj1.id);
+    const matchingObj3 = array3.find(obj3 => obj3.id === obj1.id);
+
+    if (matchingObj2 && matchingObj3) {
+      // Merge the objects from array2 and array3, excluding the 'element' property
+      const { element, ...mergedObject } = { ...obj1, ...matchingObj2 };
+      // Include the 'stats' property from array3
+      mergedObject.stats = matchingObj3.stats;
+      return mergedObject;
+    }
+    // If there is no match in either array2 or array3, return null
+    return null;
+  }).filter(Boolean); // Filter out the null values (no match)
+
+  // Sort the mergedArray by the 'position' property in ascending order
+  return mergedArray.sort((a, b) => a.position - b.position);
 }

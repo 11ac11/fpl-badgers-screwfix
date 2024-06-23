@@ -10,6 +10,7 @@ const Table = ({
   tbodyClassName,
   trClassName,
   tdClassName,
+  gameweekContextData
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -30,7 +31,7 @@ const Table = ({
                 onClick={
                   column.sortable
                     ? column.getHeaderProps(column.getSortByToggleProps())
-                        .onClick
+                      .onClick
                     : null
                 }
                 style={{
@@ -53,7 +54,7 @@ const Table = ({
         {rows.map((row, index) => {
           prepareRow(row);
           return (
-            //console.log(row),
+            // console.log(row),
             <tr key={index} {...row.getRowProps()} className={`tr ${trClassName}`}>
               {row.cells.map((cell) => {
                 //console.log('cell', cell)

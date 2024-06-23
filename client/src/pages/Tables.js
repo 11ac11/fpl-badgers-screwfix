@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../ui/Table';
 import styled from 'styled-components';
-import { leagueColumns } from '../tableUtils';
+import { leagueColumns } from '../utils/tableUtils';
 import { fetchLeagueStandings } from '../api/requests';
 import { device } from '../breakpoints';
 
@@ -38,7 +38,6 @@ export const Tables = () => {
       try {
         const screwfixData = await fetchLeagueStandings(screwfixId, 38);
         setLeagueTwoData(screwfixData);
-        //console.log('SF league data: ', screwfixData);
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }
@@ -50,7 +49,6 @@ export const Tables = () => {
         if (badgersData) {
           setLeagueOneData(badgersData);
         }
-        // console.log('B league data: ', badgersData);
       } catch (error) {
         console.error(`Error: ${error.message}`);
       }
