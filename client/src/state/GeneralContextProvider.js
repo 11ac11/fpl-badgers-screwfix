@@ -15,8 +15,6 @@ const GeneralContextProvider = ({ children }) => {
   const [badgersTableData, setBadgersTableData] = useState(null);
   const [prev5Results, setPrev5Results] = useState(null)
 
-  console.log(prev5Results)
-
   const screwfixId = 589414;
   const badgersId = 728798;
   const screwfixDivisionId = 72656;

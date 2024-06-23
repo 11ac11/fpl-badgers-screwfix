@@ -82,10 +82,13 @@ const EmojiContainer = styled.div`
 `;
 
 const LeagueTeamAndManagerName = (row, fixturesTable = false, isHome = false) => {
+  const renderForm = window.innerWidth < 600
+  const confirmPlayerId = row.entry_1_name
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
       <TeamName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.entry_name || row.entry_1_name : row.entry_2_name}</TeamName>
       <ManagerName $fixturesTable={fixturesTable} $isHome={isHome}>{!isHome ? row.player_name || row.entry_1_player_name : row.entry_2_player_name}</ManagerName>
+      {renderForm && <TeamForm teamId={row.entry_2_entry} leagueId={row.league} isHome={isHome} />}
     </ManagerTeamCombined>
   )
 }
@@ -95,13 +98,6 @@ const RenderLeagueImage = (row) => {
   return (
     <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
   )
-}
-
-const RenderTeamForm = (row, isHome) => {
-  const entryOneResults = row.cell.row.original
-  const entryTwoResults = row.cell.row.original
-
-  // console.log(entryOneResults, entryTwoResults)
 }
 
 const RenderEmojis = (row, isHome) => {
@@ -243,7 +239,7 @@ export const fixtureColumns = [
     Header: 'Emoji2',
     accessor: 'emoji_2',
     // Cell: (row) => RenderEmojis(row, false),
-    Cell: (row) => <TeamForm teamId={row.row.original.entry_2_entry} leagueId={row.row.original.league} isHome={false} />,
+    Cell: (row) => window.innerWidth < 600 ? RenderEmojis(row, false) : <TeamForm teamId={row.row.original.entry_2_entry} leagueId={row.row.original.league} isHome={false} />,
     width: '10%',
   },
 ];

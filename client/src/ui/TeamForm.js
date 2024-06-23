@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
 import { GeneralContext } from '../state/GeneralContextProvider';
@@ -16,8 +16,14 @@ const Container = styled.div`
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
   @media ${device.sm} {
+    padding-right: 0;
+    padding-left: 0;
     font-size: 0.8rem;
     white-space: unset;
+    width: 100%;
+    & > div {
+      justify-content: ${({ $isHome }) => $isHome ? 'flex-start' : 'flex-end'};
+    }
   }
 `;
 
@@ -38,6 +44,11 @@ const ResultCircle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media ${device.sm} {
+    height: 12px;
+    width: 12px;
+    font-size: 8px;
+  };
 `
 
 const Win = styled(ResultCircle)`
@@ -96,7 +107,7 @@ const TeamForm = ({ teamId, leagueId, isHome }) => {
   }
 
   return (
-    <Container>
+    <Container $isHome={isHome}>
       <FormDisplayContainer $isHome={isHome}>
         {isHome
           ? teamForm.map((result, index) => (
