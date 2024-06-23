@@ -35,8 +35,8 @@ const TeamName = styled.p`
   @media ${device.sm} {
     font-size: 0.7rem;
     width: 100%;
-    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left'};
-    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 1px'};
+    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left;'}
+    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 1px;'}
     ;
   }
 `
@@ -49,7 +49,7 @@ const ManagerName = styled.p`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  ${({ $fixturesTable }) => $fixturesTable && `width: 100%`};
+  ${({ $fixturesTable }) => $fixturesTable && `width: 100%;`}
   max-width: ${({ $fixturesTable }) => ($fixturesTable ? '100%' : '40%')};
   text-align: ${({ $fixturesTable }) => ($fixturesTable ? 'center' : 'right')};
   text-align: ${({ $isHome }) => $isHome ? 'left' : 'right'};
@@ -62,20 +62,34 @@ const ManagerName = styled.p`
     font-size: 0.5rem;
     width: 100%;
     max-width: 100%;
-    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left'};
-    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 0.5px'};
+    ${({ $fixturesTable }) => !$fixturesTable && 'text-align: left;'}
+    ${({ $fixturesTable }) => !$fixturesTable && 'letter-spacing: 0.5px;'}
   }
 `
 
-export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, gameweekContextData }) => {
+export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, gameweekContextData, firstGameStarted }) => {
   const innerWidth = useInnerWidth();
-  const canRenderForm = gameweekToView === gameweekContextData?.currentGameweekNumber
+  const canRenderForm = gameweekToView === gameweekContextData?.currentGameweekNumber || !firstGameStarted
 
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
-      <TeamName $fixturesTable={fixturesTable} $isHome={isHome}>{isHome ? rowInfo.entry_name || rowInfo.entry_1_name : rowInfo.entry_2_name}</TeamName>
-      <ManagerName $fixturesTable={fixturesTable} $isHome={isHome}>{isHome ? rowInfo.player_name || rowInfo.entry_1_player_name : rowInfo.entry_2_player_name}</ManagerName>
-      {canRenderForm && innerWidth < 600 && <TeamForm teamId={rowInfo.entry_2_entry} leagueId={rowInfo.league} isHome={isHome} />}
+      <TeamName
+        $fixturesTable={fixturesTable}
+        $isHome={isHome}
+      >
+        {isHome ? rowInfo.entry_name || rowInfo.entry_1_name : rowInfo.entry_2_name}
+      </TeamName>
+      <ManagerName
+        $fixturesTable={fixturesTable}
+        $isHome={isHome}
+      >
+        {isHome ? rowInfo.player_name || rowInfo.entry_1_player_name : rowInfo.entry_2_player_name}
+      </ManagerName>
+      {canRenderForm && innerWidth < 600 && <TeamForm
+        teamId={rowInfo.entry_2_entry}
+        leagueId={rowInfo.league}
+        isHome={isHome}
+      />}
     </ManagerTeamCombined>
   )
 }

@@ -194,6 +194,7 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
         isHome={true}
         gameweekToView={gameweekToView}
         gameweekContextData={gameweekContextData}
+        firstGameStarted={firstGameStarted}
       />,
       width: '35%',
     },
@@ -217,6 +218,7 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
         isHome={false}
         gameweekToView={gameweekToView}
         gameweekContextData={gameweekContextData}
+        firstGameStarted={firstGameStarted}
       />,
       width: '35%',
     },
