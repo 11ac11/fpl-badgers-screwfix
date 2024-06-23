@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../ui/Table';
 import styled from 'styled-components';
-import { leagueColumns } from '../utils/tableUtils';
 import { fetchLeagueStandings } from '../api/requests';
 import { device } from '../breakpoints';
+import { leagueColumns } from '../utils/tableUtils';
 
 const screwfixId = 589414;
 const badgersId = 728798;

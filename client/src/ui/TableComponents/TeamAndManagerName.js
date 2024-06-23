@@ -84,13 +84,19 @@ export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = fa
         $fixturesTable={fixturesTable}
         $isHome={isHome}
       >
-        {isHome ? rowInfo.entry_name || rowInfo.entry_1_name : rowInfo.entry_2_name}
+        {fixturesTable
+          ? (isHome ? rowInfo.entry_1_name : rowInfo.entry_2_name)
+          : (rowInfo.entry_name)
+        }
       </TeamName>
       <ManagerName
         $fixturesTable={fixturesTable}
         $isHome={isHome}
       >
-        {isHome ? rowInfo.player_name || rowInfo.entry_1_player_name : rowInfo.entry_2_player_name}
+        {fixturesTable
+          ? (isHome ? rowInfo.entry_1_player_name : rowInfo.entry_2_player_name)
+          : (rowInfo.player_name)
+        }
       </ManagerName>
       {canRenderForm && innerWidth < 600 && <TeamForm
         teamId={rowInfo.entry_2_entry}
