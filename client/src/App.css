@@ -4,12 +4,15 @@
   --turq: #37e0c1;
   --green: #5bff89;
   --lightgrey: #f0f0f0;
+  --pink: #EA568F;
+  --red: #DF676F;
+  --orange: #FC682E;
   --grey: #656565;
   --black: #1c1c1c;
   --white: #F9F9F9;
   --gradient: linear-gradient(90deg, var(--turq) 0%, var(--green) 29%);
   --gradientRev: linear-gradient(270deg, var(--turq) 0%, var(--green) 29%);
-  --gradientRed: linear-gradient(142deg, rgb(255 199 195) 0%, rgb(232 187 180) 46%, rgb(243 192 183) 100%);
+  --gradientRed: linear-gradient(135deg, var(--pink), var(--orange));
 }
 
 * {
@@ -53,12 +56,14 @@ th {
   font-weight: 100;
 }
 
-th, td {
+th,
+td {
   padding: 0.1rem 0.75rem;
   max-height: 10px;
 }
 
-th.fixture-score, td.fixture-score {
+th.fixture-score,
+td.fixture-score {
   padding: 0 0;
   font-size: 1.25rem;
 }
@@ -77,18 +82,22 @@ tr {
 }
 
 .league-tr:nth-child(-n+6) {
+  background: var(--green);
   background: var(--gradient);
   background-attachment: fixed;
 }
 
 .league-tr:nth-last-child(-n+3) {
+  background: var(--red);
   background: var(--gradientRed);
+  color: var(--white);
   background-attachment: fixed;
 }
 
 .top-half .league-tr:nth-last-child(-n+3) {
   background: var(--lightgrey);
   background-attachment: fixed;
+  color: var(--black);
 }
 
 .bottom-half .league-tr:nth-child(-n+6) {
@@ -107,11 +116,15 @@ tr:nth-child(even) {
 }
 
 @media (max-width: 600px) {
-  .fixture-th, .fixture-td {
+
+  .fixture-th,
+  .fixture-td {
     font-size: 0.5rem;
     padding: 0.1rem 0.25rem;
   }
-  th, td {
+
+  th,
+  td {
     padding: 0.2rem 0.5rem;
     max-height: 10px;
   }

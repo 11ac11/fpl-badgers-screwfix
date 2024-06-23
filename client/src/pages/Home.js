@@ -20,6 +20,7 @@ const Background = styled.div`
 
   &.stats-background::before {
     content: ${(props) => (props.$gameWeek ? `"${props.$gameWeek}"` : '""')};
+    background: var(--green);
     background: var(--gradient);
     background-size: 400% 400%;
     opacity: 0.75;
@@ -149,7 +150,7 @@ const PointsTotal = styled.div`
   }
 `
 
-export const Home = ({}) => {
+export const Home = ({ }) => {
   const { gameweekContextData } = useContext(GeneralContext);
   const { gameweekAwards, currentGameweekNumber, badgersTotalPoints, screwfixTotalPoints } = gameweekContextData
 
@@ -157,75 +158,75 @@ export const Home = ({}) => {
 
   const renderEmojiForAward = (awardName) => {
     if (awardName.includes('Highest')) {
-        return '🐐';
+      return '🐐';
     } else if (awardName.includes('Lowest')) {
-        return '😭';
+      return '😭';
     } else if (awardName.includes('Top')) {
-        return '🏆';
+      return '🏆';
     } else if (awardName.includes('Bottom')) {
-        return '‼️';
+      return '‼️';
     } else {
-        return '';
+      return '';
     }
   }
 
   return (
-    <Background className="stats-background" $gameWeek={ currentGameweekNumber }>
-    { gameweekContextData && awardsForMapping && (
-      <AllStatsContainer>
-        <PointsStatsContainer>
-          <StatContainer className="total_points">
-            <LeagueImg className="lrg">
-              <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%"/>
-            </LeagueImg>
-            <PointsTotal>
-              {badgersTotalPoints}
-            </PointsTotal>
-          </StatContainer>
-          <StatContainer className="total_points">
-            <LeagueImg className="lrg">
-              <Image
-                src={screwfixDiv2CircleBWImage}
-                alt="Screwfix division two"
-                width="100%"
-                />
-            </LeagueImg>
-            <PointsTotal>
-              {screwfixTotalPoints}
-            </PointsTotal>
-          </StatContainer>
-        </PointsStatsContainer>
-        { awardsForMapping.map((award, key) => {
-          const awardName = award[0]
-          const awardData = award[1]
-          return (
-          <StatContainer key={key}>
-            <LeagueImg>
-              { awardName.includes('badgers')
-                ? <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%"/>
-                : <Image
+    <Background className="stats-background" $gameWeek={currentGameweekNumber}>
+      {gameweekContextData && awardsForMapping && (
+        <AllStatsContainer>
+          <PointsStatsContainer>
+            <StatContainer className="total_points">
+              <LeagueImg className="lrg">
+                <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%" />
+              </LeagueImg>
+              <PointsTotal>
+                {badgersTotalPoints}
+              </PointsTotal>
+            </StatContainer>
+            <StatContainer className="total_points">
+              <LeagueImg className="lrg">
+                <Image
                   src={screwfixDiv2CircleBWImage}
                   alt="Screwfix division two"
                   width="100%"
-                  /> }
-            </LeagueImg>
-            <StatEmoji>{renderEmojiForAward(awardName)}</StatEmoji>
-            <div style={{ width: '50%' }}>
-              <TeamName>
-                <span>{awardData?.team} </span>
-              </TeamName>
-              <ManagerName>
-                {awardData?.winner}
-              </ManagerName>
-            </div>
-            <PointsTotal>
-              <span>{awardData?.points}</span>
-            </PointsTotal>
-          </StatContainer>
-          )
-        })}
-      </AllStatsContainer>
-    )}
+                />
+              </LeagueImg>
+              <PointsTotal>
+                {screwfixTotalPoints}
+              </PointsTotal>
+            </StatContainer>
+          </PointsStatsContainer>
+          {awardsForMapping.map((award, key) => {
+            const awardName = award[0]
+            const awardData = award[1]
+            return (
+              <StatContainer key={key}>
+                <LeagueImg>
+                  {awardName.includes('badgers')
+                    ? <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%" />
+                    : <Image
+                      src={screwfixDiv2CircleBWImage}
+                      alt="Screwfix division two"
+                      width="100%"
+                    />}
+                </LeagueImg>
+                <StatEmoji>{renderEmojiForAward(awardName)}</StatEmoji>
+                <div style={{ width: '50%' }}>
+                  <TeamName>
+                    <span>{awardData?.team} </span>
+                  </TeamName>
+                  <ManagerName>
+                    {awardData?.winner}
+                  </ManagerName>
+                </div>
+                <PointsTotal>
+                  <span>{awardData?.points}</span>
+                </PointsTotal>
+              </StatContainer>
+            )
+          })}
+        </AllStatsContainer>
+      )}
     </Background>
   );
 };

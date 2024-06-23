@@ -21,20 +21,6 @@ const Container = styled.div`
   }
 `;
 
-const TextContainer = styled.div`
-  font-size: 1rem;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 0.2rem;
-  width: 100%;
-  & span {
-    font-family: 'JetBrains Mono';
-    font-size: 1rem;
-    letter-spacing: 0;
-  }
-`
-
 const FormDisplayContainer = styled.div`
   display: flex;
   gap: 0.2rem;
@@ -55,7 +41,7 @@ const ResultCircle = styled.div`
 `
 
 const Win = styled(ResultCircle)`
-  background: var(--gradient);
+  background: var(--green);
   `
 
 const Draw = styled(ResultCircle)`
@@ -63,7 +49,8 @@ const Draw = styled(ResultCircle)`
   `
 
 const Loss = styled(ResultCircle)`
-  background: var(--gradientRed);
+  background: var(--red);
+  color: var(--white);
   `
 
 const TeamForm = ({ teamId, leagueId, isHome }) => {
@@ -115,14 +102,14 @@ const TeamForm = ({ teamId, leagueId, isHome }) => {
           ? teamForm.map((result, index) => (
             <OpacityContainer
               key={index}
-              opacity={0.2 * (index + 1)}
+              opacity={0.2 * (index + 1) + 0.1}
               isHome={isHome}
             >
               {renderFixture(result, index)}
             </OpacityContainer>
           ))
           : teamForm.reverse().map((result, index) => (
-            <OpacityContainer key={index} opacity={0.2 * (teamForm.length - index)}>
+            <OpacityContainer key={index} opacity={0.2 * (teamForm.length - index) + 0.1}>
               {renderFixture(result, index)}
             </OpacityContainer>
           ))}

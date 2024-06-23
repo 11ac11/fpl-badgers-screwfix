@@ -4,7 +4,8 @@ import { device } from '../breakpoints';
 
 
 const PointsContainer = styled.div`
-  background: ${({ $isHome }) => $isHome ? 'var(--gradient)' : 'var(--gradientRev)' };
+  background: var(--green);
+  background: ${({ $isHome }) => $isHome ? 'var(--gradient)' : 'var(--gradientRev)'};
   border-radius: ${({ $isHome }) => $isHome ? `20% 0% 0% 20%` : '0% 20% 20% 0%'};
   display: flex;
   align-items: center;
@@ -26,7 +27,7 @@ export const TablePoints = ({ row, isHome }) => {
   }
 
   if (!entryOnePoints && !entryTwoPoints) {
-    return (<PointsContainer style={{ ...futureFixtureStyle }} $isHome={isHome}>{ '-' } </PointsContainer>)
+    return (<PointsContainer style={{ ...futureFixtureStyle }} $isHome={isHome}>{'-'} </PointsContainer>)
   }
 
   const homeCellStyles = {
@@ -46,7 +47,7 @@ export const TablePoints = ({ row, isHome }) => {
       style={{ ...finalStyles }}
       className='fixture-score'
       $isHome={isHome}>
-        {isHome ? entryOnePoints : entryTwoPoints}
-      </PointsContainer>
-    )
+      {isHome ? entryOnePoints : entryTwoPoints}
+    </PointsContainer>
+  )
 }
