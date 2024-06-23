@@ -179,7 +179,6 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
     }
   }
 
-
   const fixtureColumns = [
     {
       Header: 'Emoji',
