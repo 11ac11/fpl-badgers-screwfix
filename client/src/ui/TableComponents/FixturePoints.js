@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { device } from '../breakpoints';
+import { device } from '../../breakpoints';
 
 
 const PointsContainer = styled.div`
@@ -18,7 +18,7 @@ const PointsContainer = styled.div`
   }
 `
 
-export const TablePoints = ({ row, isHome }) => {
+export const FixturePoints = ({ row, isHome }) => {
   const entryOnePoints = row.cell.row.original.entry_1_points
   const entryTwoPoints = row.cell.row.original.entry_2_points
 

@@ -100,7 +100,7 @@ export const fetchManagerPicksByEvent = async (managerId, gameweekNumber) => {
   }
 };
 
-export const fetchRealFixtures = async (gameweekNumber) => {
+export const fetchPremFixtures = async (gameweekNumber) => {
   try {
     const response = await fetch(
       `${encodedUrl}/fixtures/?event=${gameweekNumber}`

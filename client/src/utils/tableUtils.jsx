@@ -1,72 +1,13 @@
-import styled from 'styled-components';
-import { device } from '../breakpoints';
 import Image from '../ui/Image';
 import screwfixDiv2CircleImage from '../images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
-import { getClosestGame, getHighestPoints, getLowestPoints } from './statUtils';
-import { TablePoints } from '../ui/TablePoints';
-import TeamForm from '../ui/TeamForm';
 import { TeamAndManagerName } from '../ui/TableComponents/TeamAndManagerName';
-
-
-const EmojiContainer = styled.div`
-  ${({ $isHome }) => $isHome ? 'padding-left: 0.2rem' : 'padding-right: 0.2rem'};
-  font-size: 1.4rem;
-  white-space: nowrap;
-  text-align: ${({ $isHome }) => $isHome ? 'left' : 'right'};
-  @media ${device.sm} {
-    font-size: 0.8rem;
-    white-space: unset;
-  }
-`;
-
-
 
 const RenderLeagueImage = (row) => {
   const isBadger = (row.division === 95564)
   return (
     <Image src={isBadger ? badgersDiv1CircleImage : screwfixDiv2CircleImage} width={'20px'} />
   )
-}
-
-const RenderEmojis = (row, isHome) => {
-  const entryOnePoints = row.cell.row.original.entry_1_points
-  const entryTwoPoints = row.cell.row.original.entry_2_points
-  let emojiStr = ''
-  if (!entryOnePoints && !entryTwoPoints) {
-    return (<EmojiContainer $isHome={isHome}>{emojiStr} </EmojiContainer>)
-  }
-  const highestPoints = getHighestPoints(row.data)
-  const lowestPoints = getLowestPoints(row.data)
-  const closestGame = getClosestGame(row.data)
-  if (isHome) {
-    if (entryOnePoints > entryTwoPoints) emojiStr += '⚽️ '
-    if (entryOnePoints > 90) emojiStr += '🔥 '
-    if (entryOnePoints < 40) emojiStr += '😳 '
-    if (highestPoints.team === row.cell.row.original.entry_1_name) {
-      emojiStr += '🐐 '
-    }
-    if (lowestPoints.team === row.cell.row.original.entry_1_name) {
-      emojiStr += '😭 '
-    }
-    if (closestGame.homeTeam === row.cell.row.original.entry_1_name) {
-      emojiStr += '🤝 '
-    }
-  } else {
-    if (closestGame.awayTeam === row.cell.row.original.entry_2_name) {
-      emojiStr += '🤝 '
-    }
-    if (lowestPoints.team === row.cell.row.original.entry_2_name) {
-      emojiStr += '😭 '
-    }
-    if (highestPoints.team === row.cell.row.original.entry_2_name) {
-      emojiStr += '🐐 '
-    }
-    if (entryTwoPoints < 40) emojiStr += '😳 '
-    if (entryTwoPoints > 90) emojiStr += '🔥 '
-    if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
-  }
-  return (<EmojiContainer $isHome={isHome}>{emojiStr} </EmojiContainer>)
 }
 
 export const leagueColumns = [

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { device } from '../breakpoints';
-import { GeneralContext } from '../state/GeneralContextProvider';
+import { device } from '../../breakpoints';
+import { GeneralContext } from '../../state/GeneralContextProvider';
 
 const Container = styled.div`
   ${({ $isHome }) => $isHome ? 'padding-left: 0.2rem' : 'padding-right: 0.2rem'};
@@ -16,6 +16,7 @@ const Container = styled.div`
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
   @media ${device.sm} {
+    margin-top: 5px;
     padding-right: 0;
     padding-left: 0;
     font-size: 0.8rem;
@@ -45,24 +46,24 @@ const ResultCircle = styled.div`
   align-items: center;
   justify-content: center;
   @media ${device.sm} {
-    height: 12px;
-    width: 12px;
-    font-size: 8px;
+    height: 10px;
+    width: 10px;
+    font-size: 0px;
   };
 `
 
 const Win = styled(ResultCircle)`
   background: var(--green);
-  `
+`
 
 const Draw = styled(ResultCircle)`
   background: lightgrey;
-  `
+`
 
 const Loss = styled(ResultCircle)`
   background: var(--red);
   color: var(--white);
-  `
+`
 
 const TeamForm = ({ teamId, leagueId, isHome }) => {
   const { gameweekContextData } = useContext(GeneralContext);

@@ -6,14 +6,15 @@ import { fetchFantasyFixtures } from '../api/requests';
 import { calculateLivePoints } from '../utils/livePointsUtil';
 
 import { GameweekSelector } from '../ui/GameweekSelector';
-import { fetchRealFixtures as fetchPremFixtures } from '../api/requests';
+import { fetchPremFixtures } from '../api/requests';
 import { isPastThreeHoursLater } from '../utils/timeCheckers';
-import { Countdown } from '../ui/Countdown';
 import { FancyLoadingCircle } from '../ui/FancyLoadingCircle';
 import { TeamAndManagerName } from '../ui/TableComponents/TeamAndManagerName';
 // import { ScreenshotButton } from '../utils/ScreenshotButton';
-import TeamForm from '../ui/TeamForm';
-import { TablePoints } from '../ui/TablePoints';
+import TeamForm from '../ui/TableComponents/TeamForm';
+import { FixturePoints } from '../ui/TableComponents/FixturePoints';
+import useInnerWidth from '../utils/InnerWidth';
+import { FixtureAwards } from '../ui/TableComponents/FixtureAwards';
 
 const BothFixturescontainer = styled.div`
   display: flex;
@@ -100,6 +101,8 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
   const [allGamesFinished, setAllGamesFinished] = useState(false)
   const [firstGameStarted, setFirstGameStarted] = useState(false)
   const [finishedCheckComplete, setFinishedCheckComplete] = useState(false)
+  const innerWidth = useInnerWidth();
+  const viewingThisGameweek = gameweekToView === gameweekNumber
 
   useEffect(() => {
     if (gameweekToView) {
@@ -157,43 +160,71 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
 
   const contentRef = useRef(null);
 
+  const renderEndColumn = (row, isHome) => {
+    if (firstGameStarted || !viewingThisGameweek) {
+      return (
+        <FixtureAwards rowInfo={row} isHome={isHome} />
+      )
+    }
+    if (innerWidth < 600) {
+      const { entry_1_entry, entry_2_entry } = row.row.original
+      return (
+        <TeamForm
+          teamId={isHome ? entry_1_entry : entry_2_entry}
+          leagueId={row.row.original.league}
+          isHome={isHome}
+          gameweekContextData={gameweekContextData}
+        />
+      )
+    }
+  }
+
 
   const fixtureColumns = [
     {
       Header: 'Emoji',
       accessor: 'emoji_1',
-      Cell: (row) => <TeamForm teamId={row.row.original.entry_1_entry} leagueId={row.row.original.league} isHome={true} />,
-      // Cell: (row) => RenderEmojis(row, true),
+      Cell: (row) => renderEndColumn(row, true),
       width: '10%',
     },
     {
       Header: 'Home',
-      accessor: (row) => <TeamAndManagerName rowInfo={row} fixturesTable={true} isHome={true} />,
+      accessor: (row) => <TeamAndManagerName
+        rowInfo={row}
+        fixturesTable={true}
+        isHome={true}
+        gameweekToView={gameweekToView}
+        gameweekContextData={gameweekContextData}
+      />,
       width: '35%',
     },
     {
       Header: '',
       accessor: 'entry_1_points',
-      Cell: (row) => <TablePoints row={row} isHome={true} />,
+      Cell: (row) => <FixturePoints row={row} isHome={true} />,
       width: '5%',
     },
     {
       Header: '',
       accessor: 'entry_2_points',
-      Cell: (row) => <TablePoints row={row} isHome={false} />,
+      Cell: (row) => <FixturePoints row={row} isHome={false} />,
       width: '5%',
     },
     {
       Header: 'Away',
-      accessor: (row) => <TeamAndManagerName rowInfo={row} fixturesTable={true} isHome={false} />,
+      accessor: (row) => <TeamAndManagerName
+        rowInfo={row}
+        fixturesTable={true}
+        isHome={false}
+        gameweekToView={gameweekToView}
+        gameweekContextData={gameweekContextData}
+      />,
       width: '35%',
     },
     {
       Header: 'Emoji2',
       accessor: 'emoji_2',
-      // Cell: (row) => RenderEmojis(row, false),
-      Cell: (row) => <TeamForm teamId={row.row.original.entry_2_entry} leagueId={row.row.original.league} isHome={false} />,
-      width: '10%',
+      Cell: (row) => renderEndColumn(row, false),
     },
   ];
 
