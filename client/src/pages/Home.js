@@ -5,6 +5,7 @@ import Image from '../ui/Image';
 import { GeneralContext } from '../state/GeneralContextProvider';
 import styled, { keyframes } from 'styled-components';
 import { device } from '../breakpoints';
+import { SeasonStartCountdown } from '../ui/SeasonStartCountdown';
 
 const gradientFloat = keyframes`
   0% { background-position: 0% 50%; }
@@ -172,6 +173,10 @@ export const Home = ({ }) => {
 
   return (
     <Background className="stats-background" $gameWeek={currentGameweekNumber}>
+      {currentGameweekNumber === 'pre-season' && (
+        <SeasonStartCountdown />
+      )
+      }
       {gameweekContextData && awardsForMapping && (
         <AllStatsContainer>
           <PointsStatsContainer>
