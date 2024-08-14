@@ -24,7 +24,7 @@ const Background = styled.div`
     background: var(--gradient);
     background-size: 400% 400%;
     opacity: 0.75;
-    font-size: 50rem;
+    font-size: ${(props) => (props.$gameWeek === 'pre-season' ? '10rem' : '50rem')};
     position: absolute;
     top: 50%;
     left: 50%;
@@ -183,7 +183,7 @@ export const Home = ({ }) => {
                 {badgersTotalPoints}
               </PointsTotal>
             </StatContainer>
-            <StatContainer className="total_points">
+            {/* <StatContainer className="total_points">
               <LeagueImg className="lrg">
                 <Image
                   src={screwfixDiv2CircleBWImage}
@@ -194,7 +194,7 @@ export const Home = ({ }) => {
               <PointsTotal>
                 {screwfixTotalPoints}
               </PointsTotal>
-            </StatContainer>
+            </StatContainer> */}
           </PointsStatsContainer>
           {awardsForMapping.map((award, key) => {
             const awardName = award[0]

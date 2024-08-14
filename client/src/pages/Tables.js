@@ -7,6 +7,8 @@ import { leagueColumns } from '../utils/tableUtils';
 
 const screwfixId = 589414;
 const badgersId = 728798;
+const newBadgersId = 1115273;
+
 
 const BothLeaguesContainer = styled.div`
   display: flex;
@@ -23,7 +25,7 @@ const BothLeaguesContainer = styled.div`
 const LeagueContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 60%;
   @media ${device.lg} {
     width: 100%;
   }
@@ -34,18 +36,18 @@ export const Tables = () => {
   const [leagueTwoData, setLeagueTwoData] = useState(null);
 
   useEffect(() => {
-    const fetchScrewfixStandings = async () => {
-      try {
-        const screwfixData = await fetchLeagueStandings(screwfixId, 38);
-        setLeagueTwoData(screwfixData);
-      } catch (error) {
-        console.error(`Error: ${error.message}`);
-      }
-    };
+    // const fetchScrewfixStandings = async () => {
+    //   try {
+    //     const screwfixData = await fetchLeagueStandings(screwfixId, 38);
+    //     setLeagueTwoData(screwfixData);
+    //   } catch (error) {
+    //     console.error(`Error: ${error.message}`);
+    //   }
+    // };
 
     const fetchBadgersStandings = async () => {
       try {
-        const badgersData = await fetchLeagueStandings(badgersId, 38);
+        const badgersData = await fetchLeagueStandings(newBadgersId);
         if (badgersData) {
           setLeagueOneData(badgersData);
         }
@@ -54,7 +56,7 @@ export const Tables = () => {
       }
     };
 
-    fetchScrewfixStandings();
+    // fetchScrewfixStandings();
     fetchBadgersStandings();
   }, []);
 
@@ -74,7 +76,7 @@ export const Tables = () => {
           />
         )}
       </LeagueContainer>
-      <LeagueContainer>
+      {/* <LeagueContainer>
         {leagueTwoData?.standings?.results && (
           <Table
             columns={leagueColumns}
@@ -87,7 +89,7 @@ export const Tables = () => {
             tdClassName="league-td"
           />
         )}
-      </LeagueContainer>
+      </LeagueContainer> */}
     </BothLeaguesContainer>
   );
 };

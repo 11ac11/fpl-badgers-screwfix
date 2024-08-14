@@ -111,7 +111,7 @@ export const Sidebar = ({
 }) => {
   const sidebarClassName = isOpen ? 'sidebar' : 'sidebar closed';
   const badgersLeader = badgersTableData?.standings?.results[0]?.player_name;
-  const screwfixLeader = screwfixTableData?.standings?.results[0]?.player_name;
+  // const screwfixLeader = screwfixTableData?.standings?.results[0]?.player_name;
 
   return (
     <SidebarContainer className={sidebarClassName}>
@@ -124,7 +124,7 @@ export const Sidebar = ({
           </li>
           <li>
             <Link to="/tables" onClick={() => setIsOpen(false)}>
-              Tables
+              H2H League
             </Link>
           </li>
           <li>
@@ -148,9 +148,9 @@ export const Sidebar = ({
         </ul>
       </NavSection>
       <StatSection>
-        <h3>Leaders:</h3>
-        <span>Badgers: {badgersLeader}</span>
-        <span>Screwfix: {screwfixLeader}</span>
+        <h3>Leader:</h3>
+        <span>{badgersLeader}</span>
+        {/* <span>Screwfix: {screwfixLeader}</span> */}
       </StatSection>
     </SidebarContainer>
   );

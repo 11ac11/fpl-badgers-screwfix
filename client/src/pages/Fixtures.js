@@ -29,10 +29,10 @@ const BothFixturescontainer = styled.div`
 const FixturesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
-  @media ${device.lg} {
-    width: 100%;
-  }
+  width: 100%;
+  // @media ${device.lg} {
+  //   width: 100%;
+  // }
 `;
 
 const TopbarWrap = styled.div`
@@ -116,6 +116,7 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
   const fetchPremFixturesData = async () => {
     try {
       const realFixtures = await fetchPremFixtures(gameweekNumber)
+      console.log(realFixtures)
       if (realFixtures && realFixtures.length > 0) {
         setFirstGameStarted(realFixtures[0].started)
         const finalFixture = realFixtures[realFixtures.length - 1]
@@ -135,21 +136,22 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
     try {
       const screwfixId = 589414
       const badgersId = 728798
-      const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
-      const badgersFixtures = await fetchFantasyFixtures(badgersId, gameweekToView);
+      const newBadgersId = 1115273;
+      // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
+      const badgersFixtures = await fetchFantasyFixtures(newBadgersId, gameweekToView);
       if (gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished) {
         setLoading(true)
-        const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
-        setScrewfixFixtureData(livePointsScrewfix);
+        // const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
+        // setScrewfixFixtureData(livePointsScrewfix);
 
         const livePointsBadgers = await calculateLivePoints(badgersFixtures.results)
         setBadgersFixtureData(livePointsBadgers);
         setLoading(false)
         return
       }
-      if (screwFixFixtures) {
-        setScrewfixFixtureData(screwFixFixtures.results);
-      }
+      // if (screwFixFixtures) {
+      //   setScrewfixFixtureData(screwFixFixtures.results);
+      // }
       if (badgersFixtures) {
         setBadgersFixtureData(badgersFixtures.results);
       }

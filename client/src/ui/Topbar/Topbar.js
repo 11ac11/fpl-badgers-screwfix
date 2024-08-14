@@ -110,8 +110,16 @@ export const Topbar = ({ gameweekNumber, sidebarIsOpen, setSidebarIsOpen }) => {
         </ImageContainer>
       </LeftSide>
       <GameweekContainer>
-        <GameweekText>Gameweek:</GameweekText>
-        <GameweekNumber>{gameweekNumber}</GameweekNumber>
+        {gameweekNumber === 'pre-season'
+          ? (
+            <GameweekText>Pre-season</GameweekText>
+          ) : (
+            <>
+              <GameweekText>Gameweek:</GameweekText>
+              <GameweekNumber>{gameweekNumber}</GameweekNumber>
+            </>
+          )
+        }
       </GameweekContainer>
     </TopbarContainer>
   );
