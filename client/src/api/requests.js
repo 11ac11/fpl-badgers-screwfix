@@ -54,7 +54,6 @@ export const fetchFantasyFixtures = async (leagueId, gameweek) => {
     const response = await fetch(`${encodedUrl}/leagues-h2h-matches/league/${leagueId}/?page=1&event=${gameweek}`);
 
     if (!response.ok) {
-      console.error(response.body)
       throw new Error(`Request failed with status ${response.status}`);
     }
 

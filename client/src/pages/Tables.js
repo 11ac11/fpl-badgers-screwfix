@@ -63,7 +63,8 @@ export const Tables = () => {
   return (
     <BothLeaguesContainer>
       <LeagueContainer>
-        {leagueOneData?.standings?.results && (
+        {leagueOneData?.standings?.results?.length < 1 && `FPL haven't released the table info yet, checkback on GW1.`}
+        {leagueOneData?.standings?.results?.length > 0 && (
           <Table
             columns={leagueColumns}
             data={leagueOneData.standings.results}

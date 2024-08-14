@@ -101,11 +101,16 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
   const [allGamesFinished, setAllGamesFinished] = useState(false)
   const [firstGameStarted, setFirstGameStarted] = useState(false)
   const [finishedCheckComplete, setFinishedCheckComplete] = useState(false)
+  const [fixturesNotAvaliable, setFixturesNotAvaliable] = useState(false)
   const innerWidth = useInnerWidth();
   const viewingThisGameweek = gameweekToView === gameweekNumber
 
   useEffect(() => {
     if (gameweekToView) {
+      if (gameweekToView === 'pre-season') {
+        setFixturesNotAvaliable(true)
+        return
+      }
       fetchPremFixturesData();
       if (finishedCheckComplete) {
         fetchFantasyFixturesData();
@@ -116,7 +121,6 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
   const fetchPremFixturesData = async () => {
     try {
       const realFixtures = await fetchPremFixtures(gameweekNumber)
-      console.log(realFixtures)
       if (realFixtures && realFixtures.length > 0) {
         setFirstGameStarted(realFixtures[0].started)
         const finalFixture = realFixtures[realFixtures.length - 1]
@@ -262,6 +266,7 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
       {loading
         ? <FancyLoadingCircle />
         : <BothFixturescontainer ref={contentRef}>
+          {fixturesNotAvaliable && `FPL haven't released the fixtures yet, check back on GW1.`}
           {badgersFixtureData && badgersFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
@@ -277,7 +282,7 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
               />
             </FixturesContainer>
           )}
-          {screwfixFixtureData && screwfixFixtureData.length !== 0 && (
+          {/* {screwfixFixtureData && screwfixFixtureData.length !== 0 && (
             <FixturesContainer>
               <Table
                 columns={fixtureColumns}
@@ -291,7 +296,7 @@ export const Fixtures = ({ gameweekNumber, gameweekContextData }) => {
                 gameweekContextData={gameweekContextData}
               />
             </FixturesContainer>
-          )}
+          )} */}
         </BothFixturescontainer>
       }
     </>

@@ -40,13 +40,13 @@ const Background = styled.div`
 
   @media ${device.md} {
     &.stats-background::before {
-      font-size: 30rem;
+      font-size: ${(props) => (props.$gameWeek === 'pre-season' ? '6rem' : '30rem')};
     }
   }
 
   @media ${device.sm} {
     &.stats-background::before {
-      font-size: 20rem;
+      font-size: ${(props) => (props.$gameWeek === 'pre-season' ? '4rem' : '20rem')};
     }
   }
 `
