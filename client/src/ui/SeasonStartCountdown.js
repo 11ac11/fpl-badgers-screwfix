@@ -11,15 +11,11 @@ const Container = styled.div`
 
   & div {
     display: flex;
+    gap: 0.5rem;
     align-items: center;
-    margin: 0;
+    margin: 0px;
     width: 100%;
-
-    & div {
-      display: flex;
-      justify-content: space-between;
-      width: 25%;
-    }
+    justify-content: center;
 
     & p {
       margin: 0;
@@ -28,7 +24,6 @@ const Container = styled.div`
 
   .countdown {
     font-size: 4rem;
-    width: 80%;
     text-align: right;
   }
 
