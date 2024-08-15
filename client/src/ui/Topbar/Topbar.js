@@ -103,10 +103,10 @@ export const Topbar = ({ gameweekNumber, sidebarIsOpen, setSidebarIsOpen }) => {
         />
         <ImageContainer>
           <HeaderLogo src={badgersDiv1CircleImage} alt="Badgers division one" />
-          <HeaderLogo
+          {/* <HeaderLogo
             src={screwfixDiv2CircleBWImage}
             alt="Screwfix division two"
-          />
+          /> */}
         </ImageContainer>
       </LeftSide>
       <GameweekContainer>
