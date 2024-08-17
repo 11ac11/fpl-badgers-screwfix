@@ -26,7 +26,7 @@ const GeneralContextProvider = ({ children }) => {
     const fetchGameweekNumber = async () => {
       try {
         const res = await findCurrentGameweekNumber();
-        setGameweekNumber(res);
+        setGameweekNumber(1);
       } catch (error) {
         console.error('Error fetching gameweek number:', error);
       }
