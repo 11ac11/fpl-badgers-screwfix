@@ -6,7 +6,7 @@ const encodedUrl = proxyUrl + encodeURIComponent(targetUrl);
 
 export const getAllGameweekInfo = async () => {
   try {
-    const response = await fetch('https://corsproxy.io/?https%3A%2F%2Ffantasy.premierleague.com%2Fapi%2F%2F%2Fbootstrap-static%2F')
+    const response = await fetch('https://corsproxy.io/?https%3A%2F%2Ffantasy.premierleague.com%2Fapi%2F%2F%bootstrap-static%2F')
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
