@@ -6,7 +6,7 @@ const encodedUrl = proxyUrl + encodeURIComponent(targetUrl);
 
 export const getAllGameweekInfo = async () => {
   try {
-    const response = await fetch(`${encodedUrl}/bootstrap-static/`);
+    const response = await fetch(`${encodedUrl}//bootstrap-static/`);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
