@@ -47,7 +47,7 @@ export const getAllGameweekInfo = async () => {
 
 export const fetchLeagueStandings = async (leagueId, gameweekNumber) => {
   try {
-    const response = await fetch(`${encodedUrl}/leagues-h2h/${leagueId}/standings/?page_new_entries=1&page_standings=1${noCache}`);
+    const response = await fetch(`${encodedUrl}/leagues-h2h/${leagueId}/standings/?page_new_entries=1&page_standings=1/${noCache}`);
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status} `);
     }
@@ -63,7 +63,7 @@ export const fetchLeagueStandings = async (leagueId, gameweekNumber) => {
 
 export const fetchFantasyFixtures = async (leagueId, gameweek) => {
   try {
-    const response = await fetch(`${encodedUrl}/leagues-h2h-matches/league/${leagueId}/?page=1&event=${gameweek}${noCache}`);
+    const response = await fetch(`${encodedUrl}/leagues-h2h-matches/league/${leagueId}/?page=1&event=${gameweek}/${noCache}`);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
@@ -115,7 +115,7 @@ export const fetchManagerPicksByEvent = async (managerId, gameweekNumber) => {
 export const fetchPremFixtures = async (gameweekNumber) => {
   try {
     const response = await fetch(
-      `${encodedUrl}/fixtures/?event=${gameweekNumber}${noCache}`
+      `${encodedUrl}/fixtures/?event=${gameweekNumber}/${noCache}`
     );
 
     if (!response.ok) {
