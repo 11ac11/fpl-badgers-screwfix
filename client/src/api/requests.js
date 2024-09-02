@@ -1,6 +1,6 @@
 const serverUrl = process.env.REACT_APP_SERVER_URL; // update with your server's URL
 
-const proxyUrl = 'https://corsproxy.io/?';
+const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
 const targetUrl = 'https://fantasy.premierleague.com/api/';
 const encodedUrl = proxyUrl + encodeURIComponent(targetUrl);
 
