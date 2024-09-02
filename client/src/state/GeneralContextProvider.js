@@ -115,6 +115,7 @@ const GeneralContextProvider = ({ children }) => {
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();
+    console.log('data in context', data)
     const events = data.events
     for (const event of events) {
       if (!!event.is_current) {

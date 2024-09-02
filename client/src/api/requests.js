@@ -1,12 +1,18 @@
 const serverUrl = process.env.REACT_APP_SERVER_URL; // update with your server's URL
 
+// const proxyUrl = 'https://api.allorigins.win/get?url=';
+// const proxyUrl = 'https://crossorigin.me/';
+// const proxyUrl = 'https://proxy.cors.sh/';
 const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
 const targetUrl = 'https://fantasy.premierleague.com/api/';
 const encodedUrl = proxyUrl + encodeURIComponent(targetUrl);
 
 export const getAllGameweekInfo = async () => {
   try {
-    const response = await fetch(`${encodedUrl}/bootstrap-static/`)
+    // // const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://fantasy.premierleague.com/api/bootstrap-static/')}`)
+    const response = await fetch(`${encodedUrl}/bootstrap-static/`, {
+      // headers: { 'x-cors-api-key': 'temp_d30690954ee0284086917763ef226e01' }
+    })
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
