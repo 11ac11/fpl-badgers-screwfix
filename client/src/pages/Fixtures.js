@@ -48,9 +48,6 @@ const TopbarWrap = styled.div`
 
 const SelectorWrap = styled.div`
   width: 30%;
-  @media ${device.lg} {
-    width: 25%;
-  }
   @media ${device.md} {
     width: 50%;
   }

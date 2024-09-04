@@ -9,7 +9,6 @@ const screwfixId = 589414;
 const badgersId = 728798;
 const newBadgersId = 1115273;
 
-
 const BothLeaguesContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -32,7 +31,7 @@ const LeagueContainer = styled.div`
   }
 `;
 
-export const Tables = () => {
+export const HtoHLeagues = () => {
   const [leagueOneData, setLeagueOneData] = useState(null);
   const [leagueTwoData, setLeagueTwoData] = useState(null);
 

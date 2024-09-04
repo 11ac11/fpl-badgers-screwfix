@@ -10,14 +10,14 @@ const GeneralContextProvider = ({ children }) => {
   const [gameweekContextData, setGameweekContextData] = useState({});
   const [gameweekNumber, setGameweekNumber] = useState(0)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
-  const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
-  const [screwfixTableData, setScrewfixTableData] = useState(null);
+  // const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
+  // const [screwfixTableData, setScrewfixTableData] = useState(null);
   const [badgersTableData, setBadgersTableData] = useState(null);
   const [prev5Results, setPrev5Results] = useState(null)
 
-  const screwfixId = 589414;
+  // const screwfixId = 589414;
+  // const screwfixDivisionId = 72656;
   const badgersId = 728798;
-  const screwfixDivisionId = 72656;
   const badgersDivisionId = 95564;
 
   const newBadgersId = 1115273;
@@ -81,7 +81,7 @@ const GeneralContextProvider = ({ children }) => {
   }, [gameweekNumber]);
 
   useEffect(() => {
-    if (screwfixFixtureData && badgersFixtureData && badgersTableData && screwfixTableData && prev5Results) {
+    if (badgersFixtureData && badgersTableData && prev5Results) {
 
       const gameweekAwards = {
         badgersHighest: getHighestPoints(badgersFixtureData),
@@ -94,24 +94,24 @@ const GeneralContextProvider = ({ children }) => {
         // screwfixBottom: getBottomOfTable(screwfixTableData),
       }
       const data = {
-        screwfixId,
+        // screwfixId,
         badgersId,
-        screwfixDivisionId,
+        // screwfixDivisionId,
         badgersDivisionId,
         currentGameweekNumber: gameweekNumber,
         baFixturesThisGw: badgersFixtureData,
-        sfFixturesThisGw: screwfixFixtureData,
-        screwfixTableData,
+        // sfFixturesThisGw: screwfixFixtureData,
+        // screwfixTableData,
         badgersTableData,
         gameweekAwards,
         badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
-        screwfixTotalPoints: getLeagueTotalPoints(screwfixTableData),
+        // screwfixTotalPoints: getLeagueTotalPoints(screwfixTableData),
         prev5Results
       };
 
       setGameweekContextData(data);
     }
-  }, [screwfixFixtureData, badgersFixtureData, badgersTableData, screwfixTableData, prev5Results, gameweekNumber])
+  }, [badgersFixtureData, badgersTableData, prev5Results, gameweekNumber])
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();

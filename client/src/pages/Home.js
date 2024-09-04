@@ -64,8 +64,8 @@ const AllStatsContainer = styled.div`
 `
 
 const StatContainer = styled.div`
-  max-width: 49%;
-  min-width: 49%;
+  // max-width: 49%;
+  // min-width: 49%;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(50px);

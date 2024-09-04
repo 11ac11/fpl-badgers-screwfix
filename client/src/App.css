@@ -47,6 +47,7 @@ table {
   border-collapse: collapse;
   overflow: hidden;
   border-radius: 1rem;
+  width: 100%;
 }
 
 th {
@@ -83,13 +84,13 @@ tr {
 
 .league-tr:nth-child(-n+6) {
   background: var(--green);
-  background: var(--gradient);
+  /* background: var(--gradient); */
   background-attachment: fixed;
 }
 
 .league-tr:nth-last-child(-n+3) {
   background: var(--red);
-  background: var(--gradientRed);
+  /* background: var(--gradientRed); */
   color: var(--white);
   background-attachment: fixed;
 }

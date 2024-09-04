@@ -5,17 +5,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { Topbar } from './ui/Topbar/Topbar';
 import { Sidebar } from './ui/Sidebar';
-import { Tables } from './pages/Tables';
+import { HtoHLeagues } from './pages/HtoHLeagues';
 import { Home } from './pages/Home';
-import { Live } from './pages/Live';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 import { GeneralContext } from './state/GeneralContextProvider';
 import { device } from './breakpoints';
-import { Team } from './pages/Team';
-import { Countdown } from './ui/Countdown';
 import { FancyLoadingCircle } from './ui/FancyLoadingCircle';
-
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -27,6 +23,8 @@ const LayoutContainer = styled.div`
 const ContentContainer = styled.div`
   flex: 1;
   width: 100vw;
+  max-width: 800px;
+  margin: auto;
   min-height: 90vh;
   height: 100%;
   padding: 1rem 2rem;
@@ -73,7 +71,7 @@ const App = () => {
                     />
                   }
                 />
-                <Route path="/tables" element={<Tables />} />
+                <Route path="/h2h-league" element={<HtoHLeagues />} />
                 <Route
                   path="/points-league"
                   element={
@@ -92,15 +90,6 @@ const App = () => {
                     />
                   }
                 />
-                <Route
-                  path="/team"
-                  element={
-                    <Team
-                      gameweekNumber={currentGameweekNumber}
-                    />
-                  }
-                />
-                <Route path="/live" element={<Live />} />
               </Routes>
             </ContentContainer>
           )

@@ -10,11 +10,11 @@ const SidebarContainer = styled.div`
     left: 0;
     top: 0;
     background-color: var(--white);
-    font-size: 32px;
+    font-size: 2.5rem;
     height: 100vh;
     padding-left: 2rem;
     padding-right: 2rem;
-    width: fit-content;
+    width: 40%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -42,7 +42,7 @@ const SidebarContainer = styled.div`
 
   a {
     color: var(--grey);
-    font-size: 24px;
+    font-size: 2rem;
   }
 
   a:hover {
@@ -80,6 +80,7 @@ const StatSection = styled.div`
     position: relative;
     display: inline-block;
     border-bottom: 1px solid transparent;
+    font-size: 2rem;
 
     &::after {
       content: '';
@@ -123,15 +124,15 @@ export const Sidebar = ({
             </Link>
           </li>
           <li>
-            <Link to="/tables" onClick={() => setIsOpen(false)}>
+            <Link to="/h2h-league" onClick={() => setIsOpen(false)}>
               H2H League
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/points-league" onClick={() => setIsOpen(false)}>
               Points League
             </Link>
-          </li>
+          </li> */}
           {/* <li>
             <Link to="/current" onClick={() => setIsOpen(false)}>
               Current Gameweek
@@ -148,8 +149,8 @@ export const Sidebar = ({
         </ul>
       </NavSection>
       <StatSection>
-        <h3>Leader:</h3>
-        <span>{badgersLeader}</span>
+        <h3>Current Leader:</h3>
+        <span>{badgersLeader} 🏆</span>
         {/* <span>Screwfix: {screwfixLeader}</span> */}
       </StatSection>
     </SidebarContainer>
