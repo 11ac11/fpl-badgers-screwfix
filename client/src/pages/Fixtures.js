@@ -16,7 +16,6 @@ import { FixtureAwards } from '../ui/TableComponents/FixtureAwards';
 import useInnerWidth from '../utils/InnerWidth';
 import { BadgersContext } from '../state/BadgersContextProvider';
 
-
 const BothFixturescontainer = styled.div`
   display: flex;
   justify-content: center;
@@ -64,7 +63,7 @@ const EmojiKeyWrap = styled.div`
   margin-left: auto;
   p {
     font-family: JetBrains Mono;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     margin: 0;
   }
   @media ${device.md} {
@@ -168,7 +167,7 @@ export const Fixtures = ({ gameweekNumber }) => {
         <FixtureAwards rowInfo={row} isHome={isHome} />
       )
     }
-    if (gameweekToView === gameweekNumber + 1 && innerWidth > 600) {
+    if (allGamesFinished && gameweekToView === gameweekNumber + 1 && innerWidth > 600) {
       const { entry_1_entry, entry_2_entry } = row.row.original
       return (
         <TeamForm
@@ -195,7 +194,7 @@ export const Fixtures = ({ gameweekNumber }) => {
         isHome={true}
         gameweekToView={gameweekToView}
         badgersData={badgersData}
-        firstGameStarted={firstGameStarted}
+        allGamesFinished={allGamesFinished}
       />,
       width: '35%',
     },
@@ -219,7 +218,7 @@ export const Fixtures = ({ gameweekNumber }) => {
         isHome={false}
         gameweekToView={gameweekToView}
         badgersData={badgersData}
-        firstGameStarted={firstGameStarted}
+        allGamesFinished={allGamesFinished}
       />,
       width: '35%',
     },
@@ -234,8 +233,8 @@ export const Fixtures = ({ gameweekNumber }) => {
     ['⚽️ ', 'winner'],
     ['🐐 ', `GOAT`],
     ['😭 ', `worst`],
-    ['🔥 ', '>90'],
-    ['😳 ', '<40'],
+    ['🔥 ', '> 90'],
+    ['😳 ', '< 40'],
     ['🤝 ', 'tightest']
   ]
 

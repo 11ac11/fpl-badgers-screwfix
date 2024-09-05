@@ -54,18 +54,18 @@ const Background = styled.div`
 
 const AllStatsContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
+  align-items: stretch;
   @media ${device.sm} {
     gap: 0.75rem;
   }
 `
 
 const StatContainer = styled.div`
-  // max-width: 49%;
-  // min-width: 49%;
+  max-width: 100%;
+  min-width: 100%;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(50px);
@@ -75,6 +75,7 @@ const StatContainer = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: space-around;
+  flex: 1;
   @media ${device.md} {
     gap: 0.5rem;
     width: 100%;
@@ -82,7 +83,7 @@ const StatContainer = styled.div`
     min-width: 100%;
   }
   @media ${device.sm} {
-    padding: 0.5rem;
+    padding: 1rem;
   }
 `
 
@@ -100,7 +101,7 @@ const PointsStatsContainer = styled.div`
   }
   @media ${device.md} {
     & .lrg {
-      width: 25%;
+      width: 15%;
     }
   }
 `
@@ -171,12 +172,41 @@ export const Home = ({ }) => {
     }
   }
 
+  const mappedAwards = () => {
+    return awardsForMapping.map((award, key) => {
+      const awardName = award[0]
+      const awardData = award[1]
+      return (
+        <StatContainer key={key}>
+          {/* <LeagueImg>
+            {!awardName.includes('screwfix')
+              ? <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%" />
+              : <Image
+                src={screwfixDiv2CircleBWImage}
+                alt="Screwfix division two"
+                width="100%"
+              />}
+          </LeagueImg> */}
+          <StatEmoji>{renderEmojiForAward(awardName)}</StatEmoji>
+          <div style={{ width: '50%' }}>
+            <TeamName>
+              <span>{awardData?.team} </span>
+            </TeamName>
+            <ManagerName>
+              {awardData?.winner}
+            </ManagerName>
+          </div>
+          <PointsTotal>
+            <span>{awardData?.points}</span>
+          </PointsTotal>
+        </StatContainer>
+      )
+    })
+  }
+
   return (
     <Background className="stats-background" $gameWeek={currentGameweekNumber}>
-      {currentGameweekNumber === 'pre-season' && (
-        <SeasonStartCountdown />
-      )
-      }
+      {currentGameweekNumber === 'pre-season' && <SeasonStartCountdown />}
       {badgersData && awardsForMapping && (
         <AllStatsContainer>
           <PointsStatsContainer>
@@ -185,7 +215,7 @@ export const Home = ({ }) => {
                 <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%" />
               </LeagueImg>
               <PointsTotal>
-                {badgersTotalPoints}
+                Total pts: {badgersTotalPoints}
               </PointsTotal>
             </StatContainer>
             {/* <StatContainer className="total_points">
@@ -201,35 +231,7 @@ export const Home = ({ }) => {
               </PointsTotal>
             </StatContainer> */}
           </PointsStatsContainer>
-          {awardsForMapping.map((award, key) => {
-            const awardName = award[0]
-            const awardData = award[1]
-            return (
-              <StatContainer key={key}>
-                <LeagueImg>
-                  {awardName.includes('badgers')
-                    ? <Image src={badgersDiv1CircleImage} alt="Badgers division one" width="100%" />
-                    : <Image
-                      src={screwfixDiv2CircleBWImage}
-                      alt="Screwfix division two"
-                      width="100%"
-                    />}
-                </LeagueImg>
-                <StatEmoji>{renderEmojiForAward(awardName)}</StatEmoji>
-                <div style={{ width: '50%' }}>
-                  <TeamName>
-                    <span>{awardData?.team} </span>
-                  </TeamName>
-                  <ManagerName>
-                    {awardData?.winner}
-                  </ManagerName>
-                </div>
-                <PointsTotal>
-                  <span>{awardData?.points}</span>
-                </PointsTotal>
-              </StatContainer>
-            )
-          })}
+          {mappedAwards()}
         </AllStatsContainer>
       )}
     </Background>

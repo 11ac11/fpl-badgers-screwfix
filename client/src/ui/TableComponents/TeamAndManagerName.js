@@ -74,9 +74,9 @@ const ManagerName = styled.p`
   }
 `
 
-export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, badgersData, firstGameStarted }) => {
+export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, badgersData, allGamesFinished }) => {
   const innerWidth = useInnerWidth();
-  const canRenderForm = gameweekToView === badgersData?.currentGameweekNumber + 1 && innerWidth < 600
+  const canRenderForm = allGamesFinished && gameweekToView === badgersData?.currentGameweekNumber + 1 && innerWidth < 600
 
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
