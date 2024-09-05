@@ -6,8 +6,6 @@ const StyledImage = styled.img`
   height: ${(props) => props.height || '100%'};
 `;
 
-const Image = ({ src, alt, width, height }) => {
+export const Image = ({ src, alt, width, height }) => {
   return <StyledImage src={src} alt={alt} width={width} height={height} />;
 };
-
-export default Image;

@@ -65,7 +65,7 @@ const Loss = styled(ResultCircle)`
   color: var(--white);
 `
 
-const TeamForm = ({ teamId, leagueId, isHome }) => {
+export const TeamForm = ({ teamId, leagueId, isHome }) => {
   const { badgersData } = useContext(BadgersContext);
   const prev5Results = badgersData?.prev5Results
 
@@ -131,5 +131,3 @@ const TeamForm = ({ teamId, leagueId, isHome }) => {
     </Container>
   )
 };
-
-export default TeamForm;

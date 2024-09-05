@@ -1,19 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import Table from '../ui/Table';
 import styled from 'styled-components';
 import { device } from '../breakpoints';
-import { fetchFantasyFixtures } from '../api/requests';
-import { calculateLivePoints } from '../utils/livePointsUtil';
-
-import { GameweekSelector } from '../ui/GameweekSelector';
-import { fetchPremFixtures } from '../api/requests';
-import { isPastThreeHoursLater } from '../utils/timeCheckers';
-import { FancyLoadingCircle } from '../ui/FancyLoadingCircle';
-import { TeamAndManagerName } from '../ui/TableComponents/TeamAndManagerName';
-import TeamForm from '../ui/TableComponents/TeamForm';
-import { FixturePoints } from '../ui/TableComponents/FixturePoints';
-import { FixtureAwards } from '../ui/TableComponents/FixtureAwards';
+import { fetchFantasyFixtures, fetchPremFixtures } from '../api/requests';
+import { FancyLoadingCircle, GameweekSelector, Table } from '../ui';
+import { TeamForm, TeamAndManagerName, FixturePoints, FixtureAwards } from '../ui/TableComponents';
 import useInnerWidth from '../utils/InnerWidth';
+import { calculateLivePoints } from '../utils/livePointsUtil';
+import { isPastThreeHoursLater } from '../utils/timeCheckers';
 import { BadgersContext } from '../state/BadgersContextProvider';
 
 const BothFixturescontainer = styled.div`
@@ -30,10 +23,7 @@ const FixturesContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  // @media ${device.lg} {
-  //   width: 100%;
-  // }
-`;
+`
 
 const TopbarWrap = styled.div`
   display: flex;
@@ -54,7 +44,7 @@ const SelectorWrap = styled.div`
   @media ${device.sm} {
     width: 100%;
   }
-`;
+`
 
 const EmojiKeyWrap = styled.div`
   display: flex;
@@ -125,9 +115,8 @@ export const Fixtures = ({ gameweekNumber }) => {
 
     const fetchFantasyFixturesData = async () => {
       try {
-        const newBadgersId = 1115273;
         // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
-        const badgersFixtures = await fetchFantasyFixtures(newBadgersId, gameweekToView);
+        const badgersFixtures = await fetchFantasyFixtures(badgersData.leagueId, gameweekToView);
         if (gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished) {
           setLoading(true)
           // const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)

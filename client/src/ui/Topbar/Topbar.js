@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import screwfixDiv2CircleBWImage from '../../images/screwfix_circle_logo_bw.png';
 import badgersDiv1CircleImage from '../../images/badger_circle_logo.png';
-import Image from '../Image';
+import { Image } from '../Image';
 import { device } from '../../breakpoints';
 import { Hamburger } from './Hamburger';
 

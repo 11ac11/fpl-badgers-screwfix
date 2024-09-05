@@ -1,7 +1,7 @@
-import Image from '../ui/Image';
-import screwfixDiv2CircleImage from '../images/screwfix_circle_logo.png';
-import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
-import { TeamAndManagerName } from '../ui/TableComponents/TeamAndManagerName';
+// import Image from '../ui/Image';
+// import screwfixDiv2CircleImage from '../images/screwfix_circle_logo.png';
+// import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
+import { TeamAndManagerName } from '../ui/TableComponents';
 
 // const RenderLeagueImage = (row) => {
 //   const isBadger = (row.division === 95564)

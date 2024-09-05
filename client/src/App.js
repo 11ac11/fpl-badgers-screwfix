@@ -1,17 +1,17 @@
 import React, { useState, useContext } from 'react';
-import './App.css';
-import './fonts/fonts.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import { Topbar } from './ui/Topbar/Topbar';
-import { Sidebar } from './ui/Sidebar';
+import { device } from './breakpoints';
+import './App.css';
+import './fonts/fonts.css';
 import { HtoHLeagues } from './pages/HtoHLeagues';
 import { Home } from './pages/Home';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 import { BadgersContext } from './state/BadgersContextProvider';
-import { device } from './breakpoints';
 import { FancyLoadingCircle } from './ui/FancyLoadingCircle';
+import { Topbar } from './ui/Topbar/Topbar';
+import { Sidebar } from './ui/Sidebar';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -71,7 +71,14 @@ const App = () => {
                     />
                   }
                 />
-                <Route path="/h2h-league" element={<HtoHLeagues />} />
+                <Route
+                  path="/h2h-league"
+                  element={
+                    <HtoHLeagues
+                      badgersTableData={badgersTableData}
+                    />
+                  }
+                />
                 <Route
                   path="/points-league"
                   element={

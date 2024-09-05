@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import screwfixDiv2CircleBWImage from '../images/screwfix_circle_logo.png';
-import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
-import Image from '../ui/Image';
-import { BadgersContext } from '../state/BadgersContextProvider';
 import styled, { keyframes } from 'styled-components';
 import { device } from '../breakpoints';
-import { SeasonStartCountdown } from '../ui/SeasonStartCountdown';
+import screwfixDiv2CircleBWImage from '../images/screwfix_circle_logo.png';
+import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
+import { BadgersContext } from '../state/BadgersContextProvider';
+import { Image, SeasonStartCountdown } from '../ui';
 
 const gradientFloat = keyframes`
   0% { background-position: 0% 50%; }

@@ -2,7 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import { device } from '../../breakpoints';
 
-
 const PointsContainer = styled.div`
   background: var(--green);
   background: ${({ $isHome }) => $isHome ? 'var(--gradient)' : 'var(--gradientRev)'};

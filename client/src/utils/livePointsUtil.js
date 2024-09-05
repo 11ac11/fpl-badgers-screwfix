@@ -5,7 +5,6 @@ export const calculateLivePoints = async (normalFixtureList) => {
     try {
       const res = await fetchManagerPicksByEvent(managerId, gameweekNumber);
       return res;
-      return
     } catch (error) {
       console.error(`Error: ${error.message}`);
       return null; // Return null or handle the error as needed

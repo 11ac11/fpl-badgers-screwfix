@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { device } from '../../breakpoints';
-import { getHighestPoints } from '../../utils/statUtils';
-import { getLowestPoints } from '../../utils/statUtils';
-import { getClosestGame } from '../../utils/statUtils';
+import { getHighestPoints, getLowestPoints, getClosestGame } from '../../utils/statUtils';
 
 const EmojiContainer = styled.div`
   ${({ $isHome }) => $isHome ? 'padding-left: 0.2rem' : 'padding-right: 0.2rem'};

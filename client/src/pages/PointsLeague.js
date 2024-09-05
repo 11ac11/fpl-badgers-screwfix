@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import Table from '../ui/Table';
+import React from 'react';
 import styled from 'styled-components';
+import { Table } from '../ui';
 import { leagueColumns } from '../utils/tableUtils';
 import { device } from '../breakpoints';
 

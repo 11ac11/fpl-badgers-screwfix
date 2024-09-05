@@ -13,7 +13,7 @@ const BadgersContextProvider = ({ children }) => {
   const [badgersTableData, setBadgersTableData] = useState(null)
   const [prev5Results, setPrev5Results] = useState(null)
 
-  const newBadgersId = 1115273;
+  const leagueId = 1115273;
 
   useEffect(() => {
     const fetchGameweekNumber = async () => {
@@ -32,7 +32,7 @@ const BadgersContextProvider = ({ children }) => {
     if (gameweekNumber) {
       const fetchFantasyFixturesData = async () => {
         try {
-          const badgersFixtures = await fetchFantasyFixtures(newBadgersId, gameweekNumber);
+          const badgersFixtures = await fetchFantasyFixtures(leagueId, gameweekNumber);
           if (badgersFixtures) {
             setBadgersFixtureData(badgersFixtures.results);
           }
@@ -43,7 +43,7 @@ const BadgersContextProvider = ({ children }) => {
 
       const fetchLeaguesData = async () => {
         try {
-          const badgersLeague = await fetchLeagueStandings(newBadgersId, gameweekNumber);
+          const badgersLeague = await fetchLeagueStandings(leagueId, gameweekNumber);
 
           setBadgersTableData(badgersLeague);
         } catch (error) {
@@ -55,7 +55,7 @@ const BadgersContextProvider = ({ children }) => {
         const last5 = {}
         let i = gameweekNumber
         while (i > gameweekNumber - 5 && i > 0) {
-          const badgersFixtures = await fetchFantasyFixtures(newBadgersId, i);
+          const badgersFixtures = await fetchFantasyFixtures(leagueId, i);
           last5[`gw${i}`] = badgersFixtures.results
           i--;
         }
@@ -79,7 +79,7 @@ const BadgersContextProvider = ({ children }) => {
       }
 
       const data = {
-        newBadgersId,
+        leagueId,
         currentGameweekNumber: gameweekNumber,
         fixturesForGameweek: badgersFixtureData,
         badgersTableData,

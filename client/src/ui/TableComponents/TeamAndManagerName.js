@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import useInnerWidth from '../../utils/InnerWidth';
 import { device } from '../../breakpoints';
-import TeamForm from './TeamForm';
+import useInnerWidth from '../../utils/InnerWidth';
+import { TeamForm } from './TeamForm';
 
 const ManagerTeamCombined = styled.div`
   display: flex;
