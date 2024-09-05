@@ -90,7 +90,6 @@ const GameweekNumber = styled.span`
   }
 `;
 
-
 export const Topbar = ({ gameweekNumber, sidebarIsOpen, setSidebarIsOpen }) => {
   return (
     <TopbarContainer>
