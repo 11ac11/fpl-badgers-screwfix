@@ -2,9 +2,8 @@ import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import screwfixDiv2CircleBWImage from '../../images/screwfix_circle_logo_bw.png';
 import badgersDiv1CircleImage from '../../images/badger_circle_logo.png';
-import { Image } from '../Image';
+import { Image, Hamburger } from '../../ui';
 import { device } from '../../breakpoints';
-import { Hamburger } from './Hamburger';
 
 const TopbarContainer = styled.div`
   max-width: 100%;
@@ -89,7 +88,6 @@ const GameweekNumber = styled.span`
     width: 2.5rem;
     font-size: 2rem;
   }
-
 `;
 
 

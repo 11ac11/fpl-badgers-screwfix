@@ -4,14 +4,12 @@ import styled from 'styled-components';
 import { device } from './breakpoints';
 import './App.css';
 import './fonts/fonts.css';
-import { HtoHLeagues } from './pages/HtoHLeagues';
 import { Home } from './pages/Home';
+import { HtoHLeagues } from './pages/HtoHLeagues';
+import { PointsLeague } from './pages/PointsLeague';
 import { Fixtures } from './pages/Fixtures';
-import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
 import { BadgersContext } from './state/BadgersContextProvider';
-import { FancyLoadingCircle } from './ui/FancyLoadingCircle';
-import { Topbar } from './ui/Topbar/Topbar';
-import { Sidebar } from './ui/Sidebar';
+import { FancyLoadingCircle, Sidebar, Topbar } from './ui';
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -39,7 +37,6 @@ const App = () => {
   const { badgersData } = useContext(BadgersContext);
   const { currentGameweekNumber, badgersTableData, prev5Results } = badgersData;
 
-  // const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
   return (
@@ -82,7 +79,7 @@ const App = () => {
                 <Route
                   path="/points-league"
                   element={
-                    <CombinedPointsLeague
+                    <PointsLeague
                       // screwfixTableData={screwfixTableData}
                       badgersTableData={badgersTableData}
                     />
