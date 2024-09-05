@@ -128,11 +128,11 @@ export const Sidebar = ({
               H2H League
             </Link>
           </li>
-          {/* <li>
+          <li>
             <Link to="/points-league" onClick={() => setIsOpen(false)}>
               Points League
             </Link>
-          </li> */}
+          </li>
           {/* <li>
             <Link to="/current" onClick={() => setIsOpen(false)}>
               Current Gameweek

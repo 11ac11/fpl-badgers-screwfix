@@ -11,9 +11,11 @@ const BadgersContextProvider = ({ children }) => {
   const [gameweekNumber, setGameweekNumber] = useState(0)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   const [badgersTableData, setBadgersTableData] = useState(null)
+  const [pointsTableData, setPointsTableData] = useState(null)
   const [prev5Results, setPrev5Results] = useState(null)
 
   const leagueId = 1115273;
+  const pointsLeagueId = 1457213;
 
   useEffect(() => {
     const fetchGameweekNumber = async () => {
@@ -44,8 +46,10 @@ const BadgersContextProvider = ({ children }) => {
       const fetchLeaguesData = async () => {
         try {
           const badgersLeague = await fetchLeagueStandings(leagueId, gameweekNumber);
+          const pointsLeague = await fetchLeagueStandings(pointsLeagueId, gameweekNumber, true);
 
           setBadgersTableData(badgersLeague);
+          setPointsTableData(pointsLeague)
         } catch (error) {
           console.error(`Error: ${error.message}`);
         }
@@ -80,9 +84,11 @@ const BadgersContextProvider = ({ children }) => {
 
       const data = {
         leagueId,
+        pointsLeagueId,
         currentGameweekNumber: gameweekNumber,
         fixturesForGameweek: badgersFixtureData,
         badgersTableData,
+        pointsTableData,
         gameweekAwards,
         badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
         prev5Results

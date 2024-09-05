@@ -42,9 +42,9 @@ export const getAllGameweekInfo = async () => {
 //   }
 // };
 
-export const fetchLeagueStandings = async (leagueId, gameweekNumber) => {
+export const fetchLeagueStandings = async (leagueId, gameweekNumber, isClassic) => {
   try {
-    const response = await fetch(`${encodedUrl}leagues-h2h/${leagueId}/standings/?page_new_entries=1&page_standings=1&${noCache}`);
+    const response = await fetch(`${encodedUrl}leagues-${isClassic ? 'classic' : 'h2h'}/${leagueId}/standings/?page_new_entries=1&page_standings=1&${noCache}`);
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status} `);
     }

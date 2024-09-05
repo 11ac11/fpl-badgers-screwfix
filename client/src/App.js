@@ -35,7 +35,7 @@ const ContentContainer = styled.div`
 
 const App = () => {
   const { badgersData } = useContext(BadgersContext);
-  const { currentGameweekNumber, badgersTableData, prev5Results } = badgersData;
+  const { currentGameweekNumber, badgersTableData, prev5Results, pointsTableData } = badgersData;
 
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
@@ -81,7 +81,7 @@ const App = () => {
                   element={
                     <PointsLeague
                       // screwfixTableData={screwfixTableData}
-                      badgersTableData={badgersTableData}
+                      pointsTableData={pointsTableData}
                     />
                   }
                 />

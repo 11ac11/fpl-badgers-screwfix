@@ -19,7 +19,7 @@ const BothLeaguesContainer = styled.div`
 const LeagueContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
   align-items: center;
   @media ${device.lg} {
     width: 100%;
@@ -51,7 +51,8 @@ export const HtoHLeagues = ({ badgersTableData, screwfixTableData }) => {
   // }
 
   return (
-    <BothLeaguesContainer>
+    <>
+      {/*<BothLeaguesContainer>*/}
       <LeagueContainer>
         {badgersStandings?.length < 1 && `FPL haven't released the table info yet, checkback on GW1.`}
         {badgersStandings?.length > 0 && <Table {...badgersLeagueProps} />}
@@ -59,7 +60,8 @@ export const HtoHLeagues = ({ badgersTableData, screwfixTableData }) => {
       {/* <LeagueContainer>
         {screwfixStandings?.length < 1 && `FPL haven't released the table info yet, checkback on GW1.`}
         {screwfixStandings?.length > 0 && <Table {...screwfixLeagueProps} />}
-      </LeagueContainer> */}
-    </BothLeaguesContainer>
+        </LeagueContainer> */}
+      {/*</BothLeaguesContainer>*/}
+    </>
   );
 };

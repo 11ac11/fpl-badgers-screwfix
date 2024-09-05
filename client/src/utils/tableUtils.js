@@ -74,3 +74,36 @@ export const leagueColumns = [
     sortable: true,
   },
 ];
+
+export const classicLeagueColumns = [
+  {
+    Header: '#',
+    accessor: 'rank',
+    Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
+    width: 20,
+    minWidth: 20,
+    maxWidth: 20,
+    sortable: false,
+    canSort: false
+  },
+  // {
+  //   Header: 'Lg.',
+  //   Cell: (row) => <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.value}</div>,
+  //   accessor: (row) => RenderLeagueImage(row),
+  //   width: 10,
+  // },
+  {
+    Header: 'Team',
+    accessor: (row) => <TeamAndManagerName rowInfo={row} />,
+    width: 300,
+    sortable: false,
+  },
+  {
+    Header: 'TP',
+    accessor: 'total',
+    width: 50,
+    minWidth: 50,
+    maxWidth: 50,
+    sortable: true,
+  },
+];

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Table } from '../ui';
-import { leagueColumns } from '../utils/tableUtils';
+import { classicLeagueColumns } from '../utils/tableUtils';
 import { device } from '../breakpoints';
 
 const LeagueContainer = styled.div`
@@ -12,27 +12,20 @@ const LeagueContainer = styled.div`
   }
 `;
 
-export const PointsLeague = ({
-  screwfixTableData,
-  badgersTableData,
-}) => {
+export const PointsLeague = ({ pointsTableData }) => {
 
   return (
     <LeagueContainer>
-      {bothLeaguesSorted && (
-        <LeagueContainer>
-          <Table
-            columns={leagueColumns}
-            data={bothLeaguesSorted.slice(0, 20)}
-            tableClassName="league-table top-half"
-            theadClassName="league-thead"
-            thClassName="league-th"
-            tbodyClassName="league-tbody"
-            trClassName="league-tr"
-            tdClassName="league-td"
-          />
-        </LeagueContainer>
-      )}
+      <Table
+        columns={classicLeagueColumns}
+        data={pointsTableData.standings.results}
+        tableClassName="league-table"
+        theadClassName="league-thead"
+        thClassName="league-th"
+        tbodyClassName="league-tbody"
+        trClassName="league-tr"
+        tdClassName="league-td"
+      />
     </LeagueContainer>
   );
 };
