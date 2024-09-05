@@ -21,10 +21,7 @@ export const getAllGameweekInfo = async () => {
       throw new Error(`Request failed with status ${response.status}`);
     }
 
-    console.log(response)
-
     const data = await response.json();
-    console.log('this', data)
     return data;
   } catch (error) {
     console.error(`Error: ${error.message}`);

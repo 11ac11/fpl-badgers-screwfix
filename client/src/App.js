@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import './fonts/fonts.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { HtoHLeagues } from './pages/HtoHLeagues';
 import { Home } from './pages/Home';
 import { Fixtures } from './pages/Fixtures';
 import { CombinedPointsLeague } from './pages/CombinedPointsLeague';
-import { GeneralContext } from './state/GeneralContextProvider';
+import { BadgersContext } from './state/BadgersContextProvider';
 import { device } from './breakpoints';
 import { FancyLoadingCircle } from './ui/FancyLoadingCircle';
 
@@ -36,8 +36,8 @@ const ContentContainer = styled.div`
 `;
 
 const App = () => {
-  const { gameweekContextData } = useContext(GeneralContext);
-  const { currentGameweekNumber, badgersTableData, screwfixTableData, prev5Results } = gameweekContextData;
+  const { badgersData } = useContext(BadgersContext);
+  const { currentGameweekNumber, badgersTableData, prev5Results } = badgersData;
 
   // const [isUpdating, setIsUpdating] = useState(false);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -48,7 +48,7 @@ const App = () => {
         <Sidebar
           isOpen={sidebarIsOpen}
           setIsOpen={setSidebarIsOpen}
-          screwfixTableData={screwfixTableData}
+          // screwfixTableData={screwfixTableData}
           badgersTableData={badgersTableData}
         />
         <Topbar
@@ -66,7 +66,7 @@ const App = () => {
                   path="/"
                   element={
                     <Home
-                      screwfixTableData={screwfixTableData}
+                      // screwfixTableData={screwfixTableData}
                       badgersTableData={badgersTableData}
                     />
                   }
@@ -76,19 +76,14 @@ const App = () => {
                   path="/points-league"
                   element={
                     <CombinedPointsLeague
-                      screwfixTableData={screwfixTableData}
+                      // screwfixTableData={screwfixTableData}
                       badgersTableData={badgersTableData}
                     />
                   }
                 />
                 <Route
                   path="/fixtures-results"
-                  element={
-                    <Fixtures
-                      gameweekNumber={currentGameweekNumber}
-                      gameweekContextData={gameweekContextData}
-                    />
-                  }
+                  element={<Fixtures gameweekNumber={currentGameweekNumber} />}
                 />
               </Routes>
             </ContentContainer>

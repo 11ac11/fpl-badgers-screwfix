@@ -4,21 +4,14 @@ import { fetchFantasyFixtures, getAllGameweekInfo, fetchLeagueStandings } from '
 import { getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable, getLeagueTotalPoints } from '../utils/statUtils';
 import { isTwoDaysAway } from '../utils/timeCheckers';
 
-const GeneralContext = createContext();
+const BadgersContext = createContext();
 
-const GeneralContextProvider = ({ children }) => {
-  const [gameweekContextData, setGameweekContextData] = useState({});
+const BadgersContextProvider = ({ children }) => {
+  const [badgersData, setBadgersData] = useState({})
   const [gameweekNumber, setGameweekNumber] = useState(0)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
-  // const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
-  // const [screwfixTableData, setScrewfixTableData] = useState(null);
-  const [badgersTableData, setBadgersTableData] = useState(null);
+  const [badgersTableData, setBadgersTableData] = useState(null)
   const [prev5Results, setPrev5Results] = useState(null)
-
-  // const screwfixId = 589414;
-  // const screwfixDivisionId = 72656;
-  const badgersId = 728798;
-  const badgersDivisionId = 95564;
 
   const newBadgersId = 1115273;
 
@@ -39,11 +32,7 @@ const GeneralContextProvider = ({ children }) => {
     if (gameweekNumber) {
       const fetchFantasyFixturesData = async () => {
         try {
-          // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekNumber);
           const badgersFixtures = await fetchFantasyFixtures(newBadgersId, gameweekNumber);
-          // if (screwFixFixtures) {
-          //   setScrewfixFixtureData(screwFixFixtures.results);
-          // }
           if (badgersFixtures) {
             setBadgersFixtureData(badgersFixtures.results);
           }
@@ -52,18 +41,26 @@ const GeneralContextProvider = ({ children }) => {
         }
       };
 
-
       const fetchLeaguesData = async () => {
         try {
-          // const screwfixData = await fetchLeagueStandings(screwfixId, gameweekNumber);
           const badgersLeague = await fetchLeagueStandings(newBadgersId, gameweekNumber);
 
-          // setScrewfixTableData(screwfixData);
           setBadgersTableData(badgersLeague);
         } catch (error) {
           console.error(`Error: ${error.message}`);
         }
       };
+
+      const fetchLast5Games = async () => {
+        const last5 = {}
+        let i = gameweekNumber
+        while (i > gameweekNumber - 5 && i > 0) {
+          const badgersFixtures = await fetchFantasyFixtures(newBadgersId, i);
+          last5[`gw${i}`] = badgersFixtures.results
+          i--;
+        }
+        setPrev5Results(last5)
+      }
 
       fetchFantasyFixturesData()
       fetchLeaguesData();
@@ -75,32 +72,23 @@ const GeneralContextProvider = ({ children }) => {
     if (badgersFixtureData && badgersTableData && prev5Results) {
 
       const gameweekAwards = {
-        badgersHighest: getHighestPoints(badgersFixtureData),
-        // screwfixHighest: getHighestPoints(screwfixFixtureData),
-        badgersLowest: getLowestPoints(badgersFixtureData),
-        // screwfixLowest: getLowestPoints(screwfixFixtureData),
-        badgersTop: getTopOfTable(badgersTableData),
-        // screwfixTop: getTopOfTable(screwfixTableData),
-        badgersBottom: getBottomOfTable(badgersTableData),
-        // screwfixBottom: getBottomOfTable(screwfixTableData),
+        highest: getHighestPoints(badgersFixtureData),
+        lowest: getLowestPoints(badgersFixtureData),
+        top: getTopOfTable(badgersTableData),
+        bottom: getBottomOfTable(badgersTableData),
       }
+
       const data = {
-        // screwfixId,
-        badgersId,
-        // screwfixDivisionId,
-        badgersDivisionId,
+        newBadgersId,
         currentGameweekNumber: gameweekNumber,
-        baFixturesThisGw: badgersFixtureData,
-        // sfFixturesThisGw: screwfixFixtureData,
-        // screwfixTableData,
+        fixturesForGameweek: badgersFixtureData,
         badgersTableData,
         gameweekAwards,
         badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
-        // screwfixTotalPoints: getLeagueTotalPoints(screwfixTableData),
         prev5Results
       };
 
-      setGameweekContextData(data);
+      setBadgersData(data);
     }
   }, [badgersFixtureData, badgersTableData, prev5Results, gameweekNumber])
 
@@ -111,37 +99,16 @@ const GeneralContextProvider = ({ children }) => {
       if (!!event.is_current) {
         const twoDaysCheck = isTwoDaysAway(event.deadline_time)
         return twoDaysCheck ? event.id + 1 : event.id
-      } else {
-        // if (events[0].is_next) {
-        //   return 1
-        // }
       }
     }
     return 'pre-season';
   };
 
-  const fetchLast5Games = async () => {
-    const last5 = {
-      sf: {},
-      ba: {}
-    }
-    let i = gameweekNumber
-    while (i > gameweekNumber - 5 && i > 0) {
-      // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, i);
-      const badgersFixtures = await fetchFantasyFixtures(newBadgersId, i);
-      // last5.sf[`gw${i}`] = screwFixFixtures.results
-      last5.ba[`gw${i}`] = badgersFixtures.results
-      i--;
-    }
-    setPrev5Results(last5)
-  }
-
-
   return (
-    <GeneralContext.Provider value={{ gameweekContextData }}>
+    <BadgersContext.Provider value={{ badgersData }}>
       {children}
-    </GeneralContext.Provider>
+    </BadgersContext.Provider>
   );
 };
 
-export { GeneralContext, GeneralContextProvider };
+export { BadgersContext, BadgersContextProvider };

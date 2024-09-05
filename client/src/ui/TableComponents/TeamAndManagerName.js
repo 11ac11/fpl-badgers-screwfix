@@ -74,32 +74,26 @@ const ManagerName = styled.p`
   }
 `
 
-export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, gameweekContextData, firstGameStarted }) => {
+export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, badgersData, firstGameStarted }) => {
   const innerWidth = useInnerWidth();
-  const canRenderForm = !firstGameStarted && gameweekToView === gameweekContextData?.currentGameweekNumber
+  const canRenderForm = gameweekToView === badgersData?.currentGameweekNumber + 1 && innerWidth < 600
 
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
-      <TeamName
-        $fixturesTable={fixturesTable}
-        $isHome={isHome}
-      >
+      <TeamName $isHome={isHome} $fixturesTable={fixturesTable}>
         {fixturesTable
           ? (isHome ? rowInfo.entry_1_name : rowInfo.entry_2_name)
           : (rowInfo.entry_name)
         }
       </TeamName>
-      <ManagerName
-        $fixturesTable={fixturesTable}
-        $isHome={isHome}
-      >
+      <ManagerName $isHome={isHome} $fixturesTable={fixturesTable}>
         {fixturesTable
           ? (isHome ? rowInfo.entry_1_player_name : rowInfo.entry_2_player_name)
           : (rowInfo.player_name)
         }
       </ManagerName>
       {canRenderForm && innerWidth < 600 && <TeamForm
-        teamId={rowInfo.entry_2_entry}
+        teamId={rowInfo[isHome ? 'entry_1_entry' : 'entry_2_entry']}
         leagueId={rowInfo.league}
         isHome={isHome}
       />}

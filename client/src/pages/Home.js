@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import screwfixDiv2CircleBWImage from '../images/screwfix_circle_logo.png';
 import badgersDiv1CircleImage from '../images/badger_circle_logo.png';
 import Image from '../ui/Image';
-import { GeneralContext } from '../state/GeneralContextProvider';
+import { BadgersContext } from '../state/BadgersContextProvider';
 import styled, { keyframes } from 'styled-components';
 import { device } from '../breakpoints';
 import { SeasonStartCountdown } from '../ui/SeasonStartCountdown';
@@ -152,19 +152,19 @@ const PointsTotal = styled.div`
 `
 
 export const Home = ({ }) => {
-  const { gameweekContextData } = useContext(GeneralContext);
-  const { gameweekAwards, currentGameweekNumber, badgersTotalPoints, screwfixTotalPoints } = gameweekContextData
+  const { badgersData } = useContext(BadgersContext);
+  const { gameweekAwards, currentGameweekNumber, badgersTotalPoints, screwfixTotalPoints } = badgersData
 
   const awardsForMapping = gameweekAwards && Object.entries(gameweekAwards)
 
   const renderEmojiForAward = (awardName) => {
-    if (awardName.includes('Highest')) {
+    if (awardName.includes('highest')) {
       return '🐐';
-    } else if (awardName.includes('Lowest')) {
+    } else if (awardName.includes('lowest')) {
       return '😭';
-    } else if (awardName.includes('Top')) {
+    } else if (awardName.includes('top')) {
       return '🏆';
-    } else if (awardName.includes('Bottom')) {
+    } else if (awardName.includes('bottom')) {
       return '‼️';
     } else {
       return '';
@@ -177,7 +177,7 @@ export const Home = ({ }) => {
         <SeasonStartCountdown />
       )
       }
-      {gameweekContextData && awardsForMapping && (
+      {badgersData && awardsForMapping && (
         <AllStatsContainer>
           <PointsStatsContainer>
             <StatContainer className="total_points">

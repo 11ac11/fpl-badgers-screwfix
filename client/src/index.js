@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GeneralContextProvider } from './state/GeneralContextProvider'
+import { BadgersContextProvider } from './state/BadgersContextProvider'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <GeneralContextProvider>
+    <BadgersContextProvider>
       <App />
-    </GeneralContextProvider>
+    </BadgersContextProvider>
   </React.StrictMode>
 );
 

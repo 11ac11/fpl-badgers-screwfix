@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { device } from '../../breakpoints';
-import { GeneralContext } from '../../state/GeneralContextProvider';
+import { BadgersContext } from '../../state/BadgersContextProvider';
 
 const Container = styled.div`
   ${({ $isHome }) => $isHome ? 'padding-left: 0.2rem' : 'padding-right: 0.2rem'};
@@ -66,15 +66,14 @@ const Loss = styled(ResultCircle)`
 `
 
 const TeamForm = ({ teamId, leagueId, isHome }) => {
-  const { gameweekContextData } = useContext(GeneralContext);
-  const prev5Results = gameweekContextData.prev5Results
+  const { badgersData } = useContext(BadgersContext);
+  const prev5Results = badgersData?.prev5Results
 
-  if (!prev5Results?.ba || !prev5Results?.sf) return
+  if (!prev5Results) return
 
   const teamForm = []
-  const isBadger = leagueId === gameweekContextData.badgersId
 
-  Object.values(isBadger ? prev5Results.ba : prev5Results.sf).forEach((gameweekRound) => {
+  Object.values(prev5Results).forEach((gameweekRound) => {
     gameweekRound.map((fixtureInRound) => {
       const { entry_1_entry, entry_1_draw, entry_1_loss, entry_1_win, entry_2_entry, entry_2_win, entry_2_draw, entry_2_loss } = fixtureInRound
       const isAtHome = teamId === entry_1_entry
@@ -114,14 +113,17 @@ const TeamForm = ({ teamId, leagueId, isHome }) => {
           ? teamForm.map((result, index) => (
             <OpacityContainer
               key={index}
-              opacity={0.2 * (index + 1) + 0.1}
+              opacity={(1 / teamForm?.length) * (index + 1) + 0.1}
               $isHome={isHome}
             >
               {renderFixture(result, index)}
             </OpacityContainer>
           ))
           : teamForm.reverse().map((result, index) => (
-            <OpacityContainer key={index} opacity={0.2 * (teamForm.length - index) + 0.1}>
+            <OpacityContainer
+              key={index}
+              opacity={(1 / teamForm?.length) * (teamForm?.length - index) + 0.1}
+            >
               {renderFixture(result, index)}
             </OpacityContainer>
           ))}
