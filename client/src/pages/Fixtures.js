@@ -82,11 +82,12 @@ const EmojiPairWrap = styled.div`
 
 export const Fixtures = ({ gameweekNumber }) => {
   const { badgersData } = useContext(BadgersContext);
+  const { previewNextGw } = badgersData
 
   const [loading, setLoading] = useState(false)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   // const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
-  const [gameweekToView, setGameweekToView] = useState(gameweekNumber)
+  const [gameweekToView, setGameweekToView] = useState(previewNextGw ? (gameweekNumber + 1) : gameweekNumber)
   const [allGamesFinished, setAllGamesFinished] = useState(false)
   const [firstGameStarted, setFirstGameStarted] = useState(false)
   const [finishedCheckComplete, setFinishedCheckComplete] = useState(false)
@@ -156,7 +157,7 @@ export const Fixtures = ({ gameweekNumber }) => {
         <FixtureAwards rowInfo={row} isHome={isHome} />
       )
     }
-    if (allGamesFinished && gameweekToView === gameweekNumber + 1 && innerWidth > 600) {
+    if ((previewNextGw || (allGamesFinished && gameweekToView === gameweekNumber + 1)) && innerWidth > 600) {
       const { entry_1_entry, entry_2_entry } = row.row.original
       return (
         <TeamForm
@@ -227,7 +228,7 @@ export const Fixtures = ({ gameweekNumber }) => {
     ['🤝 ', 'tightest']
   ]
 
-  const selectorProps = { gameweekNumber, gameweekToView, setGameweekToView }
+  const selectorProps = { gameweekNumber: previewNextGw ? gameweekNumber + 1 : gameweekNumber, gameweekToView, setGameweekToView }
 
   const commonFixtureProps = {
     columns: fixtureColumns,

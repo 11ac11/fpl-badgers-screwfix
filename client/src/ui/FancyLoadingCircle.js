@@ -6,6 +6,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 `
 
 const spinAnimation = keyframes`

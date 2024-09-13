@@ -8,6 +8,7 @@ const BadgersContext = createContext();
 
 const BadgersContextProvider = ({ children }) => {
   const [badgersData, setBadgersData] = useState({})
+  const [previewNextGw, setPreviewNextGw] = useState(false)
   const [gameweekNumber, setGameweekNumber] = useState(0)
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   const [badgersTableData, setBadgersTableData] = useState(null)
@@ -86,6 +87,7 @@ const BadgersContextProvider = ({ children }) => {
         leagueId,
         pointsLeagueId,
         currentGameweekNumber: gameweekNumber,
+        previewNextGw,
         fixturesForGameweek: badgersFixtureData,
         badgersTableData,
         pointsTableData,
@@ -104,7 +106,8 @@ const BadgersContextProvider = ({ children }) => {
     for (const event of events) {
       if (!!event.is_current) {
         const twoDaysCheck = isTwoDaysAway(event.deadline_time)
-        return twoDaysCheck ? event.id + 1 : event.id
+        setPreviewNextGw(twoDaysCheck ? true : false)
+        return event.id
       }
     }
     return 'pre-season';

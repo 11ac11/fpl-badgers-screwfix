@@ -11,7 +11,7 @@ export const isTwoDaysAway = (deadlineTime) => {
   twoDaysFuture.setDate(currentDate.getDate() + 2);
   twoDaysFuture.setHours(0, 0, 0, 0);
 
-  return deadlineDate.getTime() >= twoDaysFuture.getTime();
+  return deadlineDate.getTime() <= twoDaysFuture.getTime();
 };
 
 // Calculate three hours later
