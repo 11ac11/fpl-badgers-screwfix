@@ -95,6 +95,10 @@ export const Fixtures = ({ gameweekNumber }) => {
   const innerWidth = useInnerWidth();
   const contentRef = useRef(null);
 
+  const liveScoresLoaded = badgersData.liveScoresData.length > 0
+  const useLiveScores = gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished && liveScoresLoaded
+
+
   useEffect(() => {
     const fetchPremFixturesData = async () => {
       try {
@@ -110,7 +114,7 @@ export const Fixtures = ({ gameweekNumber }) => {
           setFinishedCheckComplete(true)
         }
       } catch (error) {
-        console.error(`Error: ${error.message}`);
+        console.error(`Error fetching PL fixtures data: ${error.message}`);
       }
     }
 
@@ -118,14 +122,12 @@ export const Fixtures = ({ gameweekNumber }) => {
       try {
         // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
         const badgersFixtures = await fetchFantasyFixtures(badgersData.leagueId, gameweekToView);
-        if (gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished) {
-          setLoading(true)
+        if (useLiveScores) {
           // const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
           // setScrewfixFixtureData(livePointsScrewfix);
 
-          const livePointsBadgers = await calculateLivePoints(badgersFixtures.results)
+          const livePointsBadgers = await calculateLivePoints(badgersFixtures.results, badgersData.liveScoresData)
           setBadgersFixtureData(livePointsBadgers);
-          setLoading(false)
           return
         }
         // if (screwFixFixtures) {
@@ -135,21 +137,25 @@ export const Fixtures = ({ gameweekNumber }) => {
           setBadgersFixtureData(badgersFixtures.results);
         }
       } catch (error) {
-        console.error(`Error: ${error.message}`);
+        console.error(`Error fetching fantasy fixtures data: ${error.message}`);
       }
     };
 
     if (gameweekToView) {
+      setLoading(true)
       if (gameweekToView === 'pre-season') {
         setFixturesNotAvaliable(true)
+        setLoading(false)
         return
-      }
-      fetchPremFixturesData();
-      if (finishedCheckComplete) {
-        fetchFantasyFixturesData();
+      } else {
+        fetchPremFixturesData();
+        if (finishedCheckComplete && liveScoresLoaded) {
+          fetchFantasyFixturesData();
+          setLoading(false)
+        }
       }
     }
-  }, [gameweekToView, finishedCheckComplete, allGamesFinished, firstGameStarted, gameweekNumber]);
+  }, [gameweekToView, finishedCheckComplete, allGamesFinished, firstGameStarted, gameweekNumber, liveScoresLoaded]);
 
   const renderEndColumn = (row, isHome) => {
     if (firstGameStarted && gameweekToView <= gameweekNumber) {

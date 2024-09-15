@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createContext } from 'react';
-import { fetchFantasyFixtures, getAllGameweekInfo, fetchLeagueStandings } from '../api/requests';
+import { fetchFantasyFixtures, getAllGameweekInfo, fetchLeagueStandings, fetchLivePlayerScores } from '../api/requests';
 import { getHighestPoints, getLowestPoints, getTopOfTable, getBottomOfTable, getLeagueTotalPoints } from '../utils/statUtils';
 import { isTwoDaysAway } from '../utils/timeCheckers';
 
@@ -14,6 +14,7 @@ const BadgersContextProvider = ({ children }) => {
   const [badgersTableData, setBadgersTableData] = useState(null)
   const [pointsTableData, setPointsTableData] = useState(null)
   const [prev5Results, setPrev5Results] = useState(null)
+  const [liveScoresData, setLiveScoresData] = useState([])
 
   const leagueId = 1115273;
   const pointsLeagueId = 1457213;
@@ -67,9 +68,15 @@ const BadgersContextProvider = ({ children }) => {
         setPrev5Results(last5)
       }
 
+      const fetchElementLiveScores = async () => {
+        const liveData = await fetchLivePlayerScores(gameweekNumber)
+        setLiveScoresData(liveData.elements)
+      }
+
       fetchFantasyFixturesData()
-      fetchLeaguesData();
+      fetchLeaguesData()
       fetchLast5Games()
+      fetchElementLiveScores()
     }
   }, [gameweekNumber]);
 
@@ -93,12 +100,13 @@ const BadgersContextProvider = ({ children }) => {
         pointsTableData,
         gameweekAwards,
         badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
-        prev5Results
+        prev5Results,
+        liveScoresData
       };
 
       setBadgersData(data);
     }
-  }, [badgersFixtureData, badgersTableData, prev5Results, gameweekNumber])
+  }, [badgersFixtureData, badgersTableData, prev5Results, gameweekNumber, liveScoresData])
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();

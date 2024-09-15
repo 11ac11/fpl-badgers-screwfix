@@ -77,7 +77,7 @@ export const fetchFantasyFixtures = async (leagueId, gameweek) => {
 
 export const fetchLivePlayerScores = async (gameweekNumber) => {
   try {
-    const response = await fetch(`${encodedUrl}event/${gameweekNumber}/live/${noCache}`);
+    const response = await fetch(`${encodedUrl}event/${gameweekNumber}/live/?${noCache}`);
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
@@ -94,7 +94,7 @@ export const fetchLivePlayerScores = async (gameweekNumber) => {
 export const fetchManagerPicksByEvent = async (managerId, gameweekNumber) => {
   try {
     const response = await fetch(
-      `${encodedUrl}team/${managerId}/event/${gameweekNumber}/picks/${noCache}`
+      `${encodedUrl}entry/${managerId}/event/${gameweekNumber}/picks/?${noCache}`
     );
 
     if (!response.ok) {
