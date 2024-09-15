@@ -12,6 +12,17 @@ const ManagerTeamCombined = styled.div`
   min-height: 20px;
   padding: 0.3rem 1rem 0.3rem 0rem;
   width: 100%;
+
+  a {
+    width: 100%;
+    color: inherit;
+  }
+
+  a:hover {
+    color: var(--turq);
+    text-shadow: 1px 1px #5bff89;
+  }
+
   @media ${device.sm} {
     flex-direction: column;
     padding: 0.2rem 0.2rem 0.2rem 0rem;
@@ -76,27 +87,35 @@ const ManagerName = styled.p`
 
 export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, badgersData, allGamesFinished }) => {
   const innerWidth = useInnerWidth();
+  const homeId = rowInfo.entry_1_entry
+  const awayId = rowInfo.entry_2_entry
+  const homeTeamName = rowInfo.entry_1_name
+  const awayTeamName = rowInfo.entry_2_name
+  const homeManagerName = rowInfo.entry_1_player_name
+  const awayManagerName = rowInfo.entry_2_player_name
   const canRenderForm = allGamesFinished && gameweekToView === badgersData?.currentGameweekNumber + 1 && innerWidth < 600
 
   return (
     <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
-      <TeamName $isHome={isHome} $fixturesTable={fixturesTable}>
-        {fixturesTable
-          ? (isHome ? rowInfo.entry_1_name : rowInfo.entry_2_name)
-          : (rowInfo.entry_name)
-        }
-      </TeamName>
-      <ManagerName $isHome={isHome} $fixturesTable={fixturesTable}>
-        {fixturesTable
-          ? (isHome ? rowInfo.entry_1_player_name : rowInfo.entry_2_player_name)
-          : (rowInfo.player_name)
-        }
-      </ManagerName>
-      {canRenderForm && innerWidth < 600 && <TeamForm
-        teamId={rowInfo[isHome ? 'entry_1_entry' : 'entry_2_entry']}
-        leagueId={rowInfo.league}
-        isHome={isHome}
-      />}
+      <a href={`https://fantasy.premierleague.com/entry/${isHome ? homeId : awayId}/event/${gameweekToView}`} >
+        <TeamName $isHome={isHome} $fixturesTable={fixturesTable}>
+          {fixturesTable
+            ? (isHome ? homeTeamName : awayTeamName)
+            : (rowInfo.entry_name)
+          }
+        </TeamName>
+        <ManagerName $isHome={isHome} $fixturesTable={fixturesTable}>
+          {fixturesTable
+            ? (isHome ? homeManagerName : awayManagerName)
+            : (rowInfo.player_name)
+          }
+        </ManagerName>
+        {canRenderForm && innerWidth < 600 && <TeamForm
+          teamId={isHome ? homeId : awayId}
+          leagueId={rowInfo.league}
+          isHome={isHome}
+        />}
+      </a>
     </ManagerTeamCombined>
   )
 }
