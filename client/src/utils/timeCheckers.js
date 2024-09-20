@@ -1,17 +1,19 @@
 export const isTwoDaysAway = (deadlineTime) => {
-  const deadlineDate = new Date(deadlineTime);
-
-  if (isNaN(deadlineDate.getTime())) {
-    console.error("Invalid date format");
+  if (!deadlineTime) {
+    console.error("Invalid deadline time provided");
     return null;
   }
 
+  const deadlineDate = new Date(deadlineTime);
   const currentDate = new Date();
-  const twoDaysFuture = new Date(currentDate);
-  twoDaysFuture.setDate(currentDate.getDate() + 2);
-  twoDaysFuture.setHours(0, 0, 0, 0);
 
-  return deadlineDate.getTime() >= twoDaysFuture.getTime();
+  // Calculate 48 hours from the current time
+  const fortyEightHoursFromNow = currentDate.getTime() + 48 * 60 * 60 * 1000;
+  console.log(deadlineDate.getTime(), currentDate.getTime(), deadlineDate.getTime() >= currentDate.getTime())
+  console.log(deadlineDate.getTime(), fortyEightHoursFromNow, deadlineDate.getTime() <= fortyEightHoursFromNow)
+
+  // Check if the deadline date is within the 48-hour window
+  return deadlineDate.getTime() <= fortyEightHoursFromNow;
 };
 
 // Calculate three hours later
