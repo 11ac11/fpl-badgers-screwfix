@@ -109,12 +109,11 @@ export const TeamForm = ({ teamId, leagueId, isHome }) => {
   return (
     <Container $isHome={isHome}>
       <FormDisplayContainer $isHome={isHome}>
-        {isHome
+        {!isHome
           ? teamForm.map((result, index) => (
             <OpacityContainer
               key={index}
-              opacity={(1 / teamForm?.length) * (index + 1) + 0.1}
-              $isHome={isHome}
+              opacity={(1 / teamForm?.length) * (teamForm?.length - index) + 0.1}
             >
               {renderFixture(result, index)}
             </OpacityContainer>
@@ -122,7 +121,8 @@ export const TeamForm = ({ teamId, leagueId, isHome }) => {
           : teamForm.reverse().map((result, index) => (
             <OpacityContainer
               key={index}
-              opacity={(1 / teamForm?.length) * (teamForm?.length - index) + 0.1}
+              opacity={(1 / teamForm?.length) * (index + 1) + 0.1}
+              $isHome={isHome}
             >
               {renderFixture(result, index)}
             </OpacityContainer>
