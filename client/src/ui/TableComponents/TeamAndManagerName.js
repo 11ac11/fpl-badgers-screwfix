@@ -90,7 +90,6 @@ export const TeamAndManagerName = ({
   fixturesTable = false,
   isHome = false,
   gameweekToView,
-  currentGameweekNumber,
   badgersData,
   allGamesFinished
 }) => {
@@ -101,7 +100,7 @@ export const TeamAndManagerName = ({
   const awayTeamName = rowInfo.entry_2_name
   const homeManagerName = rowInfo.entry_1_player_name
   const awayManagerName = rowInfo.entry_2_player_name
-  const canRenderForm = allGamesFinished && gameweekToView === badgersData?.currentGameweekNumber + 1 && innerWidth < 600
+  const canRenderForm = gameweekToView === badgersData?.currentGameweekNumber + 1 && innerWidth < 600
 
   if (fixturesTable) {
     return (

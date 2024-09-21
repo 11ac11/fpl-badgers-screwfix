@@ -5,12 +5,13 @@ export const isTwoDaysAway = (deadlineTime) => {
   }
 
   const deadlineDate = new Date(deadlineTime);
+  console.log('deadlineDate:', deadlineDate)
   const currentDate = new Date();
 
   // Calculate 48 hours from the current time
   const fortyEightHoursFromNow = currentDate.getTime() + 48 * 60 * 60 * 1000;
-  console.log(deadlineDate.getTime(), currentDate.getTime(), deadlineDate.getTime() >= currentDate.getTime())
-  console.log(deadlineDate.getTime(), fortyEightHoursFromNow, deadlineDate.getTime() <= fortyEightHoursFromNow)
+  console.log('1', deadlineDate.getTime(), currentDate.getTime(), deadlineDate.getTime() >= currentDate.getTime())
+  console.log('2', deadlineDate.getTime(), fortyEightHoursFromNow, deadlineDate.getTime() <= fortyEightHoursFromNow)
 
   // Check if the deadline date is within the 48-hour window
   return deadlineDate.getTime() <= fortyEightHoursFromNow;
