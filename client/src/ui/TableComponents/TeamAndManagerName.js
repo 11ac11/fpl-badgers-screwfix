@@ -85,7 +85,15 @@ const ManagerName = styled.p`
   }
 `
 
-export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = false, gameweekToView, badgersData, allGamesFinished }) => {
+export const TeamAndManagerName = ({
+  rowInfo,
+  fixturesTable = false,
+  isHome = false,
+  gameweekToView,
+  currentGameweekNumber,
+  badgersData,
+  allGamesFinished
+}) => {
   const innerWidth = useInnerWidth();
   const homeId = rowInfo.entry_1_entry
   const awayId = rowInfo.entry_2_entry
@@ -98,7 +106,7 @@ export const TeamAndManagerName = ({ rowInfo, fixturesTable = false, isHome = fa
   if (fixturesTable) {
     return (
       <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
-        <a href={`https://fantasy.premierleague.com/entry/${isHome ? homeId : awayId}/event/${gameweekToView}`} >
+        <a href={`https://fantasy.premierleague.com/entry/${isHome ? homeId : awayId}/event/${badgersData?.currentGameweekNumber}`} >
           <TeamName $isHome={isHome} $fixturesTable={fixturesTable}>
             {isHome ? homeTeamName : awayTeamName}
           </TeamName>
