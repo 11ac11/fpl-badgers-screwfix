@@ -105,7 +105,7 @@ export const TeamAndManagerName = ({
   if (fixturesTable) {
     return (
       <ManagerTeamCombined $isHome={isHome} $fixturesTable={fixturesTable}>
-        <a href={`https://fantasy.premierleague.com/entry/${isHome ? homeId : awayId}/event/${badgersData?.currentGameweekNumber}`} >
+        <a href={`https://fantasy.premierleague.com/entry/${isHome ? homeId : awayId}/event/${badgersData?.currentGameweekNumber}`} target='_blank' rel="noreferrer" >
           <TeamName $isHome={isHome} $fixturesTable={fixturesTable}>
             {isHome ? homeTeamName : awayTeamName}
           </TeamName>
