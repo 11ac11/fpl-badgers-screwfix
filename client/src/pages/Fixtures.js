@@ -98,7 +98,6 @@ export const Fixtures = ({ gameweekNumber }) => {
   const contentRef = useRef(null);
 
   const livePlayerPointsReady = badgersData.livePlayerPointsData.length > 0
-  console.log('badgersData.livePlayerPointsData:', badgersData.livePlayerPointsData)
   const viewingCurrentGameweek = gameweekToView === gameweekNumber
   const useCustomScoring = viewingCurrentGameweek && useCustomScoringFunction
 
