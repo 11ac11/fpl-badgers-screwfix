@@ -6,7 +6,7 @@ import { FancyLoadingCircle, GameweekSelector, Table } from '../ui';
 import { TeamForm, TeamAndManagerName, FixturePoints, FixtureAwards } from '../ui/TableComponents';
 import useInnerWidth from '../utils/InnerWidth';
 import { calculateLivePoints } from '../utils/livePointsUtil';
-import { isPastThreeHoursLater } from '../utils/timeCheckers';
+import { getFirstAndLastKickOffsForEachDay, isWithinTodaysKickOffs } from '../utils/timeCheckers';
 import { BadgersContext } from '../state/BadgersContextProvider';
 
 const BothFixturescontainer = styled.div`
@@ -82,64 +82,33 @@ const EmojiPairWrap = styled.div`
 
 export const Fixtures = ({ gameweekNumber }) => {
   const { badgersData } = useContext(BadgersContext);
-  const { previewNextGw } = badgersData
+  const { previewNextGw, leagueId, liveScoresData } = badgersData
 
   const [loading, setLoading] = useState(false)
+  const [premFixtures, setPremFixtures] = useState([])
   const [badgersFixtureData, setBadgersFixtureData] = useState(null)
   // const [screwfixFixtureData, setScrewfixFixtureData] = useState(null)
   const [gameweekToView, setGameweekToView] = useState(previewNextGw ? (gameweekNumber + 1) : gameweekNumber)
   const [allGamesFinished, setAllGamesFinished] = useState(false)
   const [firstGameStarted, setFirstGameStarted] = useState(false)
-  const [finishedCheckComplete, setFinishedCheckComplete] = useState(false)
   const [fixturesNotAvaliable, setFixturesNotAvaliable] = useState(false)
+  const [useCustomScoringFunction, setUseCustomScoringFunction] = useState(false)
+
   const innerWidth = useInnerWidth();
   const contentRef = useRef(null);
 
   const liveScoresLoaded = badgersData.liveScoresData.length > 0
-  const useLiveScores = gameweekToView === gameweekNumber && firstGameStarted && finishedCheckComplete && !allGamesFinished && liveScoresLoaded
-
+  const useCustomScoring = gameweekToView === gameweekNumber && useCustomScoringFunction && liveScoresLoaded
 
   useEffect(() => {
     const fetchPremFixturesData = async () => {
       try {
-        const realFixtures = await fetchPremFixtures(gameweekNumber)
-        if (realFixtures && realFixtures.length > 0) {
-          setFirstGameStarted(realFixtures[0].started)
-          const finalFixture = realFixtures[realFixtures.length - 1]
-          const finalGameDateTime = finalFixture.kickoff_time
-          const shouldBeUpdated = isPastThreeHoursLater(finalGameDateTime)
-          shouldBeUpdated
-            ? setAllGamesFinished(true)
-            : setAllGamesFinished(false)
-          setFinishedCheckComplete(true)
-        }
+        const premFixtures = await fetchPremFixtures(gameweekNumber)
+        setPremFixtures(premFixtures)
       } catch (error) {
         console.error(`Error fetching PL fixtures data: ${error.message}`);
       }
     }
-
-    const fetchFantasyFixturesData = async () => {
-      try {
-        // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
-        const badgersFixtures = await fetchFantasyFixtures(badgersData.leagueId, gameweekToView);
-        if (useLiveScores) {
-          // const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.results)
-          // setScrewfixFixtureData(livePointsScrewfix);
-
-          const livePointsBadgers = await calculateLivePoints(badgersFixtures.results, badgersData.liveScoresData)
-          setBadgersFixtureData(livePointsBadgers);
-          return
-        }
-        // if (screwFixFixtures) {
-        //   setScrewfixFixtureData(screwFixFixtures.results);
-        // }
-        if (badgersFixtures) {
-          setBadgersFixtureData(badgersFixtures.results);
-        }
-      } catch (error) {
-        console.error(`Error fetching fantasy fixtures data: ${error.message}`);
-      }
-    };
 
     if (gameweekToView) {
       setLoading(true)
@@ -149,13 +118,65 @@ export const Fixtures = ({ gameweekNumber }) => {
         return
       } else {
         fetchPremFixturesData();
-        if (finishedCheckComplete && liveScoresLoaded) {
-          fetchFantasyFixturesData();
-          setLoading(false)
-        }
       }
     }
-  }, [gameweekToView, finishedCheckComplete, allGamesFinished, firstGameStarted, gameweekNumber, liveScoresLoaded]);
+  }, [gameweekToView, gameweekNumber]);
+
+  useEffect(() => {
+    if (premFixtures && premFixtures.length > 0) {
+      const today = new Date(Date.now()).toLocaleDateString()
+
+      // check to see if first game of gameweek has kicked off
+      const gameweekFirstGameStarted = premFixtures[0].started
+      setFirstGameStarted(gameweekFirstGameStarted)
+
+      // check to see if all games have finished
+      const allGamesFinished = premFixtures.every(fixture => !!fixture.finished)
+      setAllGamesFinished(allGamesFinished)
+
+      // get fixtures by date, in order to adapt when using custom function over each day
+      const fixturesByDate = getFirstAndLastKickOffsForEachDay(premFixtures)
+      const shouldUseLiveMode = isWithinTodaysKickOffs(today, fixturesByDate)
+      setUseCustomScoringFunction(shouldUseLiveMode)
+    }
+  }, [premFixtures]);
+
+  useEffect(() => {
+    const fetchFantasyFixturesData = async () => {
+      try {
+        // const screwFixFixtures = await fetchFantasyFixtures(screwfixId, gameweekToView);
+        const badgersFixtures = await fetchFantasyFixtures(leagueId, gameweekToView);
+        const resultsFromApi = badgersFixtures?.results
+        if (useCustomScoring) {
+          // const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.resultsFromApi)
+          // setScrewfixFixtureData(livePointsScrewfix);
+
+          const livePointsBadgers = await calculateLivePoints(resultsFromApi, liveScoresData)
+          setBadgersFixtureData(livePointsBadgers);
+          return
+        }
+        // if (screwFixFixtures) {
+        //   setScrewfixFixtureData(screwFixFixtures.resultsFromApi);
+        // }
+        if (badgersFixtures) {
+          setBadgersFixtureData(resultsFromApi);
+        }
+      } catch (error) {
+        console.error(`Error fetching fantasy fixtures data: ${error.message}`);
+      }
+    };
+
+    console.log('liveScoresLoaded:', liveScoresLoaded)
+    console.log('useCustomScoring:', useCustomScoring)
+    if ((liveScoresLoaded && useCustomScoring) || !useCustomScoring) {
+      fetchFantasyFixturesData();
+    }
+  }, [liveScoresLoaded, useCustomScoring, gameweekToView, leagueId, liveScoresData])
+
+  useEffect(() => {
+    if (!!badgersFixtureData) setLoading(false)
+  }, [badgersFixtureData])
+
 
   const renderEndColumn = (row, isHome) => {
     if (firstGameStarted && gameweekToView <= gameweekNumber) {

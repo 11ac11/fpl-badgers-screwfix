@@ -15,6 +15,7 @@ const EmojiContainer = styled.div`
 `;
 
 export const FixtureAwards = ({ rowInfo, isHome = false }) => {
+  // console.log(rowInfo)
   const entryOnePoints = rowInfo.cell.row.original.entry_1_points
   const entryTwoPoints = rowInfo.cell.row.original.entry_2_points
   let emojiStr = ''
@@ -25,32 +26,32 @@ export const FixtureAwards = ({ rowInfo, isHome = false }) => {
   const lowestPoints = getLowestPoints(rowInfo.data)
   const closestGame = getClosestGame(rowInfo.data)
   if (isHome) {
-    if (entryOnePoints > entryTwoPoints) emojiStr += '⚽️ '
+    // if (entryOnePoints > entryTwoPoints) emojiStr += '⚽️ '
     if (entryOnePoints > 90) emojiStr += '🔥 '
     if (entryOnePoints < 40) emojiStr += '😳 '
     if (highestPoints.team === rowInfo.cell.row.original.entry_1_name) {
-      emojiStr += '🐐 '
+      emojiStr = '🐐 '
     }
     if (lowestPoints.team === rowInfo.cell.row.original.entry_1_name) {
-      emojiStr += '😭 '
+      emojiStr = '😭 '
     }
     if (closestGame.homeTeam === rowInfo.cell.row.original.entry_1_name) {
-      emojiStr += '🤝 '
+      emojiStr = '🤝 '
     }
   } else {
-    if (closestGame.awayTeam === rowInfo.cell.row.original.entry_2_name) {
-      emojiStr += '🤝 '
+    if (entryTwoPoints > 90) emojiStr = '🔥 '
+    if (entryTwoPoints < 40) emojiStr = '😳 '
+    if (highestPoints.team === rowInfo.cell.row.original.entry_2_name) {
+      emojiStr = '🐐 '
     }
     if (lowestPoints.team === rowInfo.cell.row.original.entry_2_name) {
-      emojiStr += '😭 '
+      emojiStr = '😭 '
     }
-    if (highestPoints.team === rowInfo.cell.row.original.entry_2_name) {
-      emojiStr += '🐐 '
+    if (closestGame.awayTeam === rowInfo.cell.row.original.entry_2_name) {
+      emojiStr = '🤝 '
     }
-    if (entryTwoPoints < 40) emojiStr += '😳 '
-    if (entryTwoPoints > 90) emojiStr += '🔥 '
-    if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
+    // if (entryOnePoints < entryTwoPoints) emojiStr += '⚽️ '
   }
   return (
-    <EmojiContainer $isHome={isHome}>{emojiStr} </EmojiContainer>)
+    <EmojiContainer $isHome={isHome}>{emojiStr}</EmojiContainer>)
 }

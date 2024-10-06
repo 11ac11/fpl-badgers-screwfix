@@ -113,7 +113,7 @@ const BadgersContextProvider = ({ children }) => {
     const events = data.events
     for (const event of events) {
       if (!!event.is_current) {
-        console.log(event)
+        // console.log('event', event)
         const twoDaysCheck = isTwoDaysAway(event.deadline_time)
         // setPreviewNextGw(twoDaysCheck ? true : false)
         return event.id
