@@ -14,7 +14,7 @@ const BadgersContextProvider = ({ children }) => {
   const [badgersTableData, setBadgersTableData] = useState(null)
   const [pointsTableData, setPointsTableData] = useState(null)
   const [prev5Results, setPrev5Results] = useState(null)
-  const [liveScoresData, setLiveScoresData] = useState([])
+  const [livePlayerPointsData, setLivePlayerPointsData] = useState([])
 
   const leagueId = 1115273;
   const pointsLeagueId = 1457213;
@@ -70,7 +70,7 @@ const BadgersContextProvider = ({ children }) => {
 
       const fetchElementLiveScores = async () => {
         const liveData = await fetchLivePlayerScores(gameweekNumber)
-        setLiveScoresData(liveData.elements)
+        setLivePlayerPointsData(liveData.elements)
       }
 
       fetchFantasyFixturesData()
@@ -101,12 +101,12 @@ const BadgersContextProvider = ({ children }) => {
         gameweekAwards,
         badgersTotalPoints: getLeagueTotalPoints(badgersTableData),
         prev5Results,
-        liveScoresData
+        livePlayerPointsData
       };
 
       setBadgersData(data);
     }
-  }, [badgersFixtureData, badgersTableData, prev5Results, gameweekNumber, liveScoresData])
+  }, [badgersFixtureData, badgersTableData, prev5Results, gameweekNumber, livePlayerPointsData])
 
   const findCurrentGameweekNumber = async () => {
     const data = await getAllGameweekInfo();

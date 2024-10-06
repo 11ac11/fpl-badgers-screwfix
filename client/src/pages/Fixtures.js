@@ -82,7 +82,7 @@ const EmojiPairWrap = styled.div`
 
 export const Fixtures = ({ gameweekNumber }) => {
   const { badgersData } = useContext(BadgersContext);
-  const { previewNextGw, leagueId, liveScoresData } = badgersData
+  const { previewNextGw, leagueId, livePlayerPointsData } = badgersData
 
   const [loading, setLoading] = useState(false)
   const [premFixtures, setPremFixtures] = useState([])
@@ -97,9 +97,10 @@ export const Fixtures = ({ gameweekNumber }) => {
   const innerWidth = useInnerWidth();
   const contentRef = useRef(null);
 
-  const liveScoresLoaded = badgersData.liveScoresData.length > 0
+  const livePlayerPointsReady = badgersData.livePlayerPointsData.length > 0
+  console.log('badgersData.livePlayerPointsData:', badgersData.livePlayerPointsData)
   const viewingCurrentGameweek = gameweekToView === gameweekNumber
-  const useCustomScoring = viewingCurrentGameweek && useCustomScoringFunction && liveScoresLoaded
+  const useCustomScoring = viewingCurrentGameweek && useCustomScoringFunction
 
   useEffect(() => {
     const fetchPremFixturesData = async () => {
@@ -152,7 +153,7 @@ export const Fixtures = ({ gameweekNumber }) => {
           // const livePointsScrewfix = await calculateLivePoints(screwFixFixtures.resultsFromApi)
           // setScrewfixFixtureData(livePointsScrewfix);
 
-          const livePointsBadgers = await calculateLivePoints(resultsFromApi, liveScoresData)
+          const livePointsBadgers = await calculateLivePoints(resultsFromApi, livePlayerPointsData)
           setBadgersFixtureData(livePointsBadgers);
           return
         }
@@ -167,16 +168,16 @@ export const Fixtures = ({ gameweekNumber }) => {
       }
     };
 
-    console.log('liveScoresLoaded:', liveScoresLoaded)
+    console.log('livePlayerPointsReady:', livePlayerPointsReady)
     console.log('useCustomScoring:', useCustomScoring)
-    if ((liveScoresLoaded && useCustomScoring) || !useCustomScoring) {
+    if (livePlayerPointsReady) {
       fetchFantasyFixturesData();
     }
-  }, [liveScoresLoaded, useCustomScoring, gameweekToView, leagueId, liveScoresData])
+  }, [useCustomScoring, gameweekToView, leagueId, livePlayerPointsData, livePlayerPointsReady])
 
   useEffect(() => {
-    if (!!badgersFixtureData) setLoading(false)
-  }, [badgersFixtureData])
+    if (!!badgersFixtureData && livePlayerPointsReady) setLoading(false)
+  }, [badgersFixtureData, livePlayerPointsReady])
 
 
   const renderEndColumn = (row, isHome, allGamesFinished) => {
