@@ -46,7 +46,7 @@ const SelectorWrap = styled.div`
   }
 `
 
-const EmojiKeyWrap = styled.div`
+const EmojiLegendWrap = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -98,7 +98,8 @@ export const Fixtures = ({ gameweekNumber }) => {
   const contentRef = useRef(null);
 
   const liveScoresLoaded = badgersData.liveScoresData.length > 0
-  const useCustomScoring = gameweekToView === gameweekNumber && useCustomScoringFunction && liveScoresLoaded
+  const viewingCurrentGameweek = gameweekToView === gameweekNumber
+  const useCustomScoring = viewingCurrentGameweek && useCustomScoringFunction && liveScoresLoaded
 
   useEffect(() => {
     const fetchPremFixturesData = async () => {
@@ -178,10 +179,10 @@ export const Fixtures = ({ gameweekNumber }) => {
   }, [badgersFixtureData])
 
 
-  const renderEndColumn = (row, isHome) => {
+  const renderEndColumn = (row, isHome, allGamesFinished) => {
     if (firstGameStarted && gameweekToView <= gameweekNumber) {
       return (
-        <FixtureAwards rowInfo={row} isHome={isHome} />
+        <FixtureAwards rowInfo={row} isHome={isHome} allGamesFinished={allGamesFinished} viewingCurrentGameweek={viewingCurrentGameweek} />
       )
     }
     if ((previewNextGw || (allGamesFinished && gameweekToView === gameweekNumber + 1)) && innerWidth > 600) {
@@ -201,7 +202,7 @@ export const Fixtures = ({ gameweekNumber }) => {
     {
       Header: 'Emoji',
       accessor: 'emoji_1',
-      Cell: (row) => renderEndColumn(row, true),
+      Cell: (row) => renderEndColumn(row, true, allGamesFinished),
     },
     {
       Header: 'Home',
@@ -242,12 +243,12 @@ export const Fixtures = ({ gameweekNumber }) => {
     {
       Header: 'Emoji2',
       accessor: 'emoji_2',
-      Cell: (row) => renderEndColumn(row, false),
+      Cell: (row) => renderEndColumn(row, false, allGamesFinished),
     },
   ];
 
-  const emojiKeys = [
-    ['⚽️ ', 'winner'],
+  const emojiLegend = [
+    // ['⚽️ ', 'winner'],
     ['🐐 ', `GOAT`],
     ['😭 ', `worst`],
     ['🔥 ', '> 90'],
@@ -285,14 +286,14 @@ export const Fixtures = ({ gameweekNumber }) => {
         <SelectorWrap>
           <GameweekSelector {...selectorProps} />
         </SelectorWrap>
-        <EmojiKeyWrap>
-          {emojiKeys.map((emojiPair, index) => {
+        <EmojiLegendWrap>
+          {emojiLegend.map((emojiPair, index) => {
             return <EmojiPairWrap key={index}>
               <div><p className="emoji">{emojiPair[0]}</p></div>
               <div><p>{emojiPair[1]}</p></div>
             </EmojiPairWrap>
           })}
-        </EmojiKeyWrap>
+        </EmojiLegendWrap>
       </TopbarWrap>
       {loading
         ? <FancyLoadingCircle />
